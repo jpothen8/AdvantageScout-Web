@@ -1,0 +1,17 @@
+<script>
+    import Login from "./Login.svelte";
+    import {gameStage} from "./stores";
+    import Auto from "./Auto.svelte";
+    import Tele from "./Tele.svelte";
+    import Post from "./Post.svelte";
+</script>
+
+{#if $gameStage === 0}
+    <Login/>
+{:else if $gameStage === 1}
+    <Auto/>
+{:else if $gameStage === 2}
+    <Tele/>
+{:else if $gameStage === 3}
+    <Post/>
+{/if}
