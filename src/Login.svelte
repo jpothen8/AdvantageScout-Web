@@ -35,7 +35,7 @@
     <div class="hero-content flex-col lg:flex-row-reverse">
         <div class="text-center lg:text-left">
             <h1 class="text-5xl font-bold">Advantage Scout</h1>
-            <p class="py-6">A comprehensive, easy to use, QR based scouting application made by FRC 6328</p>
+            <p class="py-6">A mobile-first, easy to use, QR based, scouting application made by FRC 6328</p>
         </div>
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div class="card-body">

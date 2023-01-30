@@ -1,21 +1,65 @@
 <script>
-    let liveGamepiece = 1;
-    export let type = "Success"
-    function update(){
+    import {autoGameData, autoStack, gameStage, liveGamepiece, teleGameData, teleStack} from "./stores";
 
+    export let type = "Success"
+    export let height = 0;
+    let heightConvert = ["hybrid", "mid", "high"];
+    let dicString = heightConvert[height] + $liveGamepiece + type;
+    let cubeString = heightConvert[height] + "Cube" + type;
+    let coneString = heightConvert[height] + "Cone" + type;
+
+
+    if($autoStack.length !== 1){
+        if($autoStack[$autoStack.length - 1] !== $autoGameData){
+            $autoStack.push($autoGameData)
+        }
+        console.log($autoStack.length)
+    }
+    else{
+        $autoStack.push($autoGameData)
+    }
+
+    function pressed(){
+        dicString = heightConvert[height] + $liveGamepiece + type;
+        if($gameStage === 1){
+            $autoGameData[dicString] += 1;
+        }
+        else if($gameStage === 2){
+            $teleGameData[dicString] += 1;
+        }
+        if($gameStage === 1){
+            if($autoStack.length !== 1){
+                if($autoStack[$autoStack.length - 1] !== $autoGameData){
+                    $autoStack.push($autoGameData)
+                }
+            }
+            else{
+                $autoStack.push($autoGameData)
+            }
+        }
+        if($gameStage === 2){
+            if($teleStack.length !== 1){
+                if($teleStack[$teleStack.length - 1] !== $teleGameData){
+                    $teleStack.push($teleGameData)
+                }
+            }
+            else{
+                $teleStack.push($teleGameData)
+            }
+        }
     }
 </script>
 
 <div class="indicator">
     <span class="indicator-item badge badge-warning text-xl xl:w-12 xl:h-8 xl:text-2xl"
-    >2</span
+    >{($gameStage === 1) ? $autoGameData[cubeString] : $teleGameData[cubeString]}</span
     >
     <span class="indicator-item indicator-start badge badge-secondary text-xl xl:w-12 xl:h-8 xl:text-2xl"
-    >2</span
+    >{($gameStage === 1) ? $autoGameData[coneString] : $teleGameData[coneString]}</span
     >
     <button
-            class="btn btn-square btn-outline rounded-md w-24 h-24 xl:w-36 xl:h-36" disabled={liveGamepiece === 0}
-            on:click={update}
+            class="btn btn-square btn-outline rounded-md w-24 h-24 xl:w-36 xl:h-36"
+            on:click={pressed}
     >
         {#if type === "Success"}
             <svg

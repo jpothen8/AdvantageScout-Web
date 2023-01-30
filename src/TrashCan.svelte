@@ -1,24 +1,35 @@
 <script>
+    import {autoGameData, gameStage, liveGamepiece, teleGameData} from "./stores";
 
     export let gameMode = "Auto"
     let displayConeValue = 0
     let displayCubeValue = 0
     let dataField = " "
     function update() {
-        console.log("score");
-
-
-        console.log(dataField)
-
-
+        if($gameStage === 1){
+            if($liveGamepiece === "Cone"){
+                $autoGameData["droppedCone"]++;
+            }
+            else if($liveGamepiece === "Cube"){
+                $autoGameData["droppedCube"]++;
+            }
+        }
+        else if($gameStage === 2){
+            if($liveGamepiece === "Cone"){
+                $teleGameData["droppedCone"]++;
+            }
+            else if($liveGamepiece === "Cube"){
+                $teleGameData["droppedCube"]++;
+            }
+        }
     }
 </script>
 <div class="indicator">
     <span class="indicator-item badge badge-warning text-xl xl:w-12 xl:h-8 xl:text-2xl"
-    >{displayCubeValue}</span
+    >{($gameStage === 1) ? $autoGameData["droppedCube"] : $teleGameData["droppedCube"]}</span
     >
     <span class="indicator-item indicator-start badge badge-secondary text-xl xl:w-12 xl:h-8 xl:text-2xl"
-    >{displayConeValue}</span
+    >{($gameStage === 1) ? $autoGameData["droppedCone"] : $teleGameData["droppedCone"]}</span
     >
     <button class="btn btn-square btn-outline w-24 h-24 btn-error xl:w-36 xl:h-36" on:click={update} disabled={false}>
         <svg

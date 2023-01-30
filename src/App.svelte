@@ -4,6 +4,7 @@
     import Auto from "./Auto.svelte";
     import Tele from "./Tele.svelte";
     import Post from "./Post.svelte";
+    import QRPage from "./QRPage.svelte";
 </script>
 
 {#if $gameStage === 0}
@@ -14,4 +15,6 @@
     <Tele/>
 {:else if $gameStage === 3}
     <Post/>
+{:else}
+    <QRPage/>
 {/if}

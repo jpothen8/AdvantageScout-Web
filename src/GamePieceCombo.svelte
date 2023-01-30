@@ -3,6 +3,7 @@
     import NextStageButton from "./NextStageButton.svelte";
     import LastStageButton from "./LastStageButton.svelte";
     import QRButton from "./QRButton.svelte";
+    import RestartButton from "./RestartButton.svelte";
 
     export let type = "normal";
 </script>
@@ -18,9 +19,14 @@
     <div class="ml-3">
         <NextStageButton/>
     </div>
-    {:else if type === "post"}
+{:else if type === "post"}
     <LastStageButton/>
     <div class="ml-3">
-    <QRButton/>
+        <QRButton/>
+    </div>
+{:else if type === "qr"}
+    <LastStageButton/>
+    <div class="ml-3">
+        <RestartButton/>
     </div>
 {/if}

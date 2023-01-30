@@ -1,11 +1,15 @@
 <script>
 
+    import {liveGamepiece} from "./stores";
+
     export let gamePiece = "Cube";
-    export let location = "Floor";
     let coneSVG = "";
     function updateGameObject() {
-        console.log("score");
+        $liveGamepiece = gamePiece;
+        console.log($liveGamepiece);
     }
+
+
 </script>
 
 <button

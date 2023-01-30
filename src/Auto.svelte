@@ -9,6 +9,17 @@
     import DockedBox from "./DockedBox.svelte";
     import BalancedBox from "./BalancedBox.svelte";
     import UndoButton from "./UndoButton.svelte";
+    import {autoGameData, autoStack} from "./stores";
+
+    if($autoStack.length !== 1){
+        if($autoStack[$autoStack.length - 1] !== $autoGameData){
+            $autoStack.push($autoGameData)
+        }
+    }
+    else{
+        $autoStack.push($autoGameData)
+    }
+
 </script>
 
 <div class="z-20 pt-4 xl:pl-0xl:pl-8  z-10">
