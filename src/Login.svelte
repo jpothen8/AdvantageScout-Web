@@ -3,6 +3,8 @@
 
     let allianceColor = "blue"
     let timer;
+    let name = "";
+    let number = "";
 
     function changeColor() {
         if(allianceColor === "red") {
@@ -43,13 +45,13 @@
                     <label class="label">
                         <span class="label-text">Your Name</span>
                     </label>
-                    <input type="text" placeholder="name" class="input input-bordered" />
+                    <input type="text" placeholder="name" class="input input-bordered" bind:value={name}/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Team #</span>
                     </label>
-                    <input type="text" placeholder="team #" class="input input-bordered" />
+                    <input type="text" placeholder="team #" class="input input-bordered" bind:value={number} />
 
                 </div>
                 <label class="label">

@@ -7,13 +7,13 @@ export const teleStack = writable([])
 
 
 export const generalGameData=writable({
-    scoutName: "",
+    scoutName: "Name",
     teamNum: 0,
     allianceColor: "blue"
 })
 
 export const autoGameData = writable({
-    startingLocation: "",
+    startingLocation: "Select Starting Location",
     highConeSuccess: 0,
     highConeFail: 0,
     midConeSuccess: 0,

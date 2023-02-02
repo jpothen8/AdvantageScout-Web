@@ -4,13 +4,17 @@
 
     function clicked() {
         if($gameStage === 1){
-            if($autoStack.length !== 1) {
+            if($autoStack.length > 1) {
                 $autoGameData = $autoStack.pop()
                 console.log($autoGameData)
             }
+            else{
+                $autoGameData = JSON.parse(JSON.stringify($autoStack[0]))
+                console.log($autoStack)
+            }
         }
         if($gameStage === 2){
-            if($teleStack.length !== 1) {
+            if($teleStack.length > 0) {
                 $teleGameData = $teleStack.pop()
 
             }

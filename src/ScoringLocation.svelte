@@ -9,16 +9,6 @@
     let coneString = heightConvert[height] + "Cone" + type;
 
 
-    if($autoStack.length !== 1){
-        if($autoStack[$autoStack.length - 1] !== $autoGameData){
-            $autoStack.push($autoGameData)
-        }
-        console.log($autoStack.length)
-    }
-    else{
-        $autoStack.push($autoGameData)
-    }
-
     function pressed(){
         dicString = heightConvert[height] + $liveGamepiece + type;
         if($gameStage === 1){
@@ -28,24 +18,11 @@
             $teleGameData[dicString] += 1;
         }
         if($gameStage === 1){
-            if($autoStack.length !== 1){
-
-                    $autoStack.push($autoGameData)
-
-            }
-            else{
-                $autoStack.push($autoGameData)
-            }
+                $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
         }
-        if($gameStage === 2){
-            if($teleStack.length !== 1){
-                if($teleStack[$teleStack.length - 1] !== $teleGameData){
-                    $teleStack.push($teleGameData)
-                }
-            }
-            else{
-                $teleStack.push($teleGameData)
-            }
+        if($gameStage === 2) {
+
+            $teleStack.push((JSON.parse(JSON.stringify($teleGameData))))
         }
         console.log($autoStack)
     }

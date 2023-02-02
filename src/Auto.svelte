@@ -11,13 +11,8 @@
     import UndoButton from "./UndoButton.svelte";
     import {autoGameData, autoStack} from "./stores";
 
-    if($autoStack.length !== 1){
-        if($autoStack[$autoStack.length - 1] !== $autoGameData){
-            $autoStack.push($autoGameData)
-        }
-    }
-    else{
-        $autoStack.push($autoGameData)
+    if($autoStack.length === 0){
+        $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
     }
 
 </script>

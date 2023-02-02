@@ -4,6 +4,9 @@
     import GamePieceCombo from "./GamePieceCombo.svelte";
     import {autoGameData, generalGameData, postGameData, teleGameData} from "./stores";
     let show = true;
+    if($autoGameData["startingLocation"] === "Select Starting Location"){
+        $autoGameData["startingLocation"] = "None"
+    }
 
     let qrString = `${Object.values($generalGameData).join(',') + "," + Object.values($autoGameData).join(',') + "," + Object.values($teleGameData).join(',') + "," + Object.values($postGameData).join(',')}`
     console.log(qrString)
@@ -20,7 +23,7 @@
     if (!navigator.clipboard){
         document.execCommand('copy');
     } else{
-        navigator.clipboard.writeText("Helloooo")
+        navigator.clipboard.writeText(qrString)
     }
 </script>
 
