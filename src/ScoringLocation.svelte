@@ -29,9 +29,9 @@
         }
         if($gameStage === 1){
             if($autoStack.length !== 1){
-                if($autoStack[$autoStack.length - 1] !== $autoGameData){
+
                     $autoStack.push($autoGameData)
-                }
+
             }
             else{
                 $autoStack.push($autoGameData)
@@ -47,6 +47,7 @@
                 $teleStack.push($teleGameData)
             }
         }
+        console.log($autoStack)
     }
 </script>
 

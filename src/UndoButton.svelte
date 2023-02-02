@@ -6,12 +6,13 @@
         if($gameStage === 1){
             if($autoStack.length !== 1) {
                 $autoGameData = $autoStack.pop()
-                console.log($autoStack.length)
+                console.log($autoGameData)
             }
         }
         if($gameStage === 2){
             if($teleStack.length !== 1) {
                 $teleGameData = $teleStack.pop()
+
             }
         }
     }
