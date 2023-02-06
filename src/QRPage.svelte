@@ -12,12 +12,6 @@
     console.log(qrString)
 
 
-
-
-
-
-
-
     setTimeout(() => { show = false; }, 1500);
 
     if (!navigator.clipboard){

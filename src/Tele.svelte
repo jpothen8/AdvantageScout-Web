@@ -4,6 +4,11 @@
     import UndoButton from "./UndoButton.svelte";
     import DockedBox from "./DockedBox.svelte";
     import BalancedBox from "./BalancedBox.svelte";
+    import {autoGameData, autoStack, teleGameData, teleStack} from "./stores";
+
+    if($teleStack.length === 0){
+        $teleStack.push((JSON.parse(JSON.stringify($teleGameData))))
+    }
 </script>
 
 <div class="fixed bottom-0 w-full flex justify-center z-10">

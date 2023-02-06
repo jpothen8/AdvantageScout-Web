@@ -5,8 +5,9 @@
     function clicked() {
         if($gameStage === 1){
             if($autoStack.length > 1) {
-                $autoGameData = $autoStack.pop()
-                console.log($autoGameData)
+                $autoGameData =JSON.parse(JSON.stringify($autoStack[$autoStack.length - 2]))
+                $autoStack.pop()
+                console.log($autoStack)
             }
             else{
                 $autoGameData = JSON.parse(JSON.stringify($autoStack[0]))
@@ -14,9 +15,14 @@
             }
         }
         if($gameStage === 2){
-            if($teleStack.length > 0) {
-                $teleGameData = $teleStack.pop()
-
+            if($teleStack.length > 1) {
+                $teleGameData =JSON.parse(JSON.stringify($teleStack[$teleStack.length - 2]))
+                $teleStack.pop()
+                console.log($teleStack)
+            }
+            else{
+                $teleGameData = JSON.parse(JSON.stringify($teleStack[0]))
+                console.log($teleStack)
             }
         }
     }

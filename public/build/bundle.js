@@ -1229,7 +1229,7 @@ var app = (function () {
 
     const file$l = "src\\ScoringLocation.svelte";
 
-    // (59:8) {:else}
+    // (54:8) {:else}
     function create_else_block$4(ctx) {
     	let svg;
     	let g0;
@@ -1246,22 +1246,22 @@ var app = (function () {
     			path = svg_element("path");
     			attr_dev(g0, "id", "SVGRepo_bgCarrier");
     			attr_dev(g0, "stroke-width", "0");
-    			add_location(g0, file$l, 66, 13, 2519);
+    			add_location(g0, file$l, 61, 13, 2428);
     			attr_dev(g1, "id", "SVGRepo_tracerCarrier");
     			attr_dev(g1, "stroke-linecap", "round");
     			attr_dev(g1, "stroke-linejoin", "round");
-    			add_location(g1, file$l, 66, 58, 2564);
+    			add_location(g1, file$l, 61, 58, 2473);
     			attr_dev(path, "d", "M13.41,12l6.3-6.29a1,1,0,1,0-1.42-1.42L12,10.59,5.71,4.29A1,1,0,0,0,4.29,5.71L10.59,12l-6.3,6.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l6.29,6.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z");
-    			add_location(path, file$l, 71, 13, 2761);
+    			add_location(path, file$l, 66, 13, 2670);
     			attr_dev(g2, "id", "SVGRepo_iconCarrier");
-    			add_location(g2, file$l, 70, 14, 2719);
+    			add_location(g2, file$l, 65, 14, 2628);
     			attr_dev(svg, "fill", "#e31c1c");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "id", "cross");
     			attr_dev(svg, "class", "icon glyph");
     			attr_dev(svg, "stroke", "#e31c1c");
-    			add_location(svg, file$l, 59, 12, 2257);
+    			add_location(svg, file$l, 54, 12, 2166);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
@@ -1279,14 +1279,14 @@ var app = (function () {
     		block,
     		id: create_else_block$4.name,
     		type: "else",
-    		source: "(59:8) {:else}",
+    		source: "(54:8) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (42:8) {#if type === "Success"}
+    // (37:8) {#if type === "Success"}
     function create_if_block$6(ctx) {
     	let svg;
     	let g0;
@@ -1303,21 +1303,21 @@ var app = (function () {
     			polygon = svg_element("polygon");
     			attr_dev(g0, "id", "SVGRepo_bgCarrier");
     			attr_dev(g0, "stroke-width", "0");
-    			add_location(g0, file$l, 47, 13, 1773);
+    			add_location(g0, file$l, 42, 13, 1682);
     			attr_dev(g1, "id", "SVGRepo_tracerCarrier");
     			attr_dev(g1, "stroke-linecap", "round");
     			attr_dev(g1, "stroke-linejoin", "round");
-    			add_location(g1, file$l, 47, 58, 1818);
+    			add_location(g1, file$l, 42, 58, 1727);
     			attr_dev(polygon, "fill-rule", "evenodd");
     			attr_dev(polygon, "points", "9.707 14.293 19 5 20.414 6.414 9.707 17.121 4 11.414 5.414 10");
-    			add_location(polygon, file$l, 52, 16, 2019);
+    			add_location(polygon, file$l, 47, 16, 1928);
     			attr_dev(g2, "id", "SVGRepo_iconCarrier");
-    			add_location(g2, file$l, 51, 14, 1973);
+    			add_location(g2, file$l, 46, 14, 1882);
     			attr_dev(svg, "fill", "#1bbb43");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "stroke", "#1bbb43");
-    			add_location(svg, file$l, 42, 12, 1583);
+    			add_location(svg, file$l, 37, 12, 1492);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
@@ -1335,7 +1335,7 @@ var app = (function () {
     		block,
     		id: create_if_block$6.name,
     		type: "if",
-    		source: "(42:8) {#if type === \\\"Success\\\"}",
+    		source: "(37:8) {#if type === \\\"Success\\\"}",
     		ctx
     	});
 
@@ -1384,13 +1384,13 @@ var app = (function () {
     			button = element("button");
     			if_block.c();
     			attr_dev(span0, "class", "indicator-item badge badge-warning text-xl xl:w-12 xl:h-8 xl:text-2xl");
-    			add_location(span0, file$l, 31, 4, 1016);
+    			add_location(span0, file$l, 26, 4, 925);
     			attr_dev(span1, "class", "indicator-item indicator-start badge badge-secondary text-xl xl:w-12 xl:h-8 xl:text-2xl");
-    			add_location(span1, file$l, 34, 4, 1201);
+    			add_location(span1, file$l, 29, 4, 1110);
     			attr_dev(button, "class", "btn btn-square btn-outline rounded-md w-24 h-24 xl:w-36 xl:h-36");
-    			add_location(button, file$l, 37, 4, 1404);
+    			add_location(button, file$l, 32, 4, 1313);
     			attr_dev(div, "class", "indicator");
-    			add_location(div, file$l, 30, 0, 987);
+    			add_location(div, file$l, 25, 0, 896);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1484,15 +1484,9 @@ var app = (function () {
 
     		if ($gameStage === 1) {
     			set_store_value(autoGameData, $autoGameData[dicString] += 1, $autoGameData);
+    			$autoStack.push(JSON.parse(JSON.stringify($autoGameData)));
     		} else if ($gameStage === 2) {
     			set_store_value(teleGameData, $teleGameData[dicString] += 1, $teleGameData);
-    		}
-
-    		if ($gameStage === 1) {
-    			$autoStack.push(JSON.parse(JSON.stringify($autoGameData)));
-    		}
-
-    		if ($gameStage === 2) {
     			$teleStack.push(JSON.parse(JSON.stringify($teleGameData)));
     		}
 
@@ -3829,16 +3823,16 @@ var app = (function () {
     			attr_dev(path, "stroke-linecap", "round");
     			attr_dev(path, "stroke-linejoin", "round");
     			attr_dev(path, "d", "M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3");
-    			add_location(path, file$8, 26, 8, 871);
+    			add_location(path, file$8, 32, 8, 1213);
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "fill", "none");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "stroke-width", "2.5");
     			attr_dev(svg, "stroke", "currentColor");
     			attr_dev(svg, "class", "w-6 h-6");
-    			add_location(svg, file$8, 25, 4, 732);
+    			add_location(svg, file$8, 31, 4, 1074);
     			attr_dev(button, "class", "btn btn-square btn-outline btn-md");
-    			add_location(button, file$8, 24, 0, 657);
+    			add_location(button, file$8, 30, 0, 999);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3896,8 +3890,9 @@ var app = (function () {
     	function clicked() {
     		if ($gameStage === 1) {
     			if ($autoStack.length > 1) {
-    				set_store_value(autoGameData, $autoGameData = $autoStack.pop(), $autoGameData);
-    				console.log($autoGameData);
+    				set_store_value(autoGameData, $autoGameData = JSON.parse(JSON.stringify($autoStack[$autoStack.length - 2])), $autoGameData);
+    				$autoStack.pop();
+    				console.log($autoStack);
     			} else {
     				set_store_value(autoGameData, $autoGameData = JSON.parse(JSON.stringify($autoStack[0])), $autoGameData);
     				console.log($autoStack);
@@ -3905,8 +3900,13 @@ var app = (function () {
     		}
 
     		if ($gameStage === 2) {
-    			if ($teleStack.length > 0) {
-    				set_store_value(teleGameData, $teleGameData = $teleStack.pop(), $teleGameData);
+    			if ($teleStack.length > 1) {
+    				set_store_value(teleGameData, $teleGameData = JSON.parse(JSON.stringify($teleStack[$teleStack.length - 2])), $teleGameData);
+    				$teleStack.pop();
+    				console.log($teleStack);
+    			} else {
+    				set_store_value(teleGameData, $teleGameData = JSON.parse(JSON.stringify($teleStack[0])), $teleGameData);
+    				console.log($teleStack);
     			}
     		}
     	}
@@ -4292,32 +4292,32 @@ var app = (function () {
     			br3 = element("br");
     			hr = element("hr");
     			attr_dev(div0, "class", "fixed bottom-0 w-full flex justify-center z-10");
-    			add_location(div0, file$6, 8, 0, 306);
+    			add_location(div0, file$6, 13, 0, 499);
     			attr_dev(div1, "class", "flex justify-center mr-[320px]");
-    			add_location(div1, file$6, 13, 4, 467);
+    			add_location(div1, file$6, 18, 4, 660);
     			attr_dev(div2, "class", "z-20 pt-4 xl:pl-0xl:pl-8 z-10");
-    			add_location(div2, file$6, 12, 0, 417);
+    			add_location(div2, file$6, 17, 0, 610);
     			attr_dev(div3, "class", "text-3xl mt-7 ");
-    			add_location(div3, file$6, 19, 4, 603);
+    			add_location(div3, file$6, 24, 4, 796);
     			attr_dev(div4, "class", "ml-11");
-    			add_location(div4, file$6, 22, 4, 663);
+    			add_location(div4, file$6, 27, 4, 856);
     			attr_dev(div5, "class", "ml-16");
-    			add_location(div5, file$6, 25, 4, 722);
+    			add_location(div5, file$6, 30, 4, 915);
     			attr_dev(div6, "class", "text-3xl mt-8 ml-8");
-    			add_location(div6, file$6, 28, 4, 783);
+    			add_location(div6, file$6, 33, 4, 976);
     			attr_dev(div7, "class", "flex justify-center -mt-1");
-    			add_location(div7, file$6, 18, 0, 558);
+    			add_location(div7, file$6, 23, 0, 751);
     			attr_dev(div8, "class", "mt-6");
-    			add_location(div8, file$6, 35, 4, 926);
+    			add_location(div8, file$6, 40, 4, 1119);
     			attr_dev(div9, "class", "pl-4 xl:pl-0 -mt-5 xl:pl-8 flex justify-center z-10");
-    			add_location(div9, file$6, 34, 0, 855);
-    			add_location(br0, file$6, 40, 0, 1001);
-    			add_location(br1, file$6, 40, 4, 1005);
-    			add_location(br2, file$6, 40, 8, 1009);
-    			add_location(br3, file$6, 40, 12, 1013);
+    			add_location(div9, file$6, 39, 0, 1048);
+    			add_location(br0, file$6, 45, 0, 1194);
+    			add_location(br1, file$6, 45, 4, 1198);
+    			add_location(br2, file$6, 45, 8, 1202);
+    			add_location(br3, file$6, 45, 12, 1206);
     			set_style(hr, "height", "7px");
     			set_style(hr, "visibility", "hidden");
-    			add_location(hr, file$6, 40, 16, 1017);
+    			add_location(hr, file$6, 45, 16, 1210);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4404,8 +4404,19 @@ var app = (function () {
     }
 
     function instance$7($$self, $$props, $$invalidate) {
+    	let $teleGameData;
+    	let $teleStack;
+    	validate_store(teleGameData, 'teleGameData');
+    	component_subscribe($$self, teleGameData, $$value => $$invalidate(0, $teleGameData = $$value));
+    	validate_store(teleStack, 'teleStack');
+    	component_subscribe($$self, teleStack, $$value => $$invalidate(1, $teleStack = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Tele', slots, []);
+
+    	if ($teleStack.length === 0) {
+    		$teleStack.push(JSON.parse(JSON.stringify($teleGameData)));
+    	}
+
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
@@ -4417,7 +4428,13 @@ var app = (function () {
     		ScoringLocationCombo,
     		UndoButton,
     		DockedBox,
-    		BalancedBox
+    		BalancedBox,
+    		autoGameData,
+    		autoStack,
+    		teleGameData,
+    		teleStack,
+    		$teleGameData,
+    		$teleStack
     	});
 
     	return [];
@@ -8031,7 +8048,7 @@ var app = (function () {
 
     const file = "src\\QRPage.svelte";
 
-    // (30:0) {#if show}
+    // (24:0) {#if show}
     function create_if_block$1(ctx) {
     	let div1;
     	let div0;
@@ -8056,16 +8073,16 @@ var app = (function () {
     			attr_dev(path, "stroke-linejoin", "round");
     			attr_dev(path, "stroke-width", "2");
     			attr_dev(path, "d", "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z");
-    			add_location(path, file, 32, 125, 1071);
+    			add_location(path, file, 26, 125, 1059);
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "fill", "none");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "class", "stroke-current flex-shrink-0 w-6 h-6");
-    			add_location(svg, file, 32, 8, 954);
-    			add_location(span, file, 33, 8, 1226);
-    			add_location(div0, file, 31, 4, 939);
+    			add_location(svg, file, 26, 8, 942);
+    			add_location(span, file, 27, 8, 1214);
+    			add_location(div0, file, 25, 4, 927);
     			attr_dev(div1, "class", "alert alert-info shadow-lg absolute");
-    			add_location(div1, file, 30, 0, 867);
+    			add_location(div1, file, 24, 0, 855);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -8102,7 +8119,7 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(30:0) {#if show}",
+    		source: "(24:0) {#if show}",
     		ctx
     	});
 
@@ -8145,9 +8162,9 @@ var app = (function () {
     			div1 = element("div");
     			create_component(gamepiececombo.$$.fragment);
     			attr_dev(div0, "class", "w-full flex items-center justify-center h-screen w-screen");
-    			add_location(div0, file, 38, 0, 1293);
+    			add_location(div0, file, 32, 0, 1281);
     			attr_dev(div1, "class", "fixed bottom-0 w-full flex justify-center z-10");
-    			add_location(div1, file, 44, 0, 1483);
+    			add_location(div1, file, 38, 0, 1471);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
