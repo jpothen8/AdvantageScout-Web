@@ -4,7 +4,7 @@ ghpages.publish(
     'public',
     {
         branch: 'gh-pages',
-        repo: 'https://https://github.com/ConnorHorn/SchedulerBeta.git',
+        repo: 'https://github.com/ConnorHorn/AdvantageScoutWebEarlyDev.git',
         user: {
             name: 'ConnorHorn',
             email: 'connorhornet@gmail.com',

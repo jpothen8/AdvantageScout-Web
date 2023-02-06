@@ -1,29 +1,27 @@
 <script>
-    import {gameStage} from "./stores";
+    import {gameStage, generalGameData} from "./stores";
 
     let allianceColor = "blue"
     let timer;
-    let name = "";
-    let number = "";
+
 
     function changeColor() {
-        if(allianceColor === "red") {
-            allianceColor = "blue"
+        if($generalGameData["allianceColor"] === "red") {
+            $generalGameData["allianceColor"] = "blue"
         } else {
-            allianceColor = "red"
+            $generalGameData["allianceColor"] = "red"
         }
-        console.log(allianceColor)
+
     }
 
     const changeColorDebounce = e => {
         clearTimeout(timer);
         timer = setTimeout(() => {
-            if(allianceColor === "red") {
-                allianceColor = "blue"
+            if($generalGameData["allianceColor"] === "red") {
+                $generalGameData["allianceColor"] = "blue"
             } else {
-                allianceColor = "red"
+                $generalGameData["allianceColor"] = "red"
             }
-            console.log(allianceColor);
         }, 20);
     }
 
@@ -45,20 +43,20 @@
                     <label class="label">
                         <span class="label-text">Your Name</span>
                     </label>
-                    <input type="text" placeholder="name" class="input input-bordered" bind:value={name}/>
+                    <input type="text" placeholder="name" class="input input-bordered" bind:value={$generalGameData['scoutName']}/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Team #</span>
                     </label>
-                    <input type="text" placeholder="team #" class="input input-bordered" bind:value={number} />
+                    <input type="text" placeholder="team #" class="input input-bordered" bind:value={$generalGameData['teamNum']}/>
 
                 </div>
                 <label class="label">
                     <span class="label-text">Alliance Color</span>
                 </label>
 
-                {#if allianceColor === "red"}
+                {#if $generalGameData["allianceColor"] === "red"}
                 <button class="btn btn-error" on:click={changeColorDebounce}>Red</button>
                 {:else}
                 <button class="btn btn-accent" on:click={changeColorDebounce}>Blue</button>
