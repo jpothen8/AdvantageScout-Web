@@ -5,7 +5,14 @@
     import {autoGameData, generalGameData, postGameData, teleGameData} from "./stores";
     let show = true;
     if($autoGameData["startingLocation"] === "Select Starting Location"){
-        $autoGameData["startingLocation"] = "None"
+        $autoGameData["startingLocation"] = "none"
+    }
+
+    if($generalGameData["teamNum"] === ""){
+        $generalGameData["teamNum"] = "blank"
+    }
+    if($generalGameData["scoutName"] === ""){
+        $generalGameData["scoutName"] = "none"
     }
 
     let qrString = `${Object.values($generalGameData).join(',') + "," + Object.values($autoGameData).join(',') + "," + Object.values($teleGameData).join(',') + "," + Object.values($postGameData).join(',')}`
@@ -31,10 +38,11 @@
 {/if}
 
 <div class=" w-full flex items-center justify-center h-screen w-screen">
-    <QrCode  color="#006daa" size="800" background="#14110F" errorCorrection="Q" value={qrString} />
+    <QrCode  color="#006daa" size="700" background="#14110F" errorCorrection="Q" value={qrString} />
 </div>
 
-
+<br><br><br><br>
+<hr style="height:7px; visibility:hidden;"/>
 
 <div class="fixed bottom-0 w-full flex justify-center z-10">
     <GamePieceCombo type="qr" class="mx-auto"/>

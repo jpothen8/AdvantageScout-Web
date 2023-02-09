@@ -1,8 +1,9 @@
 <script>
 
-    import {autoGameData, autoStack, gameStage, postGameData, teleGameData, teleStack} from "./stores";
+    import {autoGameData, autoStack, gameStage, postGameData, teleGameData, teleStack, undoing} from "./stores";
 
     function clicked() {
+        $undoing=true;
         if($gameStage === 1){
             if($autoStack.length > 1) {
                 $autoGameData =JSON.parse(JSON.stringify($autoStack[$autoStack.length - 2]))

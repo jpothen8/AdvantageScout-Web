@@ -769,15 +769,47 @@ var app = (function () {
     const autoStack = writable([]);
     const teleStack = writable([]);
 
+    const badName = writable(false);
+    const badTeamNum = writable(false);
+
+    const undoing = writable(false);
+
 
 
     const generalGameData=writable({
-        scoutName: "Name",
-        teamNum: 0,
+        scoutName: "",
+        teamNum: "",
+        allianceColor: "blue"
+    });
+
+    const defaultGeneralGameData=writable({
+        scoutName: "",
+        teamNum: "",
         allianceColor: "blue"
     });
 
     const autoGameData = writable({
+        startingLocation: "Select Starting Location",
+        highConeSuccess: 0,
+        highConeFail: 0,
+        midConeSuccess: 0,
+        midConeFail: 0,
+        hybridConeSuccess: 0,
+        hybridConeFail: 0,
+        droppedCone: 0,
+        highCubeSuccess: 0,
+        highCubeFail: 0,
+        midCubeSuccess: 0,
+        midCubeFail: 0,
+        hybridCubeSuccess: 0,
+        hybridCubeFail: 0,
+        droppedCube: 0,
+        docked: false,
+        balanced: false,
+        mobility: false
+    });
+
+    const defaultAutoGameData = writable({
         startingLocation: "Select Starting Location",
         highConeSuccess: 0,
         highConeFail: 0,
@@ -817,7 +849,35 @@ var app = (function () {
         balanced: false,
     });
 
+    const defaultTeleGameData = writable({
+        highConeSuccess: 0,
+        highConeFail: 0,
+        midConeSuccess: 0,
+        midConeFail: 0,
+        hybridConeSuccess: 0,
+        hybridConeFail: 0,
+        droppedCone: 0,
+        highCubeSuccess: 0,
+        highCubeFail: 0,
+        midCubeSuccess: 0,
+        midCubeFail: 0,
+        hybridCubeSuccess: 0,
+        hybridCubeFail: 0,
+        droppedCube: 0,
+        docked: false,
+        balanced: false,
+    });
+
     const postGameData = writable({
+        defenseDuration: 0,
+        defenseRating: 0,
+        recDefenseDuration: 0,
+        driverRating: 0,
+        intakeRating: 0,
+        notes: ""
+    });
+
+    const defaultPostGameData = writable({
         defenseDuration: 0,
         defenseRating: 0,
         recDefenseDuration: 0,
@@ -831,7 +891,7 @@ var app = (function () {
     const { console: console_1$5 } = globals;
     const file$m = "src\\Login.svelte";
 
-    // (63:16) {:else}
+    // (84:16) {:else}
     function create_else_block$5(ctx) {
     	let button;
     	let mounted;
@@ -842,13 +902,13 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Blue";
     			attr_dev(button, "class", "btn btn-accent");
-    			add_location(button, file$m, 63, 16, 2208);
+    			add_location(button, file$m, 84, 16, 3092);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*changeColorDebounce*/ ctx[3], false, false, false);
+    				dispose = listen_dev(button, "click", /*changeColorDebounce*/ ctx[4], false, false, false);
     				mounted = true;
     			}
     		},
@@ -864,14 +924,14 @@ var app = (function () {
     		block,
     		id: create_else_block$5.name,
     		type: "else",
-    		source: "(63:16) {:else}",
+    		source: "(84:16) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (61:16) {#if allianceColor === "red"}
+    // (82:16) {#if allianceColor === "red"}
     function create_if_block$7(ctx) {
     	let button;
     	let mounted;
@@ -882,13 +942,13 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Red";
     			attr_dev(button, "class", "btn btn-error");
-    			add_location(button, file$m, 61, 16, 2092);
+    			add_location(button, file$m, 82, 16, 2976);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*changeColorDebounce*/ ctx[3], false, false, false);
+    				dispose = listen_dev(button, "click", /*changeColorDebounce*/ ctx[4], false, false, false);
     				mounted = true;
     			}
     		},
@@ -904,7 +964,7 @@ var app = (function () {
     		block,
     		id: create_if_block$7.name,
     		type: "if",
-    		source: "(61:16) {#if allianceColor === \\\"red\\\"}",
+    		source: "(82:16) {#if allianceColor === \\\"red\\\"}",
     		ctx
     	});
 
@@ -926,12 +986,16 @@ var app = (function () {
     	let span0;
     	let t5;
     	let input0;
+    	let input0_placeholder_value;
+    	let input0_class_value;
     	let t6;
     	let div2;
     	let label1;
     	let span1;
     	let t8;
     	let input1;
+    	let input1_placeholder_value;
+    	let input1_class_value;
     	let t9;
     	let label2;
     	let span2;
@@ -987,47 +1051,47 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Start Scouting";
     			attr_dev(h1, "class", "text-5xl font-bold");
-    			add_location(h1, file$m, 38, 12, 961);
+    			add_location(h1, file$m, 59, 12, 1654);
     			attr_dev(p, "class", "py-6");
-    			add_location(p, file$m, 39, 12, 1026);
+    			add_location(p, file$m, 60, 12, 1719);
     			attr_dev(div0, "class", "text-center lg:text-left");
-    			add_location(div0, file$m, 37, 8, 909);
+    			add_location(div0, file$m, 58, 8, 1602);
     			attr_dev(span0, "class", "label-text");
-    			add_location(span0, file$m, 45, 24, 1369);
+    			add_location(span0, file$m, 66, 24, 2062);
     			attr_dev(label0, "class", "label");
-    			add_location(label0, file$m, 44, 20, 1322);
+    			add_location(label0, file$m, 65, 20, 2015);
     			attr_dev(input0, "type", "text");
-    			attr_dev(input0, "placeholder", "name");
-    			attr_dev(input0, "class", "input input-bordered");
-    			add_location(input0, file$m, 47, 20, 1462);
+    			attr_dev(input0, "placeholder", input0_placeholder_value = /*$badTeamNum*/ ctx[1] ? 'Missing Scout Name' : 'name');
+    			attr_dev(input0, "class", input0_class_value = "input input-bordered " + (/*$badName*/ ctx[3] ? 'input-error' : ''));
+    			add_location(input0, file$m, 68, 20, 2155);
     			attr_dev(div1, "class", "form-control");
-    			add_location(div1, file$m, 43, 16, 1274);
+    			add_location(div1, file$m, 64, 16, 1967);
     			attr_dev(span1, "class", "label-text");
-    			add_location(span1, file$m, 51, 24, 1685);
+    			add_location(span1, file$m, 72, 24, 2476);
     			attr_dev(label1, "class", "label");
-    			add_location(label1, file$m, 50, 20, 1638);
+    			add_location(label1, file$m, 71, 20, 2429);
     			attr_dev(input1, "type", "text");
-    			attr_dev(input1, "placeholder", "team #");
-    			attr_dev(input1, "class", "input input-bordered");
-    			add_location(input1, file$m, 53, 20, 1775);
+    			attr_dev(input1, "placeholder", input1_placeholder_value = /*$badTeamNum*/ ctx[1] ? 'Missing Team #' : 'team #');
+    			attr_dev(input1, "class", input1_class_value = "input input-bordered " + (/*$badTeamNum*/ ctx[1] ? 'input-error' : ''));
+    			add_location(input1, file$m, 74, 20, 2566);
     			attr_dev(div2, "class", "form-control");
-    			add_location(div2, file$m, 49, 16, 1590);
+    			add_location(div2, file$m, 70, 16, 2381);
     			attr_dev(span2, "class", "label-text");
-    			add_location(span2, file$m, 57, 20, 1953);
+    			add_location(span2, file$m, 78, 20, 2837);
     			attr_dev(label2, "class", "label");
-    			add_location(label2, file$m, 56, 16, 1910);
+    			add_location(label2, file$m, 77, 16, 2794);
     			attr_dev(button, "class", "btn btn-primary");
-    			add_location(button, file$m, 67, 20, 2379);
+    			add_location(button, file$m, 88, 20, 3263);
     			attr_dev(div3, "class", "form-control mt-6");
-    			add_location(div3, file$m, 66, 16, 2326);
+    			add_location(div3, file$m, 87, 16, 3210);
     			attr_dev(div4, "class", "card-body");
-    			add_location(div4, file$m, 42, 12, 1233);
+    			add_location(div4, file$m, 63, 12, 1926);
     			attr_dev(div5, "class", "card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100");
-    			add_location(div5, file$m, 41, 8, 1148);
+    			add_location(div5, file$m, 62, 8, 1841);
     			attr_dev(div6, "class", "hero-content flex-col lg:flex-row-reverse");
-    			add_location(div6, file$m, 36, 4, 844);
+    			add_location(div6, file$m, 57, 4, 1537);
     			attr_dev(div7, "class", "hero min-h-screen bg-base-200");
-    			add_location(div7, file$m, 35, 0, 795);
+    			add_location(div7, file$m, 56, 0, 1488);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1047,14 +1111,14 @@ var app = (function () {
     			append_dev(label0, span0);
     			append_dev(div1, t5);
     			append_dev(div1, input0);
-    			set_input_value(input0, /*name*/ ctx[1]);
+    			set_input_value(input0, /*$generalGameData*/ ctx[2]["scoutName"]);
     			append_dev(div4, t6);
     			append_dev(div4, div2);
     			append_dev(div2, label1);
     			append_dev(label1, span1);
     			append_dev(div2, t8);
     			append_dev(div2, input1);
-    			set_input_value(input1, /*number*/ ctx[2]);
+    			set_input_value(input1, /*$generalGameData*/ ctx[2]["teamNum"]);
     			append_dev(div4, t9);
     			append_dev(div4, label2);
     			append_dev(label2, span2);
@@ -1066,21 +1130,37 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[5]),
-    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[6]),
-    					listen_dev(button, "click", /*goToAuto*/ ctx[4], false, false, false)
+    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[6]),
+    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[7]),
+    					listen_dev(button, "click", /*goToAuto*/ ctx[5], false, false, false)
     				];
 
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*name*/ 2 && input0.value !== /*name*/ ctx[1]) {
-    				set_input_value(input0, /*name*/ ctx[1]);
+    			if (dirty & /*$badTeamNum*/ 2 && input0_placeholder_value !== (input0_placeholder_value = /*$badTeamNum*/ ctx[1] ? 'Missing Scout Name' : 'name')) {
+    				attr_dev(input0, "placeholder", input0_placeholder_value);
     			}
 
-    			if (dirty & /*number*/ 4 && input1.value !== /*number*/ ctx[2]) {
-    				set_input_value(input1, /*number*/ ctx[2]);
+    			if (dirty & /*$badName*/ 8 && input0_class_value !== (input0_class_value = "input input-bordered " + (/*$badName*/ ctx[3] ? 'input-error' : ''))) {
+    				attr_dev(input0, "class", input0_class_value);
+    			}
+
+    			if (dirty & /*$generalGameData*/ 4 && input0.value !== /*$generalGameData*/ ctx[2]["scoutName"]) {
+    				set_input_value(input0, /*$generalGameData*/ ctx[2]["scoutName"]);
+    			}
+
+    			if (dirty & /*$badTeamNum*/ 2 && input1_placeholder_value !== (input1_placeholder_value = /*$badTeamNum*/ ctx[1] ? 'Missing Team #' : 'team #')) {
+    				attr_dev(input1, "placeholder", input1_placeholder_value);
+    			}
+
+    			if (dirty & /*$badTeamNum*/ 2 && input1_class_value !== (input1_class_value = "input input-bordered " + (/*$badTeamNum*/ ctx[1] ? 'input-error' : ''))) {
+    				attr_dev(input1, "class", input1_class_value);
+    			}
+
+    			if (dirty & /*$generalGameData*/ 4 && input1.value !== /*$generalGameData*/ ctx[2]["teamNum"]) {
+    				set_input_value(input1, /*$generalGameData*/ ctx[2]["teamNum"]);
     			}
 
     			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
@@ -1117,9 +1197,18 @@ var app = (function () {
     }
 
     function instance$n($$self, $$props, $$invalidate) {
+    	let $badTeamNum;
+    	let $generalGameData;
+    	let $badName;
     	let $gameStage;
+    	validate_store(badTeamNum, 'badTeamNum');
+    	component_subscribe($$self, badTeamNum, $$value => $$invalidate(1, $badTeamNum = $$value));
+    	validate_store(generalGameData, 'generalGameData');
+    	component_subscribe($$self, generalGameData, $$value => $$invalidate(2, $generalGameData = $$value));
+    	validate_store(badName, 'badName');
+    	component_subscribe($$self, badName, $$value => $$invalidate(3, $badName = $$value));
     	validate_store(gameStage, 'gameStage');
-    	component_subscribe($$self, gameStage, $$value => $$invalidate(8, $gameStage = $$value));
+    	component_subscribe($$self, gameStage, $$value => $$invalidate(9, $gameStage = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Login', slots, []);
     	let allianceColor = "blue";
@@ -1134,7 +1223,7 @@ var app = (function () {
     			$$invalidate(0, allianceColor = "red");
     		}
 
-    		console.log(allianceColor);
+    		set_store_value(generalGameData, $generalGameData["allianceColor"] = allianceColor, $generalGameData);
     	}
 
     	const changeColorDebounce = e => {
@@ -1149,14 +1238,36 @@ var app = (function () {
     				}
 
     				console.log(allianceColor);
+    				set_store_value(generalGameData, $generalGameData["allianceColor"] = allianceColor, $generalGameData);
     			},
     			20
     		);
     	};
 
     	function goToAuto() {
-    		set_store_value(gameStage, $gameStage = 1, $gameStage);
-    		console.log($gameStage);
+    		if (checkValid()) {
+    			set_store_value(gameStage, $gameStage = 1, $gameStage);
+    		}
+    	}
+
+    	function checkValid() {
+    		let valid = true;
+
+    		if ($generalGameData["scoutName"] === "") {
+    			valid = false;
+    			set_store_value(badName, $badName = true, $badName);
+    		} else {
+    			set_store_value(badName, $badName = false, $badName);
+    		}
+
+    		if ($generalGameData["teamNum"] === "" || isNaN($generalGameData["teamNum"]) || $generalGameData["teamNum"].length > 5 || $generalGameData["teamNum"] < 0) {
+    			valid = false;
+    			set_store_value(badTeamNum, $badTeamNum = true, $badTeamNum);
+    		} else {
+    			set_store_value(badTeamNum, $badTeamNum = false, $badTeamNum);
+    		}
+
+    		return valid;
     	}
 
     	const writable_props = [];
@@ -1166,17 +1277,20 @@ var app = (function () {
     	});
 
     	function input0_input_handler() {
-    		name = this.value;
-    		$$invalidate(1, name);
+    		$generalGameData["scoutName"] = this.value;
+    		generalGameData.set($generalGameData);
     	}
 
     	function input1_input_handler() {
-    		number = this.value;
-    		$$invalidate(2, number);
+    		$generalGameData["teamNum"] = this.value;
+    		generalGameData.set($generalGameData);
     	}
 
     	$$self.$capture_state = () => ({
     		gameStage,
+    		generalGameData,
+    		badName,
+    		badTeamNum,
     		allianceColor,
     		timer,
     		name,
@@ -1184,14 +1298,18 @@ var app = (function () {
     		changeColor,
     		changeColorDebounce,
     		goToAuto,
+    		checkValid,
+    		$badTeamNum,
+    		$generalGameData,
+    		$badName,
     		$gameStage
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('allianceColor' in $$props) $$invalidate(0, allianceColor = $$props.allianceColor);
     		if ('timer' in $$props) timer = $$props.timer;
-    		if ('name' in $$props) $$invalidate(1, name = $$props.name);
-    		if ('number' in $$props) $$invalidate(2, number = $$props.number);
+    		if ('name' in $$props) name = $$props.name;
+    		if ('number' in $$props) number = $$props.number;
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -1200,8 +1318,9 @@ var app = (function () {
 
     	return [
     		allianceColor,
-    		name,
-    		number,
+    		$badTeamNum,
+    		$generalGameData,
+    		$badName,
     		changeColorDebounce,
     		goToAuto,
     		input0_input_handler,
@@ -1246,22 +1365,22 @@ var app = (function () {
     			path = svg_element("path");
     			attr_dev(g0, "id", "SVGRepo_bgCarrier");
     			attr_dev(g0, "stroke-width", "0");
-    			add_location(g0, file$l, 61, 13, 2428);
+    			add_location(g0, file$l, 61, 13, 2434);
     			attr_dev(g1, "id", "SVGRepo_tracerCarrier");
     			attr_dev(g1, "stroke-linecap", "round");
     			attr_dev(g1, "stroke-linejoin", "round");
-    			add_location(g1, file$l, 61, 58, 2473);
+    			add_location(g1, file$l, 61, 58, 2479);
     			attr_dev(path, "d", "M13.41,12l6.3-6.29a1,1,0,1,0-1.42-1.42L12,10.59,5.71,4.29A1,1,0,0,0,4.29,5.71L10.59,12l-6.3,6.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l6.29,6.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z");
-    			add_location(path, file$l, 66, 13, 2670);
+    			add_location(path, file$l, 66, 13, 2676);
     			attr_dev(g2, "id", "SVGRepo_iconCarrier");
-    			add_location(g2, file$l, 65, 14, 2628);
+    			add_location(g2, file$l, 65, 14, 2634);
     			attr_dev(svg, "fill", "#e31c1c");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "id", "cross");
     			attr_dev(svg, "class", "icon glyph");
     			attr_dev(svg, "stroke", "#e31c1c");
-    			add_location(svg, file$l, 54, 12, 2166);
+    			add_location(svg, file$l, 54, 12, 2172);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
@@ -1303,21 +1422,21 @@ var app = (function () {
     			polygon = svg_element("polygon");
     			attr_dev(g0, "id", "SVGRepo_bgCarrier");
     			attr_dev(g0, "stroke-width", "0");
-    			add_location(g0, file$l, 42, 13, 1682);
+    			add_location(g0, file$l, 42, 13, 1688);
     			attr_dev(g1, "id", "SVGRepo_tracerCarrier");
     			attr_dev(g1, "stroke-linecap", "round");
     			attr_dev(g1, "stroke-linejoin", "round");
-    			add_location(g1, file$l, 42, 58, 1727);
+    			add_location(g1, file$l, 42, 58, 1733);
     			attr_dev(polygon, "fill-rule", "evenodd");
     			attr_dev(polygon, "points", "9.707 14.293 19 5 20.414 6.414 9.707 17.121 4 11.414 5.414 10");
-    			add_location(polygon, file$l, 47, 16, 1928);
+    			add_location(polygon, file$l, 47, 16, 1934);
     			attr_dev(g2, "id", "SVGRepo_iconCarrier");
-    			add_location(g2, file$l, 46, 14, 1882);
+    			add_location(g2, file$l, 46, 14, 1888);
     			attr_dev(svg, "fill", "#1bbb43");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "stroke", "#1bbb43");
-    			add_location(svg, file$l, 37, 12, 1492);
+    			add_location(svg, file$l, 37, 12, 1498);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
@@ -1384,13 +1503,13 @@ var app = (function () {
     			button = element("button");
     			if_block.c();
     			attr_dev(span0, "class", "indicator-item badge badge-warning text-xl xl:w-12 xl:h-8 xl:text-2xl");
-    			add_location(span0, file$l, 26, 4, 925);
+    			add_location(span0, file$l, 26, 4, 931);
     			attr_dev(span1, "class", "indicator-item indicator-start badge badge-secondary text-xl xl:w-12 xl:h-8 xl:text-2xl");
-    			add_location(span1, file$l, 29, 4, 1110);
+    			add_location(span1, file$l, 29, 4, 1116);
     			attr_dev(button, "class", "btn btn-square btn-outline rounded-md w-24 h-24 xl:w-36 xl:h-36");
-    			add_location(button, file$l, 32, 4, 1313);
+    			add_location(button, file$l, 32, 4, 1319);
     			attr_dev(div, "class", "indicator");
-    			add_location(div, file$l, 25, 0, 896);
+    			add_location(div, file$l, 25, 0, 902);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1454,7 +1573,6 @@ var app = (function () {
     function instance$m($$self, $$props, $$invalidate) {
     	let $autoStack;
     	let $teleGameData;
-    	let $teleStack;
     	let $gameStage;
     	let $autoGameData;
     	let $liveGamepiece;
@@ -1462,14 +1580,12 @@ var app = (function () {
     	component_subscribe($$self, autoStack, $$value => $$invalidate(9, $autoStack = $$value));
     	validate_store(teleGameData, 'teleGameData');
     	component_subscribe($$self, teleGameData, $$value => $$invalidate(1, $teleGameData = $$value));
-    	validate_store(teleStack, 'teleStack');
-    	component_subscribe($$self, teleStack, $$value => $$invalidate(10, $teleStack = $$value));
     	validate_store(gameStage, 'gameStage');
     	component_subscribe($$self, gameStage, $$value => $$invalidate(2, $gameStage = $$value));
     	validate_store(autoGameData, 'autoGameData');
     	component_subscribe($$self, autoGameData, $$value => $$invalidate(3, $autoGameData = $$value));
     	validate_store(liveGamepiece, 'liveGamepiece');
-    	component_subscribe($$self, liveGamepiece, $$value => $$invalidate(11, $liveGamepiece = $$value));
+    	component_subscribe($$self, liveGamepiece, $$value => $$invalidate(10, $liveGamepiece = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('ScoringLocation', slots, []);
     	let { type = "Success" } = $$props;
@@ -1484,11 +1600,9 @@ var app = (function () {
 
     		if ($gameStage === 1) {
     			set_store_value(autoGameData, $autoGameData[dicString] += 1, $autoGameData);
-    			$autoStack.push(JSON.parse(JSON.stringify($autoGameData)));
     		} else if ($gameStage === 2) {
-    			set_store_value(teleGameData, $teleGameData[dicString] += 1, $teleGameData);
-    			$teleStack.push(JSON.parse(JSON.stringify($teleGameData)));
-    		}
+    			set_store_value(teleGameData, $teleGameData[dicString] += 1, $teleGameData); // $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
+    		} // $teleStack.push((JSON.parse(JSON.stringify($teleGameData))))
 
     		console.log($autoStack);
     	}
@@ -1520,7 +1634,6 @@ var app = (function () {
     		pressed,
     		$autoStack,
     		$teleGameData,
-    		$teleStack,
     		$gameStage,
     		$autoGameData,
     		$liveGamepiece
@@ -2183,6 +2296,7 @@ var app = (function () {
     	let g1;
     	let g2;
     	let path;
+    	let svg_class_value;
 
     	const block = {
     		c: function create() {
@@ -2192,20 +2306,23 @@ var app = (function () {
     			g2 = svg_element("g");
     			path = svg_element("path");
     			attr_dev(g0, "id", "SVGRepo_bgCarrier");
-    			attr_dev(g0, "stroke-width", "0");
-    			add_location(g0, file$h, 40, 9, 1914);
+    			add_location(g0, file$h, 40, 9, 2028);
     			attr_dev(g1, "id", "SVGRepo_tracerCarrier");
     			attr_dev(g1, "stroke-linecap", "round");
     			attr_dev(g1, "stroke-linejoin", "round");
-    			add_location(g1, file$h, 40, 54, 1959);
+    			add_location(g1, file$h, 40, 37, 2056);
     			attr_dev(path, "d", "M7.03 1.88c.252-1.01 1.688-1.01 1.94 0l2.905 11.62H14a.5.5 0 0 1 0 1H2a.5.5 0 0 1 0-1h2.125L7.03 1.88z");
-    			add_location(path, file$h, 45, 12, 2140);
+    			add_location(path, file$h, 45, 12, 2237);
     			attr_dev(g2, "id", "SVGRepo_iconCarrier");
-    			add_location(g2, file$h, 44, 10, 2098);
-    			attr_dev(svg, "class", "bi bi-cone w-20 h-20 xl:w-48 xl:h-48 fill-secondary stroke-secondary");
+    			add_location(g2, file$h, 44, 10, 2195);
+
+    			attr_dev(svg, "class", svg_class_value = "bi bi-cone w-20 h-20 xl:w-48 xl:h-48 fill-secondary stroke-[0.3px] stroke-current " + (/*$liveGamepiece*/ ctx[1] === 'Cone'
+    			? 'animate-pulse'
+    			: ''));
+
     			attr_dev(svg, "viewBox", "0 0 16.00 16.00");
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
-    			add_location(svg, file$h, 36, 8, 1709);
+    			add_location(svg, file$h, 36, 8, 1759);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, svg, anchor);
@@ -2213,6 +2330,13 @@ var app = (function () {
     			append_dev(svg, g1);
     			append_dev(svg, g2);
     			append_dev(g2, path);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*$liveGamepiece*/ 2 && svg_class_value !== (svg_class_value = "bi bi-cone w-20 h-20 xl:w-48 xl:h-48 fill-secondary stroke-[0.3px] stroke-current " + (/*$liveGamepiece*/ ctx[1] === 'Cone'
+    			? 'animate-pulse'
+    			: ''))) {
+    				attr_dev(svg, "class", svg_class_value);
+    			}
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(svg);
@@ -2237,6 +2361,7 @@ var app = (function () {
     	let g1;
     	let g2;
     	let path;
+    	let svg_class_value;
 
     	const block = {
     		c: function create() {
@@ -2246,17 +2371,20 @@ var app = (function () {
     			g2 = svg_element("g");
     			path = svg_element("path");
     			attr_dev(g0, "id", "SVGRepo_bgCarrier");
-    			attr_dev(g0, "stroke-width", "0");
-    			add_location(g0, file$h, 25, 9, 688);
+    			add_location(g0, file$h, 25, 9, 755);
     			attr_dev(g1, "id", "SVGRepo_tracerCarrier");
     			attr_dev(g1, "stroke-linecap", "round");
     			attr_dev(g1, "stroke-linejoin", "round");
-    			add_location(g1, file$h, 25, 54, 733);
+    			add_location(g1, file$h, 25, 37, 783);
     			attr_dev(path, "d", "M 28.0000 26.6406 L 50.0783 14.1016 C 49.7264 13.75 49.3045 13.4688 48.7890 13.1875 L 32.2657 3.7657 C 30.8126 2.9453 29.4063 2.5000 28.0000 2.5000 C 26.5938 2.5000 25.1875 2.9453 23.7344 3.7657 L 7.2110 13.1875 C 6.6954 13.4688 6.2735 13.75 5.9219 14.1016 Z M 26.4063 53.5 L 26.4063 29.4532 L 4.3985 16.8906 C 4.2813 17.4063 4.2110 17.9688 4.2110 18.6719 L 4.2110 36.9297 C 4.2110 40.3281 5.4063 41.5938 7.5860 42.8360 L 25.9375 53.2891 C 26.1016 53.3828 26.2422 53.4532 26.4063 53.5 Z M 29.5938 53.5 C 29.7579 53.4532 29.8985 53.3828 30.0626 53.2891 L 48.4141 42.8360 C 50.5938 41.5938 51.7890 40.3281 51.7890 36.9297 L 51.7890 18.6719 C 51.7890 17.9688 51.7189 17.4063 51.6018 16.8906 L 29.5938 29.4532 Z");
-    			add_location(path, file$h, 30, 9, 910);
+    			add_location(path, file$h, 30, 9, 960);
     			attr_dev(g2, "id", "SVGRepo_iconCarrier");
-    			add_location(g2, file$h, 29, 10, 872);
-    			attr_dev(svg, "class", "w-20 h-20 xl:w-48 xl:h-48 fill-warning stroke-warning");
+    			add_location(g2, file$h, 29, 10, 922);
+
+    			attr_dev(svg, "class", svg_class_value = "w-20 h-20 xl:w-48 xl:h-48 fill-warning stroke-[0.5px] stroke-current " + (/*$liveGamepiece*/ ctx[1] === 'Cube'
+    			? 'animate-pulse'
+    			: ''));
+
     			attr_dev(svg, "viewBox", "0 0 56 56");
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			add_location(svg, file$h, 21, 8, 505);
@@ -2267,6 +2395,13 @@ var app = (function () {
     			append_dev(svg, g1);
     			append_dev(svg, g2);
     			append_dev(g2, path);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*$liveGamepiece*/ 2 && svg_class_value !== (svg_class_value = "w-20 h-20 xl:w-48 xl:h-48 fill-warning stroke-[0.5px] stroke-current " + (/*$liveGamepiece*/ ctx[1] === 'Cube'
+    			? 'animate-pulse'
+    			: ''))) {
+    				attr_dev(svg, "class", svg_class_value);
+    			}
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(svg);
@@ -2317,12 +2452,14 @@ var app = (function () {
     			if_block.m(button, null);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*updateGameObject*/ ctx[1], false, false, false);
+    				dispose = listen_dev(button, "click", /*updateGameObject*/ ctx[2], false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (current_block_type !== (current_block_type = select_block_type(ctx))) {
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+    				if_block.p(ctx, dirty);
+    			} else {
     				if_block.d(1);
     				if_block = current_block_type(ctx);
 
@@ -2362,7 +2499,7 @@ var app = (function () {
     function instance$i($$self, $$props, $$invalidate) {
     	let $liveGamepiece;
     	validate_store(liveGamepiece, 'liveGamepiece');
-    	component_subscribe($$self, liveGamepiece, $$value => $$invalidate(2, $liveGamepiece = $$value));
+    	component_subscribe($$self, liveGamepiece, $$value => $$invalidate(1, $liveGamepiece = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('GamePiece', slots, []);
     	let { gamePiece = "Cube" } = $$props;
@@ -2400,7 +2537,7 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [gamePiece, updateGameObject];
+    	return [gamePiece, $liveGamepiece, updateGameObject];
     }
 
     class GamePiece extends SvelteComponentDev {
@@ -2430,31 +2567,33 @@ var app = (function () {
 
     function create_fragment$h(ctx) {
     	let div;
-    	let button;
     	let svg;
     	let path;
+    	let t;
+    	let button;
     	let mounted;
     	let dispose;
 
     	const block = {
     		c: function create() {
     			div = element("div");
-    			button = element("button");
     			svg = svg_element("svg");
     			path = svg_element("path");
+    			t = space();
+    			button = element("button");
     			attr_dev(path, "stroke-linecap", "round");
     			attr_dev(path, "stroke-linejoin", "round");
     			attr_dev(path, "d", "M15.75 19.5L8.25 12l7.5-7.5");
-    			add_location(path, file$g, 13, 12, 488);
+    			add_location(path, file$g, 11, 8, 376);
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "fill", "none");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "stroke-width", "2");
     			attr_dev(svg, "stroke", "currentColor");
     			attr_dev(svg, "class", "w-16 h-16 flex-no-shrink absolute z-10 fill-base-100 xl:w-28 xl:h-48");
-    			add_location(svg, file$g, 12, 8, 286);
-    			attr_dev(button, "class", "btn btn-outline w-12 h-28 z-50 xl:h-64 xl:w-24 bg-base-100");
-    			add_location(button, file$g, 11, 4, 180);
+    			add_location(svg, file$g, 10, 4, 178);
+    			attr_dev(button, "class", "btn btn-outline w-12 h-28 z-50 xl:h-64 xl:w-24");
+    			add_location(button, file$g, 14, 4, 483);
     			attr_dev(div, "class", "flex items-center justify-center ");
     			add_location(div, file$g, 8, 0, 123);
     		},
@@ -2463,9 +2602,10 @@ var app = (function () {
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
-    			append_dev(div, button);
-    			append_dev(button, svg);
+    			append_dev(div, svg);
     			append_dev(svg, path);
+    			append_dev(div, t);
+    			append_dev(div, button);
 
     			if (!mounted) {
     				dispose = listen_dev(button, "click", /*nextStage*/ ctx[0], false, false, false);
@@ -2548,19 +2688,19 @@ var app = (function () {
     			attr_dev(path0, "stroke-linecap", "round");
     			attr_dev(path0, "stroke-linejoin", "round");
     			attr_dev(path0, "d", "M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z");
-    			add_location(path0, file$f, 10, 8, 354);
+    			add_location(path0, file$f, 10, 8, 386);
     			attr_dev(path1, "stroke-linecap", "round");
     			attr_dev(path1, "stroke-linejoin", "round");
     			attr_dev(path1, "d", "M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z");
-    			add_location(path1, file$f, 11, 8, 862);
+    			add_location(path1, file$f, 11, 8, 894);
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "fill", "none");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "stroke-width", "1.5");
     			attr_dev(svg, "stroke", "currentColor");
-    			attr_dev(svg, "class", "w-20 h-20");
-    			add_location(svg, file$f, 9, 4, 213);
-    			attr_dev(button, "class", "btn btn-outline btn-primary w-48 h-28 bg-base-100");
+    			attr_dev(svg, "class", "w-20 h-20 xl:h-56 xl:w-56");
+    			add_location(svg, file$f, 9, 4, 229);
+    			attr_dev(button, "class", "btn btn-outline btn-primary w-48 h-28 bg-base-100 xl:h-64 xl:w-80");
     			add_location(button, file$f, 8, 0, 122);
     		},
     		l: function claim(nodes) {
@@ -2634,44 +2774,114 @@ var app = (function () {
     }
 
     /* src\RestartButton.svelte generated by Svelte v3.49.0 */
+
     const file$e = "src\\RestartButton.svelte";
 
     function create_fragment$f(ctx) {
-    	let button;
+    	let label0;
     	let svg;
     	let path;
+    	let t0;
+    	let input;
+    	let t1;
+    	let div3;
+    	let div2;
+    	let h3;
+    	let t3;
+    	let p;
+    	let t5;
+    	let div0;
+    	let label1;
+    	let t7;
+    	let div1;
+    	let label2;
     	let mounted;
     	let dispose;
 
     	const block = {
     		c: function create() {
-    			button = element("button");
+    			label0 = element("label");
     			svg = svg_element("svg");
     			path = svg_element("path");
+    			t0 = space();
+    			input = element("input");
+    			t1 = space();
+    			div3 = element("div");
+    			div2 = element("div");
+    			h3 = element("h3");
+    			h3.textContent = "Reset Submission";
+    			t3 = space();
+    			p = element("p");
+    			p.textContent = "Are you sure you want to reset the submission?";
+    			t5 = space();
+    			div0 = element("div");
+    			label1 = element("label");
+    			label1.textContent = "Yes, Reset";
+    			t7 = space();
+    			div1 = element("div");
+    			label2 = element("label");
+    			label2.textContent = "No";
     			attr_dev(path, "stroke-linecap", "round");
     			attr_dev(path, "stroke-linejoin", "round");
     			attr_dev(path, "d", "M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99");
-    			add_location(path, file$e, 10, 8, 354);
+    			add_location(path, file$e, 14, 8, 721);
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "fill", "none");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "stroke-width", "2");
     			attr_dev(svg, "stroke", "currentColor");
-    			attr_dev(svg, "class", "w-16 h-16");
-    			add_location(svg, file$e, 9, 4, 215);
-    			attr_dev(button, "class", "btn btn-outline btn-primary w-48 h-28 bg-base-100");
-    			add_location(button, file$e, 8, 0, 124);
+    			attr_dev(svg, "class", "w-16 h-16 xl:h-56 xl:w-56");
+    			add_location(svg, file$e, 13, 4, 566);
+    			attr_dev(label0, "for", "confirmReset");
+    			attr_dev(label0, "class", "btn btn-outline btn-primary w-48 h-28 bg-base-100 xl:h-64 xl:w-80");
+    			add_location(label0, file$e, 12, 0, 460);
+    			attr_dev(input, "type", "checkbox");
+    			attr_dev(input, "id", "confirmReset");
+    			attr_dev(input, "class", "modal-toggle");
+    			add_location(input, file$e, 18, 0, 970);
+    			attr_dev(h3, "class", "font-bold text-lg");
+    			add_location(h3, file$e, 21, 8, 1138);
+    			attr_dev(p, "class", "py-4");
+    			add_location(p, file$e, 22, 8, 1199);
+    			attr_dev(label1, "for", "confirmReset");
+    			attr_dev(label1, "class", "btn btn-primary absolute left-4 bottom-4");
+    			add_location(label1, file$e, 24, 12, 1315);
+    			attr_dev(div0, "class", "modal-action");
+    			add_location(div0, file$e, 23, 8, 1275);
+    			attr_dev(label2, "for", "confirmReset");
+    			attr_dev(label2, "class", "btn btn-error absolute right-4 bottom-4");
+    			add_location(label2, file$e, 27, 12, 1493);
+    			attr_dev(div1, "class", "modal-action");
+    			add_location(div1, file$e, 26, 8, 1453);
+    			attr_dev(div2, "class", "modal-box");
+    			add_location(div2, file$e, 20, 4, 1105);
+    			attr_dev(div3, "class", "modal modal-bottom sm:modal-middle cursor-pointer");
+    			add_location(div3, file$e, 19, 0, 1036);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, button, anchor);
-    			append_dev(button, svg);
+    			insert_dev(target, label0, anchor);
+    			append_dev(label0, svg);
     			append_dev(svg, path);
+    			insert_dev(target, t0, anchor);
+    			insert_dev(target, input, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, div3, anchor);
+    			append_dev(div3, div2);
+    			append_dev(div2, h3);
+    			append_dev(div2, t3);
+    			append_dev(div2, p);
+    			append_dev(div2, t5);
+    			append_dev(div2, div0);
+    			append_dev(div0, label1);
+    			append_dev(div2, t7);
+    			append_dev(div2, div1);
+    			append_dev(div1, label2);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*pressed*/ ctx[0], false, false, false);
+    				dispose = listen_dev(label1, "click", /*pressed*/ ctx[0], false, false, false);
     				mounted = true;
     			}
     		},
@@ -2679,7 +2889,11 @@ var app = (function () {
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(button);
+    			if (detaching) detach_dev(label0);
+    			if (detaching) detach_dev(t0);
+    			if (detaching) detach_dev(input);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(div3);
     			mounted = false;
     			dispose();
     		}
@@ -2698,12 +2912,40 @@ var app = (function () {
 
     function instance$f($$self, $$props, $$invalidate) {
     	let $gameStage;
+    	let $defaultPostGameData;
+    	let $postGameData;
+    	let $defaultTeleGameData;
+    	let $teleGameData;
+    	let $defaultGeneralGameData;
+    	let $generalGameData;
+    	let $defaultAutoGameData;
+    	let $autoGameData;
     	validate_store(gameStage, 'gameStage');
     	component_subscribe($$self, gameStage, $$value => $$invalidate(1, $gameStage = $$value));
+    	validate_store(defaultPostGameData, 'defaultPostGameData');
+    	component_subscribe($$self, defaultPostGameData, $$value => $$invalidate(2, $defaultPostGameData = $$value));
+    	validate_store(postGameData, 'postGameData');
+    	component_subscribe($$self, postGameData, $$value => $$invalidate(3, $postGameData = $$value));
+    	validate_store(defaultTeleGameData, 'defaultTeleGameData');
+    	component_subscribe($$self, defaultTeleGameData, $$value => $$invalidate(4, $defaultTeleGameData = $$value));
+    	validate_store(teleGameData, 'teleGameData');
+    	component_subscribe($$self, teleGameData, $$value => $$invalidate(5, $teleGameData = $$value));
+    	validate_store(defaultGeneralGameData, 'defaultGeneralGameData');
+    	component_subscribe($$self, defaultGeneralGameData, $$value => $$invalidate(6, $defaultGeneralGameData = $$value));
+    	validate_store(generalGameData, 'generalGameData');
+    	component_subscribe($$self, generalGameData, $$value => $$invalidate(7, $generalGameData = $$value));
+    	validate_store(defaultAutoGameData, 'defaultAutoGameData');
+    	component_subscribe($$self, defaultAutoGameData, $$value => $$invalidate(8, $defaultAutoGameData = $$value));
+    	validate_store(autoGameData, 'autoGameData');
+    	component_subscribe($$self, autoGameData, $$value => $$invalidate(9, $autoGameData = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('RestartButton', slots, []);
 
     	function pressed() {
+    		set_store_value(autoGameData, $autoGameData = $defaultAutoGameData, $autoGameData);
+    		set_store_value(generalGameData, $generalGameData = $defaultGeneralGameData, $generalGameData);
+    		set_store_value(teleGameData, $teleGameData = $defaultTeleGameData, $teleGameData);
+    		set_store_value(postGameData, $postGameData = $defaultPostGameData, $postGameData);
     		set_store_value(gameStage, $gameStage = 0, $gameStage);
     	}
 
@@ -2713,7 +2955,28 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<RestartButton> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$capture_state = () => ({ gameStage, pressed, $gameStage });
+    	$$self.$capture_state = () => ({
+    		gameStage,
+    		autoGameData,
+    		teleGameData,
+    		postGameData,
+    		defaultAutoGameData,
+    		defaultGeneralGameData,
+    		defaultPostGameData,
+    		generalGameData,
+    		defaultTeleGameData,
+    		pressed,
+    		$gameStage,
+    		$defaultPostGameData,
+    		$postGameData,
+    		$defaultTeleGameData,
+    		$teleGameData,
+    		$defaultGeneralGameData,
+    		$generalGameData,
+    		$defaultAutoGameData,
+    		$autoGameData
+    	});
+
     	return [pressed];
     }
 
@@ -3120,19 +3383,19 @@ var app = (function () {
     			option0.selected = true;
     			option0.__value = "Select Starting Location";
     			option0.value = option0.__value;
-    			add_location(option0, file$c, 16, 4, 581);
+    			add_location(option0, file$c, 17, 4, 691);
     			option1.__value = "Long Side";
     			option1.value = option1.__value;
-    			add_location(option1, file$c, 17, 4, 646);
+    			add_location(option1, file$c, 18, 4, 756);
     			option2.__value = "Center";
     			option2.value = option2.__value;
-    			add_location(option2, file$c, 18, 4, 678);
+    			add_location(option2, file$c, 19, 4, 788);
     			option3.__value = "Short Side";
     			option3.value = option3.__value;
-    			add_location(option3, file$c, 19, 4, 707);
+    			add_location(option3, file$c, 20, 4, 817);
     			attr_dev(select, "class", "select select-primary w-64 xl:w-80 text-base xl:text-lg");
     			if (/*input*/ ctx[0] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[3].call(select));
-    			add_location(select, file$c, 15, 0, 460);
+    			add_location(select, file$c, 16, 0, 570);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3193,7 +3456,8 @@ var app = (function () {
     	function changeInput() {
     		set_store_value(autoGameData, $autoGameData["startingLocation"] = input, $autoGameData);
     		console.log($autoGameData["startingLocation"]);
-    		$autoStack.push(JSON.parse(JSON.stringify($autoGameData)));
+
+    		// $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
     		console.log($autoStack);
     	}
 
@@ -3269,14 +3533,14 @@ var app = (function () {
     			t1 = space();
     			input = element("input");
     			attr_dev(span, "class", "label-text text-sm xl:text-lg");
-    			add_location(span, file$b, 7, 8, 177);
+    			add_location(span, file$b, 10, 8, 295);
     			attr_dev(input, "type", "checkbox");
     			attr_dev(input, "class", "checkbox checkbox-lg checkbox-primary");
-    			add_location(input, file$b, 8, 8, 246);
+    			add_location(input, file$b, 11, 8, 364);
     			attr_dev(label, "class", "cursor-pointer label w-12 flex flex-col content-center");
-    			add_location(label, file$b, 6, 4, 97);
+    			add_location(label, file$b, 9, 4, 215);
     			attr_dev(div, "class", "form-control");
-    			add_location(div, file$b, 5, 0, 65);
+    			add_location(div, file$b, 8, 0, 183);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3336,7 +3600,7 @@ var app = (function () {
     		autoGameData.set($autoGameData);
     	}
 
-    	$$self.$capture_state = () => ({ autoGameData, $autoGameData });
+    	$$self.$capture_state = () => ({ autoGameData, autoStack, $autoGameData });
     	return [$autoGameData, input_change_handler];
     }
 
@@ -3823,16 +4087,16 @@ var app = (function () {
     			attr_dev(path, "stroke-linecap", "round");
     			attr_dev(path, "stroke-linejoin", "round");
     			attr_dev(path, "d", "M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3");
-    			add_location(path, file$8, 32, 8, 1213);
+    			add_location(path, file$8, 33, 8, 1246);
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "fill", "none");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "stroke-width", "2.5");
     			attr_dev(svg, "stroke", "currentColor");
     			attr_dev(svg, "class", "w-6 h-6");
-    			add_location(svg, file$8, 31, 4, 1074);
+    			add_location(svg, file$8, 32, 4, 1107);
     			attr_dev(button, "class", "btn btn-square btn-outline btn-md");
-    			add_location(button, file$8, 30, 0, 999);
+    			add_location(button, file$8, 31, 0, 1032);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3874,6 +4138,7 @@ var app = (function () {
     	let $gameStage;
     	let $autoStack;
     	let $autoGameData;
+    	let $undoing;
     	validate_store(teleStack, 'teleStack');
     	component_subscribe($$self, teleStack, $$value => $$invalidate(1, $teleStack = $$value));
     	validate_store(teleGameData, 'teleGameData');
@@ -3884,10 +4149,14 @@ var app = (function () {
     	component_subscribe($$self, autoStack, $$value => $$invalidate(4, $autoStack = $$value));
     	validate_store(autoGameData, 'autoGameData');
     	component_subscribe($$self, autoGameData, $$value => $$invalidate(5, $autoGameData = $$value));
+    	validate_store(undoing, 'undoing');
+    	component_subscribe($$self, undoing, $$value => $$invalidate(6, $undoing = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('UndoButton', slots, []);
 
     	function clicked() {
+    		set_store_value(undoing, $undoing = true, $undoing);
+
     		if ($gameStage === 1) {
     			if ($autoStack.length > 1) {
     				set_store_value(autoGameData, $autoGameData = JSON.parse(JSON.stringify($autoStack[$autoStack.length - 2])), $autoGameData);
@@ -3924,12 +4193,14 @@ var app = (function () {
     		postGameData,
     		teleGameData,
     		teleStack,
+    		undoing,
     		clicked,
     		$teleStack,
     		$teleGameData,
     		$gameStage,
     		$autoStack,
-    		$autoGameData
+    		$autoGameData,
+    		$undoing
     	});
 
     	return [clicked];
@@ -3973,6 +4244,9 @@ var app = (function () {
     	let balancedbox;
     	let t6;
     	let div6;
+    	let t7_value = /*$generalGameData*/ ctx[0]['teamNum'] + "";
+    	let t7;
+    	let div6_class_value;
     	let t8;
     	let div9;
     	let gamepiececombo;
@@ -3985,6 +4259,7 @@ var app = (function () {
     	let br1;
     	let br2;
     	let br3;
+    	let t11;
     	let hr;
     	let current;
     	undobutton = new UndoButton({ $$inline: true });
@@ -4023,7 +4298,7 @@ var app = (function () {
     			create_component(balancedbox.$$.fragment);
     			t6 = space();
     			div6 = element("div");
-    			div6.textContent = "6328";
+    			t7 = text(t7_value);
     			t8 = space();
     			div9 = element("div");
     			create_component(gamepiececombo.$$.fragment);
@@ -4036,38 +4311,43 @@ var app = (function () {
     			br1 = element("br");
     			br2 = element("br");
     			br3 = element("br");
+    			t11 = space();
     			hr = element("hr");
     			attr_dev(div0, "class", "ml-2");
-    			add_location(div0, file$7, 22, 8, 875);
+    			add_location(div0, file$7, 30, 8, 1115);
     			attr_dev(div1, "class", "-mt-4 ml-2");
-    			add_location(div1, file$7, 25, 8, 953);
+    			add_location(div1, file$7, 33, 8, 1197);
     			attr_dev(div2, "class", "flex justify-center");
-    			add_location(div2, file$7, 20, 4, 809);
+    			add_location(div2, file$7, 28, 4, 1049);
     			attr_dev(div3, "class", "text-3xl mt-7 ");
-    			add_location(div3, file$7, 30, 8, 1088);
+    			add_location(div3, file$7, 38, 8, 1332);
     			attr_dev(div4, "class", "ml-8");
-    			add_location(div4, file$7, 33, 8, 1160);
+    			add_location(div4, file$7, 41, 8, 1404);
     			attr_dev(div5, "class", "ml-16");
-    			add_location(div5, file$7, 36, 8, 1230);
-    			attr_dev(div6, "class", "text-3xl mt-8 ml-8");
-    			add_location(div6, file$7, 39, 8, 1303);
+    			add_location(div5, file$7, 44, 8, 1474);
+
+    			attr_dev(div6, "class", div6_class_value = "text-3xl mt-8 ml-8 " + (/*$generalGameData*/ ctx[0]['allianceColor'] === 'red'
+    			? 'text-error'
+    			: 'text-accent'));
+
+    			add_location(div6, file$7, 47, 8, 1547);
     			attr_dev(div7, "class", "flex justify-center -mt-2");
-    			add_location(div7, file$7, 29, 4, 1039);
+    			add_location(div7, file$7, 37, 4, 1283);
     			attr_dev(div8, "class", "z-20 pt-4 xl:pl-0xl:pl-8 z-10");
-    			add_location(div8, file$7, 19, 0, 759);
+    			add_location(div8, file$7, 27, 0, 999);
     			attr_dev(div9, "class", "fixed bottom-0 w-full flex justify-center z-10");
-    			add_location(div9, file$7, 47, 0, 1397);
+    			add_location(div9, file$7, 55, 0, 1741);
     			attr_dev(div10, "class", "mt-6");
-    			add_location(div10, file$7, 52, 4, 1579);
+    			add_location(div10, file$7, 60, 4, 1923);
     			attr_dev(div11, "class", "pl-4 xl:pl-0 -mt-5 xl:pl-8 flex justify-center z-10");
-    			add_location(div11, file$7, 51, 0, 1508);
-    			add_location(br0, file$7, 57, 0, 1654);
-    			add_location(br1, file$7, 57, 4, 1658);
-    			add_location(br2, file$7, 57, 8, 1662);
-    			add_location(br3, file$7, 57, 12, 1666);
+    			add_location(div11, file$7, 59, 0, 1852);
+    			add_location(br0, file$7, 65, 0, 1998);
+    			add_location(br1, file$7, 65, 4, 2002);
+    			add_location(br2, file$7, 65, 8, 2006);
+    			add_location(br3, file$7, 65, 12, 2010);
     			set_style(hr, "height", "7px");
     			set_style(hr, "visibility", "hidden");
-    			add_location(hr, file$7, 57, 16, 1670);
+    			add_location(hr, file$7, 66, 0, 2016);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4093,6 +4373,7 @@ var app = (function () {
     			mount_component(balancedbox, div5, null);
     			append_dev(div7, t6);
     			append_dev(div7, div6);
+    			append_dev(div6, t7);
     			insert_dev(target, t8, anchor);
     			insert_dev(target, div9, anchor);
     			mount_component(gamepiececombo, div9, null);
@@ -4105,10 +4386,19 @@ var app = (function () {
     			insert_dev(target, br1, anchor);
     			insert_dev(target, br2, anchor);
     			insert_dev(target, br3, anchor);
+    			insert_dev(target, t11, anchor);
     			insert_dev(target, hr, anchor);
     			current = true;
     		},
-    		p: noop,
+    		p: function update(ctx, [dirty]) {
+    			if ((!current || dirty & /*$generalGameData*/ 1) && t7_value !== (t7_value = /*$generalGameData*/ ctx[0]['teamNum'] + "")) set_data_dev(t7, t7_value);
+
+    			if (!current || dirty & /*$generalGameData*/ 1 && div6_class_value !== (div6_class_value = "text-3xl mt-8 ml-8 " + (/*$generalGameData*/ ctx[0]['allianceColor'] === 'red'
+    			? 'text-error'
+    			: 'text-accent'))) {
+    				attr_dev(div6, "class", div6_class_value);
+    			}
+    		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(undobutton.$$.fragment, local);
@@ -4148,6 +4438,7 @@ var app = (function () {
     			if (detaching) detach_dev(br1);
     			if (detaching) detach_dev(br2);
     			if (detaching) detach_dev(br3);
+    			if (detaching) detach_dev(t11);
     			if (detaching) detach_dev(hr);
     		}
     	};
@@ -4164,17 +4455,31 @@ var app = (function () {
     }
 
     function instance$8($$self, $$props, $$invalidate) {
+    	let $undoing;
     	let $autoGameData;
     	let $autoStack;
+    	let $generalGameData;
+    	validate_store(undoing, 'undoing');
+    	component_subscribe($$self, undoing, $$value => $$invalidate(2, $undoing = $$value));
     	validate_store(autoGameData, 'autoGameData');
-    	component_subscribe($$self, autoGameData, $$value => $$invalidate(0, $autoGameData = $$value));
+    	component_subscribe($$self, autoGameData, $$value => $$invalidate(1, $autoGameData = $$value));
     	validate_store(autoStack, 'autoStack');
-    	component_subscribe($$self, autoStack, $$value => $$invalidate(1, $autoStack = $$value));
+    	component_subscribe($$self, autoStack, $$value => $$invalidate(3, $autoStack = $$value));
+    	validate_store(generalGameData, 'generalGameData');
+    	component_subscribe($$self, generalGameData, $$value => $$invalidate(0, $generalGameData = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Auto', slots, []);
 
     	if ($autoStack.length === 0) {
     		$autoStack.push(JSON.parse(JSON.stringify($autoGameData)));
+    	}
+
+    	function updateStack() {
+    		if (!$undoing) {
+    			$autoStack.push(JSON.parse(JSON.stringify($autoGameData)));
+    		}
+
+    		set_store_value(undoing, $undoing = false, $undoing);
     	}
 
     	const writable_props = [];
@@ -4196,11 +4501,22 @@ var app = (function () {
     		UndoButton,
     		autoGameData,
     		autoStack,
+    		generalGameData,
+    		undoing,
+    		updateStack,
+    		$undoing,
     		$autoGameData,
-    		$autoStack
+    		$autoStack,
+    		$generalGameData
     	});
 
-    	return [];
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*$autoGameData*/ 2) {
+    			(updateStack());
+    		}
+    	};
+
+    	return [$generalGameData, $autoGameData];
     }
 
     class Auto extends SvelteComponentDev {
@@ -4218,6 +4534,7 @@ var app = (function () {
     }
 
     /* src\Tele.svelte generated by Svelte v3.49.0 */
+
     const file$6 = "src\\Tele.svelte";
 
     function create_fragment$7(ctx) {
@@ -4238,6 +4555,9 @@ var app = (function () {
     	let balancedbox;
     	let t5;
     	let div6;
+    	let t6_value = /*$generalGameData*/ ctx[0]['teamNum'] + "";
+    	let t6;
+    	let div6_class_value;
     	let t7;
     	let div9;
     	let div8;
@@ -4271,7 +4591,7 @@ var app = (function () {
     			t1 = space();
     			div7 = element("div");
     			div3 = element("div");
-    			div3.textContent = "Tele";
+    			div3.textContent = "Tele-Op";
     			t3 = space();
     			div4 = element("div");
     			create_component(dockedbox.$$.fragment);
@@ -4280,7 +4600,7 @@ var app = (function () {
     			create_component(balancedbox.$$.fragment);
     			t5 = space();
     			div6 = element("div");
-    			div6.textContent = "6328";
+    			t6 = text(t6_value);
     			t7 = space();
     			div9 = element("div");
     			div8 = element("div");
@@ -4292,32 +4612,36 @@ var app = (function () {
     			br3 = element("br");
     			hr = element("hr");
     			attr_dev(div0, "class", "fixed bottom-0 w-full flex justify-center z-10");
-    			add_location(div0, file$6, 13, 0, 499);
+    			add_location(div0, file$6, 21, 0, 737);
     			attr_dev(div1, "class", "flex justify-center mr-[320px]");
-    			add_location(div1, file$6, 18, 4, 660);
+    			add_location(div1, file$6, 26, 4, 898);
     			attr_dev(div2, "class", "z-20 pt-4 xl:pl-0xl:pl-8 z-10");
-    			add_location(div2, file$6, 17, 0, 610);
-    			attr_dev(div3, "class", "text-3xl mt-7 ");
-    			add_location(div3, file$6, 24, 4, 796);
-    			attr_dev(div4, "class", "ml-11");
-    			add_location(div4, file$6, 27, 4, 856);
+    			add_location(div2, file$6, 25, 0, 848);
+    			attr_dev(div3, "class", "text-3xl mt-7 -ml-2 xl:text-5xl");
+    			add_location(div3, file$6, 32, 4, 1042);
+    			attr_dev(div4, "class", "ml-1");
+    			add_location(div4, file$6, 35, 4, 1122);
     			attr_dev(div5, "class", "ml-16");
-    			add_location(div5, file$6, 30, 4, 915);
-    			attr_dev(div6, "class", "text-3xl mt-8 ml-8");
-    			add_location(div6, file$6, 33, 4, 976);
-    			attr_dev(div7, "class", "flex justify-center -mt-1");
-    			add_location(div7, file$6, 23, 0, 751);
+    			add_location(div5, file$6, 38, 4, 1180);
+
+    			attr_dev(div6, "class", div6_class_value = "text-3xl mt-8 ml-8 " + (/*$generalGameData*/ ctx[0]['allianceColor'] === 'red'
+    			? 'text-error'
+    			: 'text-accent'));
+
+    			add_location(div6, file$6, 41, 4, 1241);
+    			attr_dev(div7, "class", "flex justify-center -mt-1 xl:mt-1");
+    			add_location(div7, file$6, 31, 0, 989);
     			attr_dev(div8, "class", "mt-6");
-    			add_location(div8, file$6, 40, 4, 1119);
+    			add_location(div8, file$6, 48, 4, 1484);
     			attr_dev(div9, "class", "pl-4 xl:pl-0 -mt-5 xl:pl-8 flex justify-center z-10");
-    			add_location(div9, file$6, 39, 0, 1048);
-    			add_location(br0, file$6, 45, 0, 1194);
-    			add_location(br1, file$6, 45, 4, 1198);
-    			add_location(br2, file$6, 45, 8, 1202);
-    			add_location(br3, file$6, 45, 12, 1206);
+    			add_location(div9, file$6, 47, 0, 1413);
+    			add_location(br0, file$6, 53, 0, 1559);
+    			add_location(br1, file$6, 53, 4, 1563);
+    			add_location(br2, file$6, 53, 8, 1567);
+    			add_location(br3, file$6, 53, 12, 1571);
     			set_style(hr, "height", "7px");
     			set_style(hr, "visibility", "hidden");
-    			add_location(hr, file$6, 45, 16, 1210);
+    			add_location(hr, file$6, 53, 16, 1575);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4340,6 +4664,7 @@ var app = (function () {
     			mount_component(balancedbox, div5, null);
     			append_dev(div7, t5);
     			append_dev(div7, div6);
+    			append_dev(div6, t6);
     			insert_dev(target, t7, anchor);
     			insert_dev(target, div9, anchor);
     			append_dev(div9, div8);
@@ -4352,7 +4677,15 @@ var app = (function () {
     			insert_dev(target, hr, anchor);
     			current = true;
     		},
-    		p: noop,
+    		p: function update(ctx, [dirty]) {
+    			if ((!current || dirty & /*$generalGameData*/ 1) && t6_value !== (t6_value = /*$generalGameData*/ ctx[0]['teamNum'] + "")) set_data_dev(t6, t6_value);
+
+    			if (!current || dirty & /*$generalGameData*/ 1 && div6_class_value !== (div6_class_value = "text-3xl mt-8 ml-8 " + (/*$generalGameData*/ ctx[0]['allianceColor'] === 'red'
+    			? 'text-error'
+    			: 'text-accent'))) {
+    				attr_dev(div6, "class", div6_class_value);
+    			}
+    		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(gamepiececombo.$$.fragment, local);
@@ -4404,17 +4737,31 @@ var app = (function () {
     }
 
     function instance$7($$self, $$props, $$invalidate) {
+    	let $undoing;
     	let $teleGameData;
     	let $teleStack;
+    	let $generalGameData;
+    	validate_store(undoing, 'undoing');
+    	component_subscribe($$self, undoing, $$value => $$invalidate(2, $undoing = $$value));
     	validate_store(teleGameData, 'teleGameData');
-    	component_subscribe($$self, teleGameData, $$value => $$invalidate(0, $teleGameData = $$value));
+    	component_subscribe($$self, teleGameData, $$value => $$invalidate(1, $teleGameData = $$value));
     	validate_store(teleStack, 'teleStack');
-    	component_subscribe($$self, teleStack, $$value => $$invalidate(1, $teleStack = $$value));
+    	component_subscribe($$self, teleStack, $$value => $$invalidate(3, $teleStack = $$value));
+    	validate_store(generalGameData, 'generalGameData');
+    	component_subscribe($$self, generalGameData, $$value => $$invalidate(0, $generalGameData = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Tele', slots, []);
 
     	if ($teleStack.length === 0) {
     		$teleStack.push(JSON.parse(JSON.stringify($teleGameData)));
+    	}
+
+    	function updateStack() {
+    		if (!$undoing) {
+    			$teleStack.push(JSON.parse(JSON.stringify($teleGameData)));
+    		}
+
+    		set_store_value(undoing, $undoing = false, $undoing);
     	}
 
     	const writable_props = [];
@@ -4431,13 +4778,24 @@ var app = (function () {
     		BalancedBox,
     		autoGameData,
     		autoStack,
+    		generalGameData,
     		teleGameData,
     		teleStack,
+    		undoing,
+    		updateStack,
+    		$undoing,
     		$teleGameData,
-    		$teleStack
+    		$teleStack,
+    		$generalGameData
     	});
 
-    	return [];
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*$teleGameData*/ 2) {
+    			(updateStack());
+    		}
+    	};
+
+    	return [$generalGameData, $teleGameData];
     }
 
     class Tele extends SvelteComponentDev {
@@ -8048,7 +8406,7 @@ var app = (function () {
 
     const file = "src\\QRPage.svelte";
 
-    // (24:0) {#if show}
+    // (31:0) {#if show}
     function create_if_block$1(ctx) {
     	let div1;
     	let div0;
@@ -8073,16 +8431,16 @@ var app = (function () {
     			attr_dev(path, "stroke-linejoin", "round");
     			attr_dev(path, "stroke-width", "2");
     			attr_dev(path, "d", "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z");
-    			add_location(path, file, 26, 125, 1059);
+    			add_location(path, file, 33, 125, 1262);
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
     			attr_dev(svg, "fill", "none");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "class", "stroke-current flex-shrink-0 w-6 h-6");
-    			add_location(svg, file, 26, 8, 942);
-    			add_location(span, file, 27, 8, 1214);
-    			add_location(div0, file, 25, 4, 927);
+    			add_location(svg, file, 33, 8, 1145);
+    			add_location(span, file, 34, 8, 1417);
+    			add_location(div0, file, 32, 4, 1130);
     			attr_dev(div1, "class", "alert alert-info shadow-lg absolute");
-    			add_location(div1, file, 24, 0, 855);
+    			add_location(div1, file, 31, 0, 1058);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -8119,7 +8477,7 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(24:0) {#if show}",
+    		source: "(31:0) {#if show}",
     		ctx
     	});
 
@@ -8131,6 +8489,13 @@ var app = (function () {
     	let div0;
     	let qrcode;
     	let t1;
+    	let br0;
+    	let br1;
+    	let br2;
+    	let br3;
+    	let t2;
+    	let hr;
+    	let t3;
     	let div1;
     	let gamepiececombo;
     	let current;
@@ -8139,7 +8504,7 @@ var app = (function () {
     	qrcode = new Lib({
     			props: {
     				color: "#006daa",
-    				size: "800",
+    				size: "700",
     				background: "#14110F",
     				errorCorrection: "Q",
     				value: /*qrString*/ ctx[1]
@@ -8159,12 +8524,26 @@ var app = (function () {
     			div0 = element("div");
     			create_component(qrcode.$$.fragment);
     			t1 = space();
+    			br0 = element("br");
+    			br1 = element("br");
+    			br2 = element("br");
+    			br3 = element("br");
+    			t2 = space();
+    			hr = element("hr");
+    			t3 = space();
     			div1 = element("div");
     			create_component(gamepiececombo.$$.fragment);
     			attr_dev(div0, "class", "w-full flex items-center justify-center h-screen w-screen");
-    			add_location(div0, file, 32, 0, 1281);
+    			add_location(div0, file, 39, 0, 1484);
+    			add_location(br0, file, 43, 0, 1670);
+    			add_location(br1, file, 43, 4, 1674);
+    			add_location(br2, file, 43, 8, 1678);
+    			add_location(br3, file, 43, 12, 1682);
+    			set_style(hr, "height", "7px");
+    			set_style(hr, "visibility", "hidden");
+    			add_location(hr, file, 44, 0, 1688);
     			attr_dev(div1, "class", "fixed bottom-0 w-full flex justify-center z-10");
-    			add_location(div1, file, 38, 0, 1471);
+    			add_location(div1, file, 46, 0, 1736);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -8175,6 +8554,13 @@ var app = (function () {
     			insert_dev(target, div0, anchor);
     			mount_component(qrcode, div0, null);
     			insert_dev(target, t1, anchor);
+    			insert_dev(target, br0, anchor);
+    			insert_dev(target, br1, anchor);
+    			insert_dev(target, br2, anchor);
+    			insert_dev(target, br3, anchor);
+    			insert_dev(target, t2, anchor);
+    			insert_dev(target, hr, anchor);
+    			insert_dev(target, t3, anchor);
     			insert_dev(target, div1, anchor);
     			mount_component(gamepiececombo, div1, null);
     			current = true;
@@ -8220,6 +8606,13 @@ var app = (function () {
     			if (detaching) detach_dev(div0);
     			destroy_component(qrcode);
     			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(br0);
+    			if (detaching) detach_dev(br1);
+    			if (detaching) detach_dev(br2);
+    			if (detaching) detach_dev(br3);
+    			if (detaching) detach_dev(t2);
+    			if (detaching) detach_dev(hr);
+    			if (detaching) detach_dev(t3);
     			if (detaching) detach_dev(div1);
     			destroy_component(gamepiececombo);
     		}
@@ -8254,7 +8647,15 @@ var app = (function () {
     	let show = true;
 
     	if ($autoGameData["startingLocation"] === "Select Starting Location") {
-    		set_store_value(autoGameData, $autoGameData["startingLocation"] = "None", $autoGameData);
+    		set_store_value(autoGameData, $autoGameData["startingLocation"] = "none", $autoGameData);
+    	}
+
+    	if ($generalGameData["teamNum"] === "") {
+    		set_store_value(generalGameData, $generalGameData["teamNum"] = "blank", $generalGameData);
+    	}
+
+    	if ($generalGameData["scoutName"] === "") {
+    		set_store_value(generalGameData, $generalGameData["scoutName"] = "none", $generalGameData);
     	}
 
     	let qrString = `${Object.values($generalGameData).join(',') + "," + Object.values($autoGameData).join(',') + "," + Object.values($teleGameData).join(',') + "," + Object.values($postGameData).join(',')}`;
@@ -8673,7 +9074,7 @@ var app = (function () {
       }
     }
 
-    var css_248z = "/*\n! tailwindcss v3.1.7 | MIT License | https://tailwindcss.com\n*//*\n1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)\n2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)\n*/\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: #e5e7eb; /* 2 */\n}\n\n::before,\n::after {\n  --tw-content: '';\n}\n\n/*\n1. Use a consistent sensible line-height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n3. Use a more readable tab size.\n4. Use the user's configured `sans` font-family by default.\n*/\n\nhtml {\n  line-height: 1.5; /* 1 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n  -moz-tab-size: 4; /* 3 */\n  -o-tab-size: 4;\n     tab-size: 4; /* 3 */\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 4 */\n}\n\n/*\n1. Remove the margin in all browsers.\n2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.\n*/\n\nbody {\n  margin: 0; /* 1 */\n  line-height: inherit; /* 2 */\n}\n\n/*\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n3. Ensure horizontal rules are visible by default.\n*/\n\nhr {\n  height: 0; /* 1 */\n  color: inherit; /* 2 */\n  border-top-width: 1px; /* 3 */\n}\n\n/*\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr:where([title]) {\n  -webkit-text-decoration: underline dotted;\n          text-decoration: underline dotted;\n}\n\n/*\nRemove the default font size and weight for headings.\n*/\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/*\nReset links to optimize for opt-in styling instead of opt-out.\n*/\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/*\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/*\n1. Use the user's configured `mono` font family by default.\n2. Correct the odd `em` font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/*\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n  font-size: 80%;\n}\n\n/*\nPrevent `sub` and `sup` elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/*\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n3. Remove gaps between table borders by default.\n*/\n\ntable {\n  text-indent: 0; /* 1 */\n  border-color: inherit; /* 2 */\n  border-collapse: collapse; /* 3 */\n}\n\n/*\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n3. Remove default padding in all browsers.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: inherit; /* 1 */\n  font-size: 100%; /* 1 */\n  font-weight: inherit; /* 1 */\n  line-height: inherit; /* 1 */\n  color: inherit; /* 1 */\n  margin: 0; /* 2 */\n  padding: 0; /* 3 */\n}\n\n/*\nRemove the inheritance of text transform in Edge and Firefox.\n*/\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/*\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Remove default button styles.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n  -webkit-appearance: button; /* 1 */\n  background-color: transparent; /* 2 */\n  background-image: none; /* 2 */\n}\n\n/*\nUse the modern Firefox focus style for all focusable elements.\n*/\n\n:-moz-focusring {\n  outline: auto;\n}\n\n/*\nRemove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)\n*/\n\n:-moz-ui-invalid {\n  box-shadow: none;\n}\n\n/*\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n  vertical-align: baseline;\n}\n\n/*\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/*\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/*\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/*\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to `inherit` in Safari.\n*/\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n  display: list-item;\n}\n\n/*\nRemoves the default spacing and border for appropriate elements.\n*/\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nlegend {\n  padding: 0;\n}\n\nol,\nul,\nmenu {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/*\nPrevent resizing textareas horizontally by default.\n*/\n\ntextarea {\n  resize: vertical;\n}\n\n/*\n1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)\n2. Set the default placeholder color to the user's configured gray 400 color.\n*/\n\ninput::-moz-placeholder, textarea::-moz-placeholder {\n  opacity: 1; /* 1 */\n  color: #9ca3af; /* 2 */\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1; /* 1 */\n  color: #9ca3af; /* 2 */\n}\n\n/*\nSet the default cursor for buttons.\n*/\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\n/*\nMake sure disabled buttons don't get the pointer cursor.\n*/\n:disabled {\n  cursor: default;\n}\n\n/*\n1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)\n2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)\n   This can trigger a poorly considered lint error in some tools but is included by design.\n*/\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/*\nConstrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)\n*/\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n:root,\n[data-theme] {\n  background-color: hsla(var(--b1) / var(--tw-bg-opacity, 1));\n  color: hsla(var(--bc) / var(--tw-text-opacity, 1));\n}\n\nhtml {\n  -webkit-tap-highlight-color: transparent;\n}\n\n:root {\n  --p: 202 100% 33%;\n  --pf: 202 100% 27%;\n  --sf: 45 70% 42%;\n  --af: 224 76% 38%;\n  --nf: 24 14% 5%;\n  --b2: 24 14% 6%;\n  --b3: 24 14% 6%;\n  --bc: 24 12% 81%;\n  --pc: 202 100% 87%;\n  --sc: 45 100% 10%;\n  --ac: 224 100% 90%;\n  --nc: 24 12% 81%;\n  --inc: 198 100% 12%;\n  --suc: 93 100% 12%;\n  --wac: 267 100% 92%;\n  --erc: 356 100% 93%;\n  --rounded-box: 1rem;\n  --rounded-btn: 0.5rem;\n  --rounded-badge: 1.9rem;\n  --animation-btn: 0.25s;\n  --animation-input: .2s;\n  --btn-text-case: uppercase;\n  --btn-focus-scale: 0.95;\n  --border-btn: 1px;\n  --tab-border: 1px;\n  --tab-radius: 0.5rem;\n  --s: 45 70% 52%;\n  --a: 224 76% 48%;\n  --n: 24 14% 7%;\n  --b1: 24 14% 7%;\n  --in: 198 93% 60%;\n  --su: 93 78% 60%;\n  --wa: 267 87% 59%;\n  --er: 356 100% 67%;\n}\n\n*, ::before, ::after {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\n\n::-webkit-backdrop {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\n\n::backdrop {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\r\n.alert {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n  align-items: center;\n  justify-content: space-between;\n  gap: 1rem;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  padding: 1rem;\n  border-radius: var(--rounded-box, 1rem);\n}\r\n.alert > :not([hidden]) ~ :not([hidden]) {\n  --tw-space-y-reverse: 0;\n  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));\n  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));\n}\r\n@media (min-width: 768px) {\n\n  .alert {\n    flex-direction: row;\n  }\n\n  .alert > :not([hidden]) ~ :not([hidden]) {\n    --tw-space-y-reverse: 0;\n    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));\n    margin-bottom: calc(0px * var(--tw-space-y-reverse));\n  }\n}\r\n.alert > :where(*) {\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n}\r\n.avatar.placeholder > div {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\r\n.badge {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  height: 1.25rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  padding-left: 0.563rem;\n  padding-right: 0.563rem;\n  border-width: 1px;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--n) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n  border-radius: var(--rounded-badge, 1.9rem);\n}\r\n.btn {\n  display: inline-flex;\n  flex-shrink: 0;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n       user-select: none;\n  flex-wrap: wrap;\n  align-items: center;\n  justify-content: center;\n  border-color: transparent;\n  border-color: hsl(var(--n) / var(--tw-border-opacity));\n  text-align: center;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: var(--rounded-btn, 0.5rem);\n  height: 3rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  line-height: 1em;\n  min-height: 3rem;\n  font-weight: 600;\n  text-transform: uppercase;\n  text-transform: var(--btn-text-case, uppercase);\n  -webkit-text-decoration-line: none;\n  text-decoration-line: none;\n  border-width: var(--border-btn, 1px);\n  -webkit-animation: button-pop var(--animation-btn, 0.25s) ease-out;\n          animation: button-pop var(--animation-btn, 0.25s) ease-out;\n  --tw-border-opacity: 1;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n}\r\n.btn-disabled, \n  .btn[disabled] {\n  pointer-events: none;\n}\r\n.btn-square {\n  height: 3rem;\n  width: 3rem;\n  padding: 0px;\n}\r\n.btn.loading, \n    .btn.loading:hover {\n  pointer-events: none;\n}\r\n.btn.loading:before {\n  margin-right: 0.5rem;\n  height: 1rem;\n  width: 1rem;\n  border-radius: 9999px;\n  border-width: 2px;\n  -webkit-animation: spin 2s linear infinite;\n          animation: spin 2s linear infinite;\n  content: \"\";\n  border-top-color: transparent;\n  border-left-color: transparent;\n  border-bottom-color: currentColor;\n  border-right-color: currentColor;\n}\r\n@media (prefers-reduced-motion: reduce) {\n\n  .btn.loading:before {\n    -webkit-animation: spin 10s linear infinite;\n            animation: spin 10s linear infinite;\n  }\n}\r\n@-webkit-keyframes spin {\n\n  from {\n    transform: rotate(0deg);\n  }\n\n  to {\n    transform: rotate(360deg);\n  }\n}\r\n@keyframes spin {\n\n  from {\n    transform: rotate(0deg);\n  }\n\n  to {\n    transform: rotate(360deg);\n  }\n}\r\n.btn-group > input[type=\"radio\"].btn {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n}\r\n.btn-group > input[type=\"radio\"].btn:before {\n  content: attr(data-title);\n}\r\n.card {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  overflow: hidden;\n  border-radius: var(--rounded-box, 1rem);\n}\r\n.card:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\r\n.card-body {\n  display: flex;\n  flex: 1 1 auto;\n  flex-direction: column;\n  padding: var(--padding-card, 2rem);\n  gap: 0.5rem;\n}\r\n.card-body :where(p) {\n  flex-grow: 1;\n}\r\n.card figure {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\r\n.card.image-full {\n  display: grid;\n}\r\n.card.image-full:before {\n  position: relative;\n  content: \"\";\n  z-index: 10;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  opacity: 0.75;\n  border-radius: var(--rounded-box, 1rem);\n}\r\n.card.image-full:before, \n    .card.image-full > * {\n  grid-column-start: 1;\n  grid-row-start: 1;\n}\r\n.card.image-full > figure img {\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\r\n.card.image-full > .card-body {\n  position: relative;\n  z-index: 20;\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n}\r\n.checkbox {\n  flex-shrink: 0;\n  --chkbg: var(--bc);\n  --chkfg: var(--b1);\n  height: 1.5rem;\n  width: 1.5rem;\n  cursor: pointer;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0.2;\n  border-radius: var(--rounded-btn, 0.5rem);\n}\r\n.form-control {\n  display: flex;\n  flex-direction: column;\n}\r\n.label {\n  display: flex;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n       user-select: none;\n  align-items: center;\n  justify-content: space-between;\n  padding-left: 0.25rem;\n  padding-right: 0.25rem;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n}\r\n.hero {\n  display: grid;\n  width: 100%;\n  place-items: center;\n  background-size: cover;\n  background-position: center;\n}\r\n.hero > * {\n  grid-column-start: 1;\n  grid-row-start: 1;\n}\r\n.hero-content {\n  z-index: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  max-width: 80rem;\n  gap: 1rem;\n  padding: 1rem;\n}\r\n.indicator {\n  position: relative;\n  display: inline-flex;\n  width: -webkit-max-content;\n  width: -moz-max-content;\n  width: max-content;\n}\r\n.indicator :where(.indicator-item) {\n  z-index: 1;\n  position: absolute;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.input {\n  flex-shrink: 1;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  height: 3rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  line-height: 2;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b1) / var(--tw-bg-opacity));\n  border-radius: var(--rounded-btn, 0.5rem);\n}\r\n.input-group > .input {\n  isolation: isolate;\n}\r\n.input-group > *, \n  .input-group > .input {\n  border-radius: 0px;\n}\r\n.mask {\n  -webkit-mask-size: contain;\n  mask-size: contain;\n  -webkit-mask-repeat: no-repeat;\n  mask-repeat: no-repeat;\n  -webkit-mask-position: center;\n  mask-position: center;\n}\r\n.mask-half-1 {\n  -webkit-mask-size: 200%;\n  mask-size: 200%;\n  -webkit-mask-position: left;\n  mask-position: left;\n}\r\n.mask-half-2 {\n  -webkit-mask-size: 200%;\n  mask-size: 200%;\n  -webkit-mask-position: right;\n  mask-position: right;\n}\r\n.menu > :where(li.disabled > *:not(ul):focus) {\n  cursor: auto;\n}\r\n.radio {\n  flex-shrink: 0;\n  --chkbg: var(--bc);\n  height: 1.5rem;\n  width: 1.5rem;\n  cursor: pointer;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-radius: 9999px;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0.2;\n  transition: background, box-shadow var(--animation-input, 0.2s) ease-in-out;\n}\r\n.range {\n  height: 1.5rem;\n  width: 100%;\n  cursor: pointer;\n  -webkit-appearance: none;\n  --range-shdw: var(--bc);\n  overflow: hidden;\n  background-color: transparent;\n  border-radius: var(--rounded-box, 1rem);\n}\r\n.range:focus {\n  outline: none;\n}\r\n.rating {\n  position: relative;\n  display: inline-flex;\n}\r\n.rating :where(input) {\n  cursor: pointer;\n  -webkit-animation: rating-pop var(--animation-input, 0.25s) ease-out;\n          animation: rating-pop var(--animation-input, 0.25s) ease-out;\n  height: 1.5rem;\n  width: 1.5rem;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  --tw-bg-opacity: 1;\n}\r\n.select {\n  display: inline-flex;\n  flex-shrink: 0;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n       user-select: none;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  height: 3rem;\n  padding-left: 1rem;\n  padding-right: 2.5rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  line-height: 2;\n  min-height: 3rem;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b1) / var(--tw-bg-opacity));\n  font-weight: 600;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: var(--rounded-btn, 0.5rem);\n  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);\n  background-position: calc(100% - 20px) calc(1px + 50%), calc(100% - 16px) calc(1px + 50%);\n  background-size: 4px 4px, 4px 4px;\n  background-repeat: no-repeat;\n}\r\n.select[multiple] {\n  height: auto;\n}\r\n.steps .step {\n  display: grid;\n  grid-template-columns: repeat(1, minmax(0, 1fr));\n  grid-template-columns: auto;\n  grid-template-rows: repeat(2, minmax(0, 1fr));\n  grid-template-rows: 40px 1fr;\n  place-items: center;\n  text-align: center;\n  min-width: 4rem;\n}\r\n.textarea {\n  flex-shrink: 1;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  padding-left: 1rem;\n  padding-right: 1rem;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  line-height: 2;\n  min-height: 3rem;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b1) / var(--tw-bg-opacity));\n  border-radius: var(--rounded-btn, 0.5rem);\n}\r\n.btn-outline .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--nf, var(--n)) / var(--tw-border-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--s) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--s) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--a) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--a) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--ac) / var(--tw-text-opacity));\n}\r\n.btn-outline .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--nf, var(--n)) / var(--tw-border-opacity));\n  background-color: transparent;\n}\r\n.btn-outline.btn-primary .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--p) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--s) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--s) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--a) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--a) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-info .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--in) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--in) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-success .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--su) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--su) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-warning .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--wa) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--wa) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-error .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--er) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--er) / var(--tw-text-opacity));\n}\r\n.btn-outline:hover .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.btn-outline:hover .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary:hover .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--pc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--pc) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--p) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary:hover .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--pc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--pf, var(--p)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary:hover .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--sc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--sc) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--s) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary:hover .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--sc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--sf, var(--s)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent:hover .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--ac) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--ac) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--a) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent:hover .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--ac) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--af, var(--a)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--ac) / var(--tw-text-opacity));\n}\r\n.btm-nav>*.disabled, \n    .btm-nav>*.disabled:hover, \n    .btm-nav>*[disabled], \n    .btm-nav>*[disabled]:hover {\n  pointer-events: none;\n  --tw-border-opacity: 0;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  --tw-bg-opacity: 0.1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.btm-nav>* .label {\n  font-size: 1rem;\n  line-height: 1.5rem;\n}\r\n.btn:active:hover,\n  .btn:active:focus {\n  -webkit-animation: none;\n          animation: none;\n  transform: scale(var(--btn-focus-scale, 0.95));\n}\r\n.btn:hover, \n    .btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--nf, var(--n)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--nf, var(--n)) / var(--tw-bg-opacity));\n}\r\n.btn:focus-visible {\n  outline: 2px solid hsl(var(--nf));\n  outline-offset: 2px;\n}\r\n.btn-primary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-primary:hover, \n    .btn-primary.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--pf, var(--p)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--pf, var(--p)) / var(--tw-bg-opacity));\n}\r\n.btn-primary:focus-visible {\n  outline: 2px solid hsl(var(--p));\n}\r\n.btn-secondary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--s) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--s) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.btn-secondary:hover, \n    .btn-secondary.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--sf, var(--s)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--sf, var(--s)) / var(--tw-bg-opacity));\n}\r\n.btn-secondary:focus-visible {\n  outline: 2px solid hsl(var(--s));\n}\r\n.btn-accent {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--a) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--a) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--ac) / var(--tw-text-opacity));\n}\r\n.btn-accent:hover, \n    .btn-accent.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--af, var(--a)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--af, var(--a)) / var(--tw-bg-opacity));\n}\r\n.btn-accent:focus-visible {\n  outline: 2px solid hsl(var(--a));\n}\r\n.btn-warning {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--wa) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--wa) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--wac, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-warning:hover, \n    .btn-warning.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--wa) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--wa) / var(--tw-bg-opacity));\n}\r\n.btn-warning:focus-visible {\n  outline: 2px solid hsl(var(--wa));\n}\r\n.btn-error {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--er) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--er) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--erc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-error:hover, \n    .btn-error.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--er) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--er) / var(--tw-bg-opacity));\n}\r\n.btn-error:focus-visible {\n  outline: 2px solid hsl(var(--er));\n}\r\n.btn.glass:hover,\n    .btn.glass.btn-active {\n  --glass-opacity: 25%;\n  --glass-border-opacity: 15%;\n}\r\n.btn.glass:focus-visible {\n  outline: 2px solid 0 0 2px currentColor;\n}\r\n.btn-outline {\n  border-color: currentColor;\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.btn-outline:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--b1) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary {\n  --tw-text-opacity: 1;\n  color: hsl(var(--p) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--pf, var(--p)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--pf, var(--p)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary {\n  --tw-text-opacity: 1;\n  color: hsl(var(--s) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--sf, var(--s)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--sf, var(--s)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent {\n  --tw-text-opacity: 1;\n  color: hsl(var(--a) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--af, var(--a)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--af, var(--a)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--ac) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-success {\n  --tw-text-opacity: 1;\n  color: hsl(var(--su) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-success:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--su) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--su) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--suc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-info {\n  --tw-text-opacity: 1;\n  color: hsl(var(--in) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-info:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--in) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--in) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--inc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-warning {\n  --tw-text-opacity: 1;\n  color: hsl(var(--wa) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-warning:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--wa) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--wa) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--wac, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-error {\n  --tw-text-opacity: 1;\n  color: hsl(var(--er) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-error:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--er) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--er) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--erc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-disabled, \n  .btn-disabled:hover, \n  .btn[disabled], \n  .btn[disabled]:hover {\n  --tw-border-opacity: 0;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  --tw-bg-opacity: 0.2;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.btn.loading.btn-square:before, \n    .btn.loading.btn-circle:before {\n  margin-right: 0px;\n}\r\n.btn.loading.btn-xl:before, \n    .btn.loading.btn-lg:before {\n  height: 1.25rem;\n  width: 1.25rem;\n}\r\n.btn.loading.btn-sm:before, \n    .btn.loading.btn-xs:before {\n  height: 0.75rem;\n  width: 0.75rem;\n}\r\n.btn-group > input[type=\"radio\"]:checked.btn, \n  .btn-group > .btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-group > input[type=\"radio\"]:checked.btn:focus-visible, .btn-group > .btn-active:focus-visible {\n  outline: 2px solid hsl(var(--p));\n}\r\n.btn-group:not(.btn-group-vertical) > .btn:not(:first-of-type) {\n  margin-left: -1px;\n  border-top-left-radius: 0px;\n  border-bottom-left-radius: 0px;\n}\r\n.btn-group:not(.btn-group-vertical) > .btn:not(:last-of-type) {\n  border-top-right-radius: 0px;\n  border-bottom-right-radius: 0px;\n}\r\n.btn-group-vertical > .btn:not(:first-of-type) {\n  margin-top: -1px;\n  border-top-left-radius: 0px;\n  border-top-right-radius: 0px;\n}\r\n.btn-group-vertical > .btn:not(:last-of-type) {\n  border-bottom-right-radius: 0px;\n  border-bottom-left-radius: 0px;\n}\r\n@-webkit-keyframes button-pop {\n\n  0% {\n    transform: scale(var(--btn-focus-scale, 0.95));\n  }\n\n  40% {\n    transform: scale(1.02);\n  }\n\n  100% {\n    transform: scale(1);\n  }\n}\r\n@keyframes button-pop {\n\n  0% {\n    transform: scale(var(--btn-focus-scale, 0.95));\n  }\n\n  40% {\n    transform: scale(1.02);\n  }\n\n  100% {\n    transform: scale(1);\n  }\n}\r\n.card:focus-visible {\n  outline: 2px solid currentColor;\n  outline-offset: 2px;\n}\r\n.card.bordered {\n  border-width: 1px;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n}\r\n.card.compact .card-body {\n  padding: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n}\r\n.checkbox:focus-visible {\n  outline: 2px solid hsl(var(--bc));\n  outline-offset: 2px;\n}\r\n.checkbox:checked, \n  .checkbox[checked=\"true\"], \n  .checkbox[aria-checked=true] {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  background-repeat: no-repeat;\n  -webkit-animation: checkmark var(--animation-input, 0.2s) ease-in-out;\n          animation: checkmark var(--animation-input, 0.2s) ease-in-out;\n  background-image: linear-gradient(-45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);\n}\r\n.checkbox:indeterminate {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  background-repeat: no-repeat;\n  -webkit-animation: checkmark var(--animation-input, 0.2s) ease-in-out;\n          animation: checkmark var(--animation-input, 0.2s) ease-in-out;\n  background-image: linear-gradient(90deg, transparent 80%, hsl(var(--chkbg)) 80%), linear-gradient(-90deg, transparent 80%, hsl(var(--chkbg)) 80%), linear-gradient(0deg, hsl(var(--chkbg)) 43%, hsl(var(--chkfg)) 43%, hsl(var(--chkfg)) 57%, hsl(var(--chkbg)) 57%);\n}\r\n.checkbox-primary {\n  --chkbg: var(--p);\n  --chkfg: var(--pc);\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n}\r\n.checkbox-primary:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n}\r\n.checkbox-primary:focus-visible {\n  outline: 2px solid hsl(var(--p));\n}\r\n.checkbox-primary:checked, \n    .checkbox-primary[checked=\"true\"], \n    .checkbox-primary[aria-checked=true] {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.checkbox:disabled {\n  cursor: not-allowed;\n  border-color: transparent;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  opacity: 0.2;\n}\r\n@-webkit-keyframes checkmark {\n\n  0% {\n    background-position-y: 5px;\n  }\n\n  50% {\n    background-position-y: -2px;\n  }\n\n  100% {\n    background-position-y: 0;\n  }\n}\r\n@keyframes checkmark {\n\n  0% {\n    background-position-y: 5px;\n  }\n\n  50% {\n    background-position-y: -2px;\n  }\n\n  100% {\n    background-position-y: 0;\n  }\n}\r\nbody[dir=\"rtl\"] .checkbox {\n  --chkbg: var(--bc);\n  --chkfg: var(--b1);\n}\r\nbody[dir=\"rtl\"] .checkbox:checked,\n    body[dir=\"rtl\"] .checkbox[checked=\"true\"],\n    body[dir=\"rtl\"] .checkbox[aria-checked=true] {\n  background-image: linear-gradient(45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(-45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-primary {\n  outline: 2px solid hsl(var(--p));\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-secondary {\n  outline: 2px solid hsl(var(--s));\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-accent {\n  outline: 2px solid hsl(var(--a));\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-warning {\n  outline: 2px solid hsl(var(--wa));\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-error {\n  outline: 2px solid hsl(var(--er));\n}\r\n.label-text {\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.label a:hover {\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.input[list]::-webkit-calendar-picker-indicator {\n  line-height: 1em;\n}\r\n.input-bordered {\n  --tw-border-opacity: 0.2;\n}\r\n.input:focus {\n  outline: 2px solid hsla(var(--bc) / 0.2);\n  outline-offset: 2px;\n}\r\n.input-disabled, \n  .input[disabled] {\n  cursor: not-allowed;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.input-disabled::-moz-placeholder, .input[disabled]::-moz-placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.input-disabled::placeholder, \n  .input[disabled]::placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.mask-star-2 {\n  -webkit-mask-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTkycHgiIGhlaWdodD0iMTgwcHgiIHZpZXdCb3g9IjAgMCAxOTIgMTgwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPCEtLSBHZW5lcmF0b3I6IFNrZXRjaCA2MC4xICg4ODEzMykgLSBodHRwczovL3NrZXRjaC5jb20gLS0+CiAgICA8dGl0bGU+c3Rhci0yPC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBvbHlnb24gaWQ9InN0YXItMiIgZmlsbD0iIzAwMDAwMCIgcG9pbnRzPSI5NiAxNTMuMDQzNjYxIDM3LjIyMTQ3NDggMTc5LjI4NjUwNiA0NC4yNDExOTA0IDExNS43NzQ0NDQgMC44OTQzNDgzNyA2OC40ODEzNTE1IDY0LjAxMTI5NjUgNTUuNDcxNTgyOCA5NiAwIDEyNy45ODg3MDQgNTUuNDcxNTgyOCAxOTEuMTA1NjUyIDY4LjQ4MTM1MTUgMTQ3Ljc1ODgxIDExNS43NzQ0NDQgMTU0Ljc3ODUyNSAxNzkuMjg2NTA2Ij48L3BvbHlnb24+CiAgICA8L2c+Cjwvc3ZnPg==);\n  mask-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTkycHgiIGhlaWdodD0iMTgwcHgiIHZpZXdCb3g9IjAgMCAxOTIgMTgwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPCEtLSBHZW5lcmF0b3I6IFNrZXRjaCA2MC4xICg4ODEzMykgLSBodHRwczovL3NrZXRjaC5jb20gLS0+CiAgICA8dGl0bGU+c3Rhci0yPC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBvbHlnb24gaWQ9InN0YXItMiIgZmlsbD0iIzAwMDAwMCIgcG9pbnRzPSI5NiAxNTMuMDQzNjYxIDM3LjIyMTQ3NDggMTc5LjI4NjUwNiA0NC4yNDExOTA0IDExNS43NzQ0NDQgMC44OTQzNDgzNyA2OC40ODEzNTE1IDY0LjAxMTI5NjUgNTUuNDcxNTgyOCA5NiAwIDEyNy45ODg3MDQgNTUuNDcxNTgyOCAxOTEuMTA1NjUyIDY4LjQ4MTM1MTUgMTQ3Ljc1ODgxIDExNS43NzQ0NDQgMTU0Ljc3ODUyNSAxNzkuMjg2NTA2Ij48L3BvbHlnb24+CiAgICA8L2c+Cjwvc3ZnPg==);\n}\r\n.menu li.disabled > * {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n       user-select: none;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.menu li.disabled > *:hover {\n  background-color: transparent;\n}\r\n@-webkit-keyframes progress-loading {\n\n  50% {\n    left: 107%;\n  }\n}\r\n@keyframes progress-loading {\n\n  50% {\n    left: 107%;\n  }\n}\r\n.radio:focus-visible {\n  outline: 2px solid hsl(var(--bc));\n  outline-offset: 2px;\n}\r\n.radio:checked, \n  .radio[aria-checked=true] {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  -webkit-animation: radiomark var(--animation-input, 0.2s) ease-in-out;\n          animation: radiomark var(--animation-input, 0.2s) ease-in-out;\n  box-shadow: 0 0 0 4px hsl(var(--b1)) inset, 0 0 0 4px hsl(var(--b1)) inset;\n}\r\n.radio:disabled {\n  cursor: not-allowed;\n  opacity: 0.2;\n}\r\n@-webkit-keyframes radiomark {\n\n  0% {\n    box-shadow: 0 0 0 12px hsl(var(--b1)) inset, 0 0 0 12px hsl(var(--b1)) inset;\n  }\n\n  50% {\n    box-shadow: 0 0 0 3px hsl(var(--b1)) inset, 0 0 0 3px hsl(var(--b1)) inset;\n  }\n\n  100% {\n    box-shadow: 0 0 0 4px hsl(var(--b1)) inset, 0 0 0 4px hsl(var(--b1)) inset;\n  }\n}\r\n@keyframes radiomark {\n\n  0% {\n    box-shadow: 0 0 0 12px hsl(var(--b1)) inset, 0 0 0 12px hsl(var(--b1)) inset;\n  }\n\n  50% {\n    box-shadow: 0 0 0 3px hsl(var(--b1)) inset, 0 0 0 3px hsl(var(--b1)) inset;\n  }\n\n  100% {\n    box-shadow: 0 0 0 4px hsl(var(--b1)) inset, 0 0 0 4px hsl(var(--b1)) inset;\n  }\n}\r\n.range:focus-visible::-webkit-slider-thumb {\n  --focus-shadow: 0 0 0 6px hsl(var(--b1)) inset, 0 0 0 2rem hsl(var(--range-shdw)) inset;\n}\r\n.range:focus-visible::-moz-range-thumb {\n  --focus-shadow: 0 0 0 6px hsl(var(--b1)) inset, 0 0 0 2rem hsl(var(--range-shdw)) inset;\n}\r\n.range::-webkit-slider-runnable-track {\n  height: 0.5rem;\n  width: 100%;\n  border-radius: var(--rounded-box, 1rem);\n  background-color: hsla(var(--bc) / 0.1);\n}\r\n.range::-moz-range-track {\n  height: 0.5rem;\n  width: 100%;\n  border-radius: var(--rounded-box, 1rem);\n  background-color: hsla(var(--bc) / 0.1);\n}\r\n.range::-webkit-slider-thumb {\n  background-color: hsl(var(--b1));\n  position: relative;\n  height: 1.5rem;\n  width: 1.5rem;\n  border-style: none;\n  border-radius: var(--rounded-box, 1rem);\n  -webkit-appearance: none;\n  top: 50%;\n  color: hsl(var(--range-shdw));\n  transform: translateY(-50%);\n  --filler-size: 100rem;\n  --filler-offset: 0.6rem;\n  box-shadow: 0 0 0 3px hsl(var(--range-shdw)) inset, var(--focus-shadow, 0 0), calc(var(--filler-size) * -1 - var(--filler-offset)) 0 0 var(--filler-size);\n}\r\n.range::-moz-range-thumb {\n  background-color: hsl(var(--b1));\n  position: relative;\n  height: 1.5rem;\n  width: 1.5rem;\n  border-style: none;\n  border-radius: var(--rounded-box, 1rem);\n  top: 50%;\n  color: hsl(var(--range-shdw));\n  --filler-size: 100rem;\n  --filler-offset: 0.5rem;\n  box-shadow: 0 0 0 3px hsl(var(--range-shdw)) inset, var(--focus-shadow, 0 0), calc(var(--filler-size) * -1 - var(--filler-offset)) 0 0 var(--filler-size);\n}\r\n.range-primary {\n  --range-shdw: var(--p);\n}\r\n.rating input {\n  -moz-appearance: none;\n       appearance: none;\n  -webkit-appearance: none;\n}\r\n.rating .rating-hidden {\n  width: 0.5rem;\n  background-color: transparent;\n}\r\n.rating input:checked ~ input, \n  .rating input[aria-checked=true] ~ input {\n  --tw-bg-opacity: 0.2;\n}\r\n.rating input:focus-visible {\n  transition-property: transform;\n  transition-duration: 300ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  transform: translateY(-0.125em);\n}\r\n.rating input:active:focus {\n  -webkit-animation: none;\n          animation: none;\n  transform: translateY(-0.125em);\n}\r\n.rating-half :where(input:not(.rating-hidden)) {\n  width: 0.75rem;\n}\r\n@-webkit-keyframes rating-pop {\n\n  0% {\n    transform: translateY(-0.125em);\n  }\n\n  40% {\n    transform: translateY(-0.125em);\n  }\n\n  100% {\n    transform: translateY(0);\n  }\n}\r\n@keyframes rating-pop {\n\n  0% {\n    transform: translateY(-0.125em);\n  }\n\n  40% {\n    transform: translateY(-0.125em);\n  }\n\n  100% {\n    transform: translateY(0);\n  }\n}\r\n.select:focus {\n  outline: 2px solid hsla(var(--bc) / 0.2);\n  outline-offset: 2px;\n}\r\n.select-primary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n}\r\n.select-primary:focus {\n  outline: 2px solid hsl(var(--p));\n}\r\n.select-disabled, \n  .select[disabled] {\n  cursor: not-allowed;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.select-disabled::-moz-placeholder, .select[disabled]::-moz-placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.select-disabled::placeholder, \n  .select[disabled]::placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.select-multiple, \n  .select[multiple], \n  .select[size].select:not([size=\"1\"]) {\n  background-image: none;\n  padding-right: 1rem;\n}\r\n.steps .step:before {\n  top: 0px;\n  grid-column-start: 1;\n  grid-row-start: 1;\n  height: 0.5rem;\n  width: 100%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b3, var(--b2)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n  content: \"\";\n  margin-left: -100%;\n}\r\n.steps .step:after {\n  content: counter(step);\n  counter-increment: step;\n  z-index: 1;\n  position: relative;\n  grid-column-start: 1;\n  grid-row-start: 1;\n  display: grid;\n  height: 2rem;\n  width: 2rem;\n  place-items: center;\n  place-self: center;\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b3, var(--b2)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.steps .step:first-child:before {\n  content: none;\n}\r\n.steps .step[data-content]:after {\n  content: attr(data-content);\n}\r\n.textarea-bordered {\n  --tw-border-opacity: 0.2;\n}\r\n.textarea:focus {\n  outline: 2px solid hsla(var(--bc) / 0.2);\n  outline-offset: 2px;\n}\r\n.textarea-primary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n}\r\n.textarea-primary:focus {\n  outline: 2px solid hsl(var(--p));\n}\r\n.textarea-disabled, \n  .textarea[disabled] {\n  cursor: not-allowed;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.textarea-disabled::-moz-placeholder, .textarea[disabled]::-moz-placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.textarea-disabled::placeholder, \n  .textarea[disabled]::placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n@-webkit-keyframes toast-pop {\n\n  0% {\n    transform: scale(0.9);\n    opacity: 0;\n  }\n\n  100% {\n    transform: scale(1);\n    opacity: 1;\n  }\n}\r\n@keyframes toast-pop {\n\n  0% {\n    transform: scale(0.9);\n    opacity: 0;\n  }\n\n  100% {\n    transform: scale(1);\n    opacity: 1;\n  }\n}\r\n.btn-md {\n  height: 3rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  min-height: 3rem;\n  font-size: 0.875rem;\n}\r\n.btn-square:where(.btn-xs) {\n  height: 1.5rem;\n  width: 1.5rem;\n  padding: 0px;\n}\r\n.btn-square:where(.btn-sm) {\n  height: 2rem;\n  width: 2rem;\n  padding: 0px;\n}\r\n.btn-square:where(.btn-md) {\n  height: 3rem;\n  width: 3rem;\n  padding: 0px;\n}\r\n.btn-square:where(.btn-lg) {\n  height: 4rem;\n  width: 4rem;\n  padding: 0px;\n}\r\n.btn-circle:where(.btn-md) {\n  height: 3rem;\n  width: 3rem;\n  border-radius: 9999px;\n  padding: 0px;\n}\r\n.checkbox-lg {\n  height: 2rem;\n  width: 2rem;\n}\r\n.indicator :where(.indicator-item) {\n  right: 0px;\n  left: auto;\n  top: 0px;\n  bottom: auto;\n  --tw-translate-x: 50%;\n  --tw-translate-y: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-start) {\n  right: auto;\n  left: 0px;\n  --tw-translate-x: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-center) {\n  right: 50%;\n  left: 50%;\n  --tw-translate-x: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-end) {\n  right: 0px;\n  left: auto;\n  --tw-translate-x: 50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-bottom) {\n  top: auto;\n  bottom: 0px;\n  --tw-translate-y: 50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-middle) {\n  top: 50%;\n  bottom: 50%;\n  --tw-translate-y: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-top) {\n  top: 0px;\n  bottom: auto;\n  --tw-translate-y: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.rating-lg input {\n  height: 2.5rem;\n  width: 2.5rem;\n}\r\n.rating-half.rating-xs input:not(.rating-hidden) {\n  width: 0.375rem;\n}\r\n.rating-half.rating-sm input:not(.rating-hidden) {\n  width: 0.5rem;\n}\r\n.rating-half.rating-md input:not(.rating-hidden) {\n  width: 0.75rem;\n}\r\n.rating-half.rating-lg input:not(.rating-hidden) {\n  width: 1.25rem;\n}\r\n.steps-horizontal .step {\n  display: grid;\n  grid-template-columns: repeat(1, minmax(0, 1fr));\n  grid-template-rows: repeat(2, minmax(0, 1fr));\n  place-items: center;\n  text-align: center;\n}\r\n.steps-vertical .step {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  grid-template-rows: repeat(1, minmax(0, 1fr));\n}\r\n.alert-info {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--in) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--inc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.badge-secondary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--s) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--s) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.badge-warning {\n  border-color: transparent;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--wa) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--wac, var(--nc)) / var(--tw-text-opacity));\n}\r\n.badge-outline.badge-secondary {\n  --tw-text-opacity: 1;\n  color: hsl(var(--s) / var(--tw-text-opacity));\n}\r\n.badge-outline.badge-warning {\n  --tw-text-opacity: 1;\n  color: hsl(var(--wa) / var(--tw-text-opacity));\n}\r\n.card-compact .card-body {\n  padding: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n}\r\n.card-normal .card-body {\n  padding: var(--padding-card, 2rem);\n  font-size: 1rem;\n  line-height: 1.5rem;\n}\r\n.steps-horizontal .step {\n  grid-template-rows: 40px 1fr;\n  grid-template-columns: auto;\n  min-width: 4rem;\n}\r\n.steps-horizontal .step:before {\n  height: 0.5rem;\n  width: 100%;\n  --tw-translate-y: 0px;\n  --tw-translate-x: 0px;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n  content: \"\";\n  margin-left: -100%;\n}\r\n.steps-vertical .step {\n  gap: 0.5rem;\n  grid-template-columns: 40px 1fr;\n  grid-template-rows: auto;\n  min-height: 4rem;\n  justify-items: start;\n}\r\n.steps-vertical .step:before {\n  height: 100%;\n  width: 0.5rem;\n  --tw-translate-y: -50%;\n  --tw-translate-x: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n  margin-left: 50%;\n}\r\n.fixed {\n  position: fixed;\n}\r\n.absolute {\n  position: absolute;\n}\r\n.bottom-0 {\n  bottom: 0px;\n}\r\n.z-20 {\n  z-index: 20;\n}\r\n.z-10 {\n  z-index: 10;\n}\r\n.z-50 {\n  z-index: 50;\n}\r\n.m-10 {\n  margin: 2.5rem;\n}\r\n.mx-auto {\n  margin-left: auto;\n  margin-right: auto;\n}\r\n.ml-2 {\n  margin-left: 0.5rem;\n}\r\n.-mt-4 {\n  margin-top: -1rem;\n}\r\n.-mt-2 {\n  margin-top: -0.5rem;\n}\r\n.mt-7 {\n  margin-top: 1.75rem;\n}\r\n.ml-8 {\n  margin-left: 2rem;\n}\r\n.ml-16 {\n  margin-left: 4rem;\n}\r\n.mt-8 {\n  margin-top: 2rem;\n}\r\n.-mt-5 {\n  margin-top: -1.25rem;\n}\r\n.mt-6 {\n  margin-top: 1.5rem;\n}\r\n.ml-3 {\n  margin-left: 0.75rem;\n}\r\n.mt-2 {\n  margin-top: 0.5rem;\n}\r\n.mb-2 {\n  margin-bottom: 0.5rem;\n}\r\n.mr-2 {\n  margin-right: 0.5rem;\n}\r\n.-ml-3 {\n  margin-left: -0.75rem;\n}\r\n.mr-\\[320px\\] {\n  margin-right: 320px;\n}\r\n.-mt-1 {\n  margin-top: -0.25rem;\n}\r\n.ml-11 {\n  margin-left: 2.75rem;\n}\r\n.flex {\n  display: flex;\n}\r\n.h-28 {\n  height: 7rem;\n}\r\n.h-20 {\n  height: 5rem;\n}\r\n.h-16 {\n  height: 4rem;\n}\r\n.h-48 {\n  height: 12rem;\n}\r\n.h-6 {\n  height: 1.5rem;\n}\r\n.h-screen {\n  height: 100vh;\n}\r\n.h-24 {\n  height: 6rem;\n}\r\n.min-h-screen {\n  min-height: 100vh;\n}\r\n.w-full {\n  width: 100%;\n}\r\n.w-12 {\n  width: 3rem;\n}\r\n.w-28 {\n  width: 7rem;\n}\r\n.w-20 {\n  width: 5rem;\n}\r\n.w-16 {\n  width: 4rem;\n}\r\n.w-72 {\n  width: 18rem;\n}\r\n.w-48 {\n  width: 12rem;\n}\r\n.w-6 {\n  width: 1.5rem;\n}\r\n.w-screen {\n  width: 100vw;\n}\r\n.w-24 {\n  width: 6rem;\n}\r\n.w-64 {\n  width: 16rem;\n}\r\n.w-\\[270px\\] {\n  width: 270px;\n}\r\n.max-w-sm {\n  max-width: 24rem;\n}\r\n.max-w-xs {\n  max-width: 20rem;\n}\r\n.flex-shrink-0 {\n  flex-shrink: 0;\n}\r\n.transform {\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.cursor-pointer {\n  cursor: pointer;\n}\r\n.flex-col {\n  flex-direction: column;\n}\r\n.content-center {\n  align-content: center;\n}\r\n.items-center {\n  align-items: center;\n}\r\n.justify-center {\n  justify-content: center;\n}\r\n.justify-between {\n  justify-content: space-between;\n}\r\n.rounded-md {\n  border-radius: 0.375rem;\n}\r\n.bg-base-100 {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b1) / var(--tw-bg-opacity));\n}\r\n.bg-base-200 {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n}\r\n.bg-primary {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n}\r\n.fill-warning {\n  fill: hsl(var(--wa));\n}\r\n.fill-secondary {\n  fill: hsl(var(--s));\n}\r\n.fill-base-100 {\n  fill: hsl(var(--b1));\n}\r\n.stroke-warning {\n  stroke: hsl(var(--wa));\n}\r\n.stroke-secondary {\n  stroke: hsl(var(--s));\n}\r\n.stroke-current {\n  stroke: currentColor;\n}\r\n.p-2 {\n  padding: 0.5rem;\n}\r\n.p-5 {\n  padding: 1.25rem;\n}\r\n.py-6 {\n  padding-top: 1.5rem;\n  padding-bottom: 1.5rem;\n}\r\n.px-2 {\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n}\r\n.pt-4 {\n  padding-top: 1rem;\n}\r\n.pl-4 {\n  padding-left: 1rem;\n}\r\n.text-center {\n  text-align: center;\n}\r\n.text-3xl {\n  font-size: 1.875rem;\n  line-height: 2.25rem;\n}\r\n.text-base {\n  font-size: 1rem;\n  line-height: 1.5rem;\n}\r\n.text-5xl {\n  font-size: 3rem;\n  line-height: 1;\n}\r\n.text-sm {\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n}\r\n.text-xl {\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n}\r\n.font-bold {\n  font-weight: 700;\n}\r\n.shadow-2xl {\n  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);\n  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\r\n.shadow-lg {\n  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\r\n/*My hatred for CSS is present in the emptiness of this file*/\r\n@media (min-width: 1024px) {\n\n  .lg\\:flex-row-reverse {\n    flex-direction: row-reverse;\n  }\n\n  .lg\\:text-left {\n    text-align: left;\n  }\n}\r\n@media (min-width: 1280px) {\n\n  .xl\\:mb-4 {\n    margin-bottom: 1rem;\n  }\n\n  .xl\\:ml-4 {\n    margin-left: 1rem;\n  }\n\n  .xl\\:h-64 {\n    height: 16rem;\n  }\n\n  .xl\\:h-48 {\n    height: 12rem;\n  }\n\n  .xl\\:h-8 {\n    height: 2rem;\n  }\n\n  .xl\\:h-36 {\n    height: 9rem;\n  }\n\n  .xl\\:h-24 {\n    height: 6rem;\n  }\n\n  .xl\\:w-64 {\n    width: 16rem;\n  }\n\n  .xl\\:w-48 {\n    width: 12rem;\n  }\n\n  .xl\\:w-24 {\n    width: 6rem;\n  }\n\n  .xl\\:w-28 {\n    width: 7rem;\n  }\n\n  .xl\\:w-12 {\n    width: 3rem;\n  }\n\n  .xl\\:w-36 {\n    width: 9rem;\n  }\n\n  .xl\\:w-80 {\n    width: 20rem;\n  }\n\n  .xl\\:p-10 {\n    padding: 2.5rem;\n  }\n\n  .xl\\:pl-0 {\n    padding-left: 0px;\n  }\n\n  .xl\\:pl-8 {\n    padding-left: 2rem;\n  }\n\n  .xl\\:text-lg {\n    font-size: 1.125rem;\n    line-height: 1.75rem;\n  }\n\n  .xl\\:text-2xl {\n    font-size: 1.5rem;\n    line-height: 2rem;\n  }\n\n  .xl\\:text-3xl {\n    font-size: 1.875rem;\n    line-height: 2.25rem;\n  }\n}\r\n\r\n";
+    var css_248z = "/*\n! tailwindcss v3.1.7 | MIT License | https://tailwindcss.com\n*//*\n1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)\n2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)\n*/\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: #e5e7eb; /* 2 */\n}\n\n::before,\n::after {\n  --tw-content: '';\n}\n\n/*\n1. Use a consistent sensible line-height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n3. Use a more readable tab size.\n4. Use the user's configured `sans` font-family by default.\n*/\n\nhtml {\n  line-height: 1.5; /* 1 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n  -moz-tab-size: 4; /* 3 */\n  -o-tab-size: 4;\n     tab-size: 4; /* 3 */\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 4 */\n}\n\n/*\n1. Remove the margin in all browsers.\n2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.\n*/\n\nbody {\n  margin: 0; /* 1 */\n  line-height: inherit; /* 2 */\n}\n\n/*\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n3. Ensure horizontal rules are visible by default.\n*/\n\nhr {\n  height: 0; /* 1 */\n  color: inherit; /* 2 */\n  border-top-width: 1px; /* 3 */\n}\n\n/*\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr:where([title]) {\n  -webkit-text-decoration: underline dotted;\n          text-decoration: underline dotted;\n}\n\n/*\nRemove the default font size and weight for headings.\n*/\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/*\nReset links to optimize for opt-in styling instead of opt-out.\n*/\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/*\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/*\n1. Use the user's configured `mono` font family by default.\n2. Correct the odd `em` font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/*\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n  font-size: 80%;\n}\n\n/*\nPrevent `sub` and `sup` elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/*\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n3. Remove gaps between table borders by default.\n*/\n\ntable {\n  text-indent: 0; /* 1 */\n  border-color: inherit; /* 2 */\n  border-collapse: collapse; /* 3 */\n}\n\n/*\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n3. Remove default padding in all browsers.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: inherit; /* 1 */\n  font-size: 100%; /* 1 */\n  font-weight: inherit; /* 1 */\n  line-height: inherit; /* 1 */\n  color: inherit; /* 1 */\n  margin: 0; /* 2 */\n  padding: 0; /* 3 */\n}\n\n/*\nRemove the inheritance of text transform in Edge and Firefox.\n*/\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/*\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Remove default button styles.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n  -webkit-appearance: button; /* 1 */\n  background-color: transparent; /* 2 */\n  background-image: none; /* 2 */\n}\n\n/*\nUse the modern Firefox focus style for all focusable elements.\n*/\n\n:-moz-focusring {\n  outline: auto;\n}\n\n/*\nRemove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)\n*/\n\n:-moz-ui-invalid {\n  box-shadow: none;\n}\n\n/*\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n  vertical-align: baseline;\n}\n\n/*\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/*\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/*\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/*\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to `inherit` in Safari.\n*/\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n  display: list-item;\n}\n\n/*\nRemoves the default spacing and border for appropriate elements.\n*/\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nlegend {\n  padding: 0;\n}\n\nol,\nul,\nmenu {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/*\nPrevent resizing textareas horizontally by default.\n*/\n\ntextarea {\n  resize: vertical;\n}\n\n/*\n1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)\n2. Set the default placeholder color to the user's configured gray 400 color.\n*/\n\ninput::-moz-placeholder, textarea::-moz-placeholder {\n  opacity: 1; /* 1 */\n  color: #9ca3af; /* 2 */\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1; /* 1 */\n  color: #9ca3af; /* 2 */\n}\n\n/*\nSet the default cursor for buttons.\n*/\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\n/*\nMake sure disabled buttons don't get the pointer cursor.\n*/\n:disabled {\n  cursor: default;\n}\n\n/*\n1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)\n2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)\n   This can trigger a poorly considered lint error in some tools but is included by design.\n*/\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/*\nConstrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)\n*/\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n:root,\n[data-theme] {\n  background-color: hsla(var(--b1) / var(--tw-bg-opacity, 1));\n  color: hsla(var(--bc) / var(--tw-text-opacity, 1));\n}\n\nhtml {\n  -webkit-tap-highlight-color: transparent;\n}\n\n:root {\n  --p: 202 100% 33%;\n  --pf: 202 100% 27%;\n  --sf: 45 70% 42%;\n  --af: 224 76% 38%;\n  --nf: 24 14% 5%;\n  --b2: 24 14% 6%;\n  --b3: 24 14% 6%;\n  --bc: 24 12% 81%;\n  --pc: 202 100% 87%;\n  --sc: 45 100% 10%;\n  --ac: 224 100% 90%;\n  --nc: 24 12% 81%;\n  --inc: 198 100% 12%;\n  --suc: 93 100% 12%;\n  --wac: 267 100% 92%;\n  --erc: 356 100% 93%;\n  --rounded-box: 1rem;\n  --rounded-btn: 0.5rem;\n  --rounded-badge: 1.9rem;\n  --animation-btn: 0.25s;\n  --animation-input: .2s;\n  --btn-text-case: uppercase;\n  --btn-focus-scale: 0.95;\n  --border-btn: 1px;\n  --tab-border: 1px;\n  --tab-radius: 0.5rem;\n  --s: 45 70% 52%;\n  --a: 224 76% 48%;\n  --n: 24 14% 7%;\n  --b1: 24 14% 7%;\n  --in: 198 93% 60%;\n  --su: 93 78% 60%;\n  --wa: 267 87% 59%;\n  --er: 356 100% 67%;\n}\n\n*, ::before, ::after {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\n\n::-webkit-backdrop {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\n\n::backdrop {\n  --tw-border-spacing-x: 0;\n  --tw-border-spacing-y: 0;\n  --tw-translate-x: 0;\n  --tw-translate-y: 0;\n  --tw-rotate: 0;\n  --tw-skew-x: 0;\n  --tw-skew-y: 0;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  --tw-pan-x:  ;\n  --tw-pan-y:  ;\n  --tw-pinch-zoom:  ;\n  --tw-scroll-snap-strictness: proximity;\n  --tw-ordinal:  ;\n  --tw-slashed-zero:  ;\n  --tw-numeric-figure:  ;\n  --tw-numeric-spacing:  ;\n  --tw-numeric-fraction:  ;\n  --tw-ring-inset:  ;\n  --tw-ring-offset-width: 0px;\n  --tw-ring-offset-color: #fff;\n  --tw-ring-color: rgb(59 130 246 / 0.5);\n  --tw-ring-offset-shadow: 0 0 #0000;\n  --tw-ring-shadow: 0 0 #0000;\n  --tw-shadow: 0 0 #0000;\n  --tw-shadow-colored: 0 0 #0000;\n  --tw-blur:  ;\n  --tw-brightness:  ;\n  --tw-contrast:  ;\n  --tw-grayscale:  ;\n  --tw-hue-rotate:  ;\n  --tw-invert:  ;\n  --tw-saturate:  ;\n  --tw-sepia:  ;\n  --tw-drop-shadow:  ;\n  --tw-backdrop-blur:  ;\n  --tw-backdrop-brightness:  ;\n  --tw-backdrop-contrast:  ;\n  --tw-backdrop-grayscale:  ;\n  --tw-backdrop-hue-rotate:  ;\n  --tw-backdrop-invert:  ;\n  --tw-backdrop-opacity:  ;\n  --tw-backdrop-saturate:  ;\n  --tw-backdrop-sepia:  ;\n}\r\n.alert {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n  align-items: center;\n  justify-content: space-between;\n  gap: 1rem;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  padding: 1rem;\n  border-radius: var(--rounded-box, 1rem);\n}\r\n.alert > :not([hidden]) ~ :not([hidden]) {\n  --tw-space-y-reverse: 0;\n  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));\n  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));\n}\r\n@media (min-width: 768px) {\n\n  .alert {\n    flex-direction: row;\n  }\n\n  .alert > :not([hidden]) ~ :not([hidden]) {\n    --tw-space-y-reverse: 0;\n    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));\n    margin-bottom: calc(0px * var(--tw-space-y-reverse));\n  }\n}\r\n.alert > :where(*) {\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n}\r\n.avatar.placeholder > div {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\r\n.badge {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  height: 1.25rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  padding-left: 0.563rem;\n  padding-right: 0.563rem;\n  border-width: 1px;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--n) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n  border-radius: var(--rounded-badge, 1.9rem);\n}\r\n.btn {\n  display: inline-flex;\n  flex-shrink: 0;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n       user-select: none;\n  flex-wrap: wrap;\n  align-items: center;\n  justify-content: center;\n  border-color: transparent;\n  border-color: hsl(var(--n) / var(--tw-border-opacity));\n  text-align: center;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: var(--rounded-btn, 0.5rem);\n  height: 3rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  line-height: 1em;\n  min-height: 3rem;\n  font-weight: 600;\n  text-transform: uppercase;\n  text-transform: var(--btn-text-case, uppercase);\n  -webkit-text-decoration-line: none;\n  text-decoration-line: none;\n  border-width: var(--border-btn, 1px);\n  -webkit-animation: button-pop var(--animation-btn, 0.25s) ease-out;\n          animation: button-pop var(--animation-btn, 0.25s) ease-out;\n  --tw-border-opacity: 1;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n}\r\n.btn-disabled, \n  .btn[disabled] {\n  pointer-events: none;\n}\r\n.btn-square {\n  height: 3rem;\n  width: 3rem;\n  padding: 0px;\n}\r\n.btn.loading, \n    .btn.loading:hover {\n  pointer-events: none;\n}\r\n.btn.loading:before {\n  margin-right: 0.5rem;\n  height: 1rem;\n  width: 1rem;\n  border-radius: 9999px;\n  border-width: 2px;\n  -webkit-animation: spin 2s linear infinite;\n          animation: spin 2s linear infinite;\n  content: \"\";\n  border-top-color: transparent;\n  border-left-color: transparent;\n  border-bottom-color: currentColor;\n  border-right-color: currentColor;\n}\r\n@media (prefers-reduced-motion: reduce) {\n\n  .btn.loading:before {\n    -webkit-animation: spin 10s linear infinite;\n            animation: spin 10s linear infinite;\n  }\n}\r\n@-webkit-keyframes spin {\n\n  from {\n    transform: rotate(0deg);\n  }\n\n  to {\n    transform: rotate(360deg);\n  }\n}\r\n@keyframes spin {\n\n  from {\n    transform: rotate(0deg);\n  }\n\n  to {\n    transform: rotate(360deg);\n  }\n}\r\n.btn-group > input[type=\"radio\"].btn {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n}\r\n.btn-group > input[type=\"radio\"].btn:before {\n  content: attr(data-title);\n}\r\n.card {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  overflow: hidden;\n  border-radius: var(--rounded-box, 1rem);\n}\r\n.card:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\r\n.card-body {\n  display: flex;\n  flex: 1 1 auto;\n  flex-direction: column;\n  padding: var(--padding-card, 2rem);\n  gap: 0.5rem;\n}\r\n.card-body :where(p) {\n  flex-grow: 1;\n}\r\n.card figure {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\r\n.card.image-full {\n  display: grid;\n}\r\n.card.image-full:before {\n  position: relative;\n  content: \"\";\n  z-index: 10;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  opacity: 0.75;\n  border-radius: var(--rounded-box, 1rem);\n}\r\n.card.image-full:before, \n    .card.image-full > * {\n  grid-column-start: 1;\n  grid-row-start: 1;\n}\r\n.card.image-full > figure img {\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\r\n.card.image-full > .card-body {\n  position: relative;\n  z-index: 20;\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n}\r\n.checkbox {\n  flex-shrink: 0;\n  --chkbg: var(--bc);\n  --chkfg: var(--b1);\n  height: 1.5rem;\n  width: 1.5rem;\n  cursor: pointer;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0.2;\n  border-radius: var(--rounded-btn, 0.5rem);\n}\r\n.form-control {\n  display: flex;\n  flex-direction: column;\n}\r\n.label {\n  display: flex;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n       user-select: none;\n  align-items: center;\n  justify-content: space-between;\n  padding-left: 0.25rem;\n  padding-right: 0.25rem;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n}\r\n.hero {\n  display: grid;\n  width: 100%;\n  place-items: center;\n  background-size: cover;\n  background-position: center;\n}\r\n.hero > * {\n  grid-column-start: 1;\n  grid-row-start: 1;\n}\r\n.hero-content {\n  z-index: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  max-width: 80rem;\n  gap: 1rem;\n  padding: 1rem;\n}\r\n.indicator {\n  position: relative;\n  display: inline-flex;\n  width: -webkit-max-content;\n  width: -moz-max-content;\n  width: max-content;\n}\r\n.indicator :where(.indicator-item) {\n  z-index: 1;\n  position: absolute;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.input {\n  flex-shrink: 1;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  height: 3rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  line-height: 2;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b1) / var(--tw-bg-opacity));\n  border-radius: var(--rounded-btn, 0.5rem);\n}\r\n.input-group > .input {\n  isolation: isolate;\n}\r\n.input-group > *, \n  .input-group > .input {\n  border-radius: 0px;\n}\r\n.mask {\n  -webkit-mask-size: contain;\n  mask-size: contain;\n  -webkit-mask-repeat: no-repeat;\n  mask-repeat: no-repeat;\n  -webkit-mask-position: center;\n  mask-position: center;\n}\r\n.mask-half-1 {\n  -webkit-mask-size: 200%;\n  mask-size: 200%;\n  -webkit-mask-position: left;\n  mask-position: left;\n}\r\n.mask-half-2 {\n  -webkit-mask-size: 200%;\n  mask-size: 200%;\n  -webkit-mask-position: right;\n  mask-position: right;\n}\r\n.menu > :where(li.disabled > *:not(ul):focus) {\n  cursor: auto;\n}\r\n.modal {\n  pointer-events: none;\n  visibility: hidden;\n  position: fixed;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n  display: flex;\n  justify-content: center;\n  opacity: 0;\n  z-index: 999;\n  background-color: hsl(var(--nf, var(--n)) / var(--tw-bg-opacity));\n  --tw-bg-opacity: 0.4;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  transition-property: transform, opacity;\n  overflow-y: hidden;\n  overscroll-behavior: contain;\n}\r\n:where(.modal) {\n  align-items: center;\n}\r\n.modal-box {\n  max-height: calc(100vh - 5em);\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b1) / var(--tw-bg-opacity));\n  padding: 1.5rem;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  width: 91.666667%;\n  max-width: 32rem;\n  --tw-scale-x: .9;\n  --tw-scale-y: .9;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n  border-top-left-radius: var(--rounded-box, 1rem);\n  border-top-right-radius: var(--rounded-box, 1rem);\n  border-bottom-left-radius: var(--rounded-box, 1rem);\n  border-bottom-right-radius: var(--rounded-box, 1rem);\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);\n  overflow-y: auto;\n  overscroll-behavior: contain;\n}\r\n.modal-open, \n.modal:target, \n.modal-toggle:checked + .modal {\n  pointer-events: auto;\n  visibility: visible;\n  opacity: 1;\n}\r\n.modal-action {\n  display: flex;\n  margin-top: 1.5rem;\n  justify-content: flex-end;\n}\r\n.modal-toggle {\n  position: fixed;\n  height: 0px;\n  width: 0px;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  opacity: 0;\n}\r\n.radio {\n  flex-shrink: 0;\n  --chkbg: var(--bc);\n  height: 1.5rem;\n  width: 1.5rem;\n  cursor: pointer;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  border-radius: 9999px;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0.2;\n  transition: background, box-shadow var(--animation-input, 0.2s) ease-in-out;\n}\r\n.range {\n  height: 1.5rem;\n  width: 100%;\n  cursor: pointer;\n  -webkit-appearance: none;\n  --range-shdw: var(--bc);\n  overflow: hidden;\n  background-color: transparent;\n  border-radius: var(--rounded-box, 1rem);\n}\r\n.range:focus {\n  outline: none;\n}\r\n.rating {\n  position: relative;\n  display: inline-flex;\n}\r\n.rating :where(input) {\n  cursor: pointer;\n  -webkit-animation: rating-pop var(--animation-input, 0.25s) ease-out;\n          animation: rating-pop var(--animation-input, 0.25s) ease-out;\n  height: 1.5rem;\n  width: 1.5rem;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  --tw-bg-opacity: 1;\n}\r\n.select {\n  display: inline-flex;\n  flex-shrink: 0;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n       user-select: none;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  height: 3rem;\n  padding-left: 1rem;\n  padding-right: 2.5rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  line-height: 2;\n  min-height: 3rem;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b1) / var(--tw-bg-opacity));\n  font-weight: 600;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  border-radius: var(--rounded-btn, 0.5rem);\n  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);\n  background-position: calc(100% - 20px) calc(1px + 50%), calc(100% - 16px) calc(1px + 50%);\n  background-size: 4px 4px, 4px 4px;\n  background-repeat: no-repeat;\n}\r\n.select[multiple] {\n  height: auto;\n}\r\n.steps .step {\n  display: grid;\n  grid-template-columns: repeat(1, minmax(0, 1fr));\n  grid-template-columns: auto;\n  grid-template-rows: repeat(2, minmax(0, 1fr));\n  grid-template-rows: 40px 1fr;\n  place-items: center;\n  text-align: center;\n  min-width: 4rem;\n}\r\n.textarea {\n  flex-shrink: 1;\n  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;\n  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;\n  transition-duration: 200ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  padding-left: 1rem;\n  padding-right: 1rem;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  line-height: 2;\n  min-height: 3rem;\n  border-width: 1px;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-border-opacity: 0;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b1) / var(--tw-bg-opacity));\n  border-radius: var(--rounded-btn, 0.5rem);\n}\r\n.btn-outline .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--nf, var(--n)) / var(--tw-border-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--s) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--s) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--a) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--a) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--ac) / var(--tw-text-opacity));\n}\r\n.btn-outline .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--nf, var(--n)) / var(--tw-border-opacity));\n  background-color: transparent;\n}\r\n.btn-outline.btn-primary .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--p) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--s) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--s) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--a) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--a) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-info .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--in) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--in) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-success .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--su) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--su) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-warning .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--wa) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--wa) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-error .badge-outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--er) / var(--tw-border-opacity));\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--er) / var(--tw-text-opacity));\n}\r\n.btn-outline:hover .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.btn-outline:hover .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--nc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary:hover .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--pc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--pc) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--p) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary:hover .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--pc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--pf, var(--p)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary:hover .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--sc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--sc) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--s) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary:hover .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--sc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--sf, var(--s)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent:hover .badge {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--ac) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--ac) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--a) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent:hover .badge.outline {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--ac) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--af, var(--a)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--ac) / var(--tw-text-opacity));\n}\r\n.btm-nav>*.disabled, \n    .btm-nav>*.disabled:hover, \n    .btm-nav>*[disabled], \n    .btm-nav>*[disabled]:hover {\n  pointer-events: none;\n  --tw-border-opacity: 0;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  --tw-bg-opacity: 0.1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.btm-nav>* .label {\n  font-size: 1rem;\n  line-height: 1.5rem;\n}\r\n.btn:active:hover,\n  .btn:active:focus {\n  -webkit-animation: none;\n          animation: none;\n  transform: scale(var(--btn-focus-scale, 0.95));\n}\r\n.btn:hover, \n    .btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--nf, var(--n)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--nf, var(--n)) / var(--tw-bg-opacity));\n}\r\n.btn:focus-visible {\n  outline: 2px solid hsl(var(--nf));\n  outline-offset: 2px;\n}\r\n.btn-primary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-primary:hover, \n    .btn-primary.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--pf, var(--p)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--pf, var(--p)) / var(--tw-bg-opacity));\n}\r\n.btn-primary:focus-visible {\n  outline: 2px solid hsl(var(--p));\n}\r\n.btn-secondary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--s) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--s) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.btn-secondary:hover, \n    .btn-secondary.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--sf, var(--s)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--sf, var(--s)) / var(--tw-bg-opacity));\n}\r\n.btn-secondary:focus-visible {\n  outline: 2px solid hsl(var(--s));\n}\r\n.btn-accent {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--a) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--a) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--ac) / var(--tw-text-opacity));\n}\r\n.btn-accent:hover, \n    .btn-accent.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--af, var(--a)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--af, var(--a)) / var(--tw-bg-opacity));\n}\r\n.btn-accent:focus-visible {\n  outline: 2px solid hsl(var(--a));\n}\r\n.btn-success {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--su) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--su) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--suc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-success:hover, \n    .btn-success.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--su) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--su) / var(--tw-bg-opacity));\n}\r\n.btn-success:focus-visible {\n  outline: 2px solid hsl(var(--su));\n}\r\n.btn-warning {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--wa) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--wa) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--wac, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-warning:hover, \n    .btn-warning.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--wa) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--wa) / var(--tw-bg-opacity));\n}\r\n.btn-warning:focus-visible {\n  outline: 2px solid hsl(var(--wa));\n}\r\n.btn-error {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--er) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--er) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--erc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-error:hover, \n    .btn-error.btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--er) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--er) / var(--tw-bg-opacity));\n}\r\n.btn-error:focus-visible {\n  outline: 2px solid hsl(var(--er));\n}\r\n.btn.glass:hover,\n    .btn.glass.btn-active {\n  --glass-opacity: 25%;\n  --glass-border-opacity: 15%;\n}\r\n.btn.glass:focus-visible {\n  outline: 2px solid 0 0 2px currentColor;\n}\r\n.btn-outline {\n  border-color: currentColor;\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.btn-outline:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--bc) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--b1) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary {\n  --tw-text-opacity: 1;\n  color: hsl(var(--p) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-primary:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--pf, var(--p)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--pf, var(--p)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary {\n  --tw-text-opacity: 1;\n  color: hsl(var(--s) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-secondary:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--sf, var(--s)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--sf, var(--s)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent {\n  --tw-text-opacity: 1;\n  color: hsl(var(--a) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-accent:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--af, var(--a)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--af, var(--a)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--ac) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-success {\n  --tw-text-opacity: 1;\n  color: hsl(var(--su) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-success:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--su) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--su) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--suc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-info {\n  --tw-text-opacity: 1;\n  color: hsl(var(--in) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-info:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--in) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--in) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--inc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-warning {\n  --tw-text-opacity: 1;\n  color: hsl(var(--wa) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-warning:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--wa) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--wa) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--wac, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-error {\n  --tw-text-opacity: 1;\n  color: hsl(var(--er) / var(--tw-text-opacity));\n}\r\n.btn-outline.btn-error:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--er) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--er) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--erc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.btn-disabled, \n  .btn-disabled:hover, \n  .btn[disabled], \n  .btn[disabled]:hover {\n  --tw-border-opacity: 0;\n  background-color: hsl(var(--n) / var(--tw-bg-opacity));\n  --tw-bg-opacity: 0.2;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.btn.loading.btn-square:before, \n    .btn.loading.btn-circle:before {\n  margin-right: 0px;\n}\r\n.btn.loading.btn-xl:before, \n    .btn.loading.btn-lg:before {\n  height: 1.25rem;\n  width: 1.25rem;\n}\r\n.btn.loading.btn-sm:before, \n    .btn.loading.btn-xs:before {\n  height: 0.75rem;\n  width: 0.75rem;\n}\r\n.btn-group > input[type=\"radio\"]:checked.btn, \n  .btn-group > .btn-active {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.btn-group > input[type=\"radio\"]:checked.btn:focus-visible, .btn-group > .btn-active:focus-visible {\n  outline: 2px solid hsl(var(--p));\n}\r\n.btn-group:not(.btn-group-vertical) > .btn:not(:first-of-type) {\n  margin-left: -1px;\n  border-top-left-radius: 0px;\n  border-bottom-left-radius: 0px;\n}\r\n.btn-group:not(.btn-group-vertical) > .btn:not(:last-of-type) {\n  border-top-right-radius: 0px;\n  border-bottom-right-radius: 0px;\n}\r\n.btn-group-vertical > .btn:not(:first-of-type) {\n  margin-top: -1px;\n  border-top-left-radius: 0px;\n  border-top-right-radius: 0px;\n}\r\n.btn-group-vertical > .btn:not(:last-of-type) {\n  border-bottom-right-radius: 0px;\n  border-bottom-left-radius: 0px;\n}\r\n@-webkit-keyframes button-pop {\n\n  0% {\n    transform: scale(var(--btn-focus-scale, 0.95));\n  }\n\n  40% {\n    transform: scale(1.02);\n  }\n\n  100% {\n    transform: scale(1);\n  }\n}\r\n@keyframes button-pop {\n\n  0% {\n    transform: scale(var(--btn-focus-scale, 0.95));\n  }\n\n  40% {\n    transform: scale(1.02);\n  }\n\n  100% {\n    transform: scale(1);\n  }\n}\r\n.card:focus-visible {\n  outline: 2px solid currentColor;\n  outline-offset: 2px;\n}\r\n.card.bordered {\n  border-width: 1px;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n}\r\n.card.compact .card-body {\n  padding: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n}\r\n.checkbox:focus-visible {\n  outline: 2px solid hsl(var(--bc));\n  outline-offset: 2px;\n}\r\n.checkbox:checked, \n  .checkbox[checked=\"true\"], \n  .checkbox[aria-checked=true] {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  background-repeat: no-repeat;\n  -webkit-animation: checkmark var(--animation-input, 0.2s) ease-in-out;\n          animation: checkmark var(--animation-input, 0.2s) ease-in-out;\n  background-image: linear-gradient(-45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);\n}\r\n.checkbox:indeterminate {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  background-repeat: no-repeat;\n  -webkit-animation: checkmark var(--animation-input, 0.2s) ease-in-out;\n          animation: checkmark var(--animation-input, 0.2s) ease-in-out;\n  background-image: linear-gradient(90deg, transparent 80%, hsl(var(--chkbg)) 80%), linear-gradient(-90deg, transparent 80%, hsl(var(--chkbg)) 80%), linear-gradient(0deg, hsl(var(--chkbg)) 43%, hsl(var(--chkfg)) 43%, hsl(var(--chkfg)) 57%, hsl(var(--chkbg)) 57%);\n}\r\n.checkbox-primary {\n  --chkbg: var(--p);\n  --chkfg: var(--pc);\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n}\r\n.checkbox-primary:hover {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n}\r\n.checkbox-primary:focus-visible {\n  outline: 2px solid hsl(var(--p));\n}\r\n.checkbox-primary:checked, \n    .checkbox-primary[checked=\"true\"], \n    .checkbox-primary[aria-checked=true] {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--pc) / var(--tw-text-opacity));\n}\r\n.checkbox:disabled {\n  cursor: not-allowed;\n  border-color: transparent;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  opacity: 0.2;\n}\r\n@-webkit-keyframes checkmark {\n\n  0% {\n    background-position-y: 5px;\n  }\n\n  50% {\n    background-position-y: -2px;\n  }\n\n  100% {\n    background-position-y: 0;\n  }\n}\r\n@keyframes checkmark {\n\n  0% {\n    background-position-y: 5px;\n  }\n\n  50% {\n    background-position-y: -2px;\n  }\n\n  100% {\n    background-position-y: 0;\n  }\n}\r\nbody[dir=\"rtl\"] .checkbox {\n  --chkbg: var(--bc);\n  --chkfg: var(--b1);\n}\r\nbody[dir=\"rtl\"] .checkbox:checked,\n    body[dir=\"rtl\"] .checkbox[checked=\"true\"],\n    body[dir=\"rtl\"] .checkbox[aria-checked=true] {\n  background-image: linear-gradient(45deg, transparent 65%, hsl(var(--chkbg)) 65.99%), linear-gradient(-45deg, transparent 75%, hsl(var(--chkbg)) 75.99%), linear-gradient(45deg, hsl(var(--chkbg)) 40%, transparent 40.99%), linear-gradient(-45deg, hsl(var(--chkbg)) 30%, hsl(var(--chkfg)) 30.99%, hsl(var(--chkfg)) 40%, transparent 40.99%), linear-gradient(45deg, hsl(var(--chkfg)) 50%, hsl(var(--chkbg)) 50.99%);\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-primary {\n  outline: 2px solid hsl(var(--p));\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-secondary {\n  outline: 2px solid hsl(var(--s));\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-accent {\n  outline: 2px solid hsl(var(--a));\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-success {\n  outline: 2px solid hsl(var(--su));\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-warning {\n  outline: 2px solid hsl(var(--wa));\n}\r\n.drawer-toggle:focus-visible ~ .drawer-content .drawer-button.btn-error {\n  outline: 2px solid hsl(var(--er));\n}\r\n.label-text {\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.label a:hover {\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.input[list]::-webkit-calendar-picker-indicator {\n  line-height: 1em;\n}\r\n.input-bordered {\n  --tw-border-opacity: 0.2;\n}\r\n.input:focus {\n  outline: 2px solid hsla(var(--bc) / 0.2);\n  outline-offset: 2px;\n}\r\n.input-error {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--er) / var(--tw-border-opacity));\n}\r\n.input-error:focus {\n  outline: 2px solid hsl(var(--er));\n}\r\n.input-disabled, \n  .input[disabled] {\n  cursor: not-allowed;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.input-disabled::-moz-placeholder, .input[disabled]::-moz-placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.input-disabled::placeholder, \n  .input[disabled]::placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.mask-star-2 {\n  -webkit-mask-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTkycHgiIGhlaWdodD0iMTgwcHgiIHZpZXdCb3g9IjAgMCAxOTIgMTgwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPCEtLSBHZW5lcmF0b3I6IFNrZXRjaCA2MC4xICg4ODEzMykgLSBodHRwczovL3NrZXRjaC5jb20gLS0+CiAgICA8dGl0bGU+c3Rhci0yPC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBvbHlnb24gaWQ9InN0YXItMiIgZmlsbD0iIzAwMDAwMCIgcG9pbnRzPSI5NiAxNTMuMDQzNjYxIDM3LjIyMTQ3NDggMTc5LjI4NjUwNiA0NC4yNDExOTA0IDExNS43NzQ0NDQgMC44OTQzNDgzNyA2OC40ODEzNTE1IDY0LjAxMTI5NjUgNTUuNDcxNTgyOCA5NiAwIDEyNy45ODg3MDQgNTUuNDcxNTgyOCAxOTEuMTA1NjUyIDY4LjQ4MTM1MTUgMTQ3Ljc1ODgxIDExNS43NzQ0NDQgMTU0Ljc3ODUyNSAxNzkuMjg2NTA2Ij48L3BvbHlnb24+CiAgICA8L2c+Cjwvc3ZnPg==);\n  mask-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTkycHgiIGhlaWdodD0iMTgwcHgiIHZpZXdCb3g9IjAgMCAxOTIgMTgwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPCEtLSBHZW5lcmF0b3I6IFNrZXRjaCA2MC4xICg4ODEzMykgLSBodHRwczovL3NrZXRjaC5jb20gLS0+CiAgICA8dGl0bGU+c3Rhci0yPC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBvbHlnb24gaWQ9InN0YXItMiIgZmlsbD0iIzAwMDAwMCIgcG9pbnRzPSI5NiAxNTMuMDQzNjYxIDM3LjIyMTQ3NDggMTc5LjI4NjUwNiA0NC4yNDExOTA0IDExNS43NzQ0NDQgMC44OTQzNDgzNyA2OC40ODEzNTE1IDY0LjAxMTI5NjUgNTUuNDcxNTgyOCA5NiAwIDEyNy45ODg3MDQgNTUuNDcxNTgyOCAxOTEuMTA1NjUyIDY4LjQ4MTM1MTUgMTQ3Ljc1ODgxIDExNS43NzQ0NDQgMTU0Ljc3ODUyNSAxNzkuMjg2NTA2Ij48L3BvbHlnb24+CiAgICA8L2c+Cjwvc3ZnPg==);\n}\r\n.menu li.disabled > * {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n       user-select: none;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.menu li.disabled > *:hover {\n  background-color: transparent;\n}\r\n.modal-open .modal-box, \n.modal-toggle:checked + .modal .modal-box, \n.modal:target .modal-box {\n  --tw-translate-y: 0px;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.modal-action > :not([hidden]) ~ :not([hidden]) {\n  --tw-space-x-reverse: 0;\n  margin-right: calc(0.5rem * var(--tw-space-x-reverse));\n  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));\n}\r\n@-webkit-keyframes progress-loading {\n\n  50% {\n    left: 107%;\n  }\n}\r\n@keyframes progress-loading {\n\n  50% {\n    left: 107%;\n  }\n}\r\n.radio:focus-visible {\n  outline: 2px solid hsl(var(--bc));\n  outline-offset: 2px;\n}\r\n.radio:checked, \n  .radio[aria-checked=true] {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--bc) / var(--tw-bg-opacity));\n  -webkit-animation: radiomark var(--animation-input, 0.2s) ease-in-out;\n          animation: radiomark var(--animation-input, 0.2s) ease-in-out;\n  box-shadow: 0 0 0 4px hsl(var(--b1)) inset, 0 0 0 4px hsl(var(--b1)) inset;\n}\r\n.radio:disabled {\n  cursor: not-allowed;\n  opacity: 0.2;\n}\r\n@-webkit-keyframes radiomark {\n\n  0% {\n    box-shadow: 0 0 0 12px hsl(var(--b1)) inset, 0 0 0 12px hsl(var(--b1)) inset;\n  }\n\n  50% {\n    box-shadow: 0 0 0 3px hsl(var(--b1)) inset, 0 0 0 3px hsl(var(--b1)) inset;\n  }\n\n  100% {\n    box-shadow: 0 0 0 4px hsl(var(--b1)) inset, 0 0 0 4px hsl(var(--b1)) inset;\n  }\n}\r\n@keyframes radiomark {\n\n  0% {\n    box-shadow: 0 0 0 12px hsl(var(--b1)) inset, 0 0 0 12px hsl(var(--b1)) inset;\n  }\n\n  50% {\n    box-shadow: 0 0 0 3px hsl(var(--b1)) inset, 0 0 0 3px hsl(var(--b1)) inset;\n  }\n\n  100% {\n    box-shadow: 0 0 0 4px hsl(var(--b1)) inset, 0 0 0 4px hsl(var(--b1)) inset;\n  }\n}\r\n.range:focus-visible::-webkit-slider-thumb {\n  --focus-shadow: 0 0 0 6px hsl(var(--b1)) inset, 0 0 0 2rem hsl(var(--range-shdw)) inset;\n}\r\n.range:focus-visible::-moz-range-thumb {\n  --focus-shadow: 0 0 0 6px hsl(var(--b1)) inset, 0 0 0 2rem hsl(var(--range-shdw)) inset;\n}\r\n.range::-webkit-slider-runnable-track {\n  height: 0.5rem;\n  width: 100%;\n  border-radius: var(--rounded-box, 1rem);\n  background-color: hsla(var(--bc) / 0.1);\n}\r\n.range::-moz-range-track {\n  height: 0.5rem;\n  width: 100%;\n  border-radius: var(--rounded-box, 1rem);\n  background-color: hsla(var(--bc) / 0.1);\n}\r\n.range::-webkit-slider-thumb {\n  background-color: hsl(var(--b1));\n  position: relative;\n  height: 1.5rem;\n  width: 1.5rem;\n  border-style: none;\n  border-radius: var(--rounded-box, 1rem);\n  -webkit-appearance: none;\n  top: 50%;\n  color: hsl(var(--range-shdw));\n  transform: translateY(-50%);\n  --filler-size: 100rem;\n  --filler-offset: 0.6rem;\n  box-shadow: 0 0 0 3px hsl(var(--range-shdw)) inset, var(--focus-shadow, 0 0), calc(var(--filler-size) * -1 - var(--filler-offset)) 0 0 var(--filler-size);\n}\r\n.range::-moz-range-thumb {\n  background-color: hsl(var(--b1));\n  position: relative;\n  height: 1.5rem;\n  width: 1.5rem;\n  border-style: none;\n  border-radius: var(--rounded-box, 1rem);\n  top: 50%;\n  color: hsl(var(--range-shdw));\n  --filler-size: 100rem;\n  --filler-offset: 0.5rem;\n  box-shadow: 0 0 0 3px hsl(var(--range-shdw)) inset, var(--focus-shadow, 0 0), calc(var(--filler-size) * -1 - var(--filler-offset)) 0 0 var(--filler-size);\n}\r\n.range-primary {\n  --range-shdw: var(--p);\n}\r\n.rating input {\n  -moz-appearance: none;\n       appearance: none;\n  -webkit-appearance: none;\n}\r\n.rating .rating-hidden {\n  width: 0.5rem;\n  background-color: transparent;\n}\r\n.rating input:checked ~ input, \n  .rating input[aria-checked=true] ~ input {\n  --tw-bg-opacity: 0.2;\n}\r\n.rating input:focus-visible {\n  transition-property: transform;\n  transition-duration: 300ms;\n  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n  transform: translateY(-0.125em);\n}\r\n.rating input:active:focus {\n  -webkit-animation: none;\n          animation: none;\n  transform: translateY(-0.125em);\n}\r\n.rating-half :where(input:not(.rating-hidden)) {\n  width: 0.75rem;\n}\r\n@-webkit-keyframes rating-pop {\n\n  0% {\n    transform: translateY(-0.125em);\n  }\n\n  40% {\n    transform: translateY(-0.125em);\n  }\n\n  100% {\n    transform: translateY(0);\n  }\n}\r\n@keyframes rating-pop {\n\n  0% {\n    transform: translateY(-0.125em);\n  }\n\n  40% {\n    transform: translateY(-0.125em);\n  }\n\n  100% {\n    transform: translateY(0);\n  }\n}\r\n.select:focus {\n  outline: 2px solid hsla(var(--bc) / 0.2);\n  outline-offset: 2px;\n}\r\n.select-primary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n}\r\n.select-primary:focus {\n  outline: 2px solid hsl(var(--p));\n}\r\n.select-disabled, \n  .select[disabled] {\n  cursor: not-allowed;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.select-disabled::-moz-placeholder, .select[disabled]::-moz-placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.select-disabled::placeholder, \n  .select[disabled]::placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.select-multiple, \n  .select[multiple], \n  .select[size].select:not([size=\"1\"]) {\n  background-image: none;\n  padding-right: 1rem;\n}\r\n.steps .step:before {\n  top: 0px;\n  grid-column-start: 1;\n  grid-row-start: 1;\n  height: 0.5rem;\n  width: 100%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b3, var(--b2)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n  content: \"\";\n  margin-left: -100%;\n}\r\n.steps .step:after {\n  content: counter(step);\n  counter-increment: step;\n  z-index: 1;\n  position: relative;\n  grid-column-start: 1;\n  grid-row-start: 1;\n  display: grid;\n  height: 2rem;\n  width: 2rem;\n  place-items: center;\n  place-self: center;\n  border-radius: 9999px;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b3, var(--b2)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--bc) / var(--tw-text-opacity));\n}\r\n.steps .step:first-child:before {\n  content: none;\n}\r\n.steps .step[data-content]:after {\n  content: attr(data-content);\n}\r\n.textarea-bordered {\n  --tw-border-opacity: 0.2;\n}\r\n.textarea:focus {\n  outline: 2px solid hsla(var(--bc) / 0.2);\n  outline-offset: 2px;\n}\r\n.textarea-primary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--p) / var(--tw-border-opacity));\n}\r\n.textarea-primary:focus {\n  outline: 2px solid hsl(var(--p));\n}\r\n.textarea-disabled, \n  .textarea[disabled] {\n  cursor: not-allowed;\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n  --tw-text-opacity: 0.2;\n}\r\n.textarea-disabled::-moz-placeholder, .textarea[disabled]::-moz-placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n.textarea-disabled::placeholder, \n  .textarea[disabled]::placeholder {\n  color: hsl(var(--bc) / var(--tw-placeholder-opacity));\n  --tw-placeholder-opacity: 0.2;\n}\r\n@-webkit-keyframes toast-pop {\n\n  0% {\n    transform: scale(0.9);\n    opacity: 0;\n  }\n\n  100% {\n    transform: scale(1);\n    opacity: 1;\n  }\n}\r\n@keyframes toast-pop {\n\n  0% {\n    transform: scale(0.9);\n    opacity: 0;\n  }\n\n  100% {\n    transform: scale(1);\n    opacity: 1;\n  }\n}\r\n.btn-md {\n  height: 3rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  min-height: 3rem;\n  font-size: 0.875rem;\n}\r\n.btn-square:where(.btn-xs) {\n  height: 1.5rem;\n  width: 1.5rem;\n  padding: 0px;\n}\r\n.btn-square:where(.btn-sm) {\n  height: 2rem;\n  width: 2rem;\n  padding: 0px;\n}\r\n.btn-square:where(.btn-md) {\n  height: 3rem;\n  width: 3rem;\n  padding: 0px;\n}\r\n.btn-square:where(.btn-lg) {\n  height: 4rem;\n  width: 4rem;\n  padding: 0px;\n}\r\n.btn-circle:where(.btn-md) {\n  height: 3rem;\n  width: 3rem;\n  border-radius: 9999px;\n  padding: 0px;\n}\r\n.checkbox-lg {\n  height: 2rem;\n  width: 2rem;\n}\r\n.indicator :where(.indicator-item) {\n  right: 0px;\n  left: auto;\n  top: 0px;\n  bottom: auto;\n  --tw-translate-x: 50%;\n  --tw-translate-y: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-start) {\n  right: auto;\n  left: 0px;\n  --tw-translate-x: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-center) {\n  right: 50%;\n  left: 50%;\n  --tw-translate-x: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-end) {\n  right: 0px;\n  left: auto;\n  --tw-translate-x: 50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-bottom) {\n  top: auto;\n  bottom: 0px;\n  --tw-translate-y: 50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-middle) {\n  top: 50%;\n  bottom: 50%;\n  --tw-translate-y: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.indicator :where(.indicator-item.indicator-top) {\n  top: 0px;\n  bottom: auto;\n  --tw-translate-y: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n.modal-bottom {\n  align-items: flex-end;\n}\r\n.rating-lg input {\n  height: 2.5rem;\n  width: 2.5rem;\n}\r\n.rating-half.rating-xs input:not(.rating-hidden) {\n  width: 0.375rem;\n}\r\n.rating-half.rating-sm input:not(.rating-hidden) {\n  width: 0.5rem;\n}\r\n.rating-half.rating-md input:not(.rating-hidden) {\n  width: 0.75rem;\n}\r\n.rating-half.rating-lg input:not(.rating-hidden) {\n  width: 1.25rem;\n}\r\n.steps-horizontal .step {\n  display: grid;\n  grid-template-columns: repeat(1, minmax(0, 1fr));\n  grid-template-rows: repeat(2, minmax(0, 1fr));\n  place-items: center;\n  text-align: center;\n}\r\n.steps-vertical .step {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  grid-template-rows: repeat(1, minmax(0, 1fr));\n}\r\n.alert-info {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--in) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--inc, var(--nc)) / var(--tw-text-opacity));\n}\r\n.badge-secondary {\n  --tw-border-opacity: 1;\n  border-color: hsl(var(--s) / var(--tw-border-opacity));\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--s) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--sc) / var(--tw-text-opacity));\n}\r\n.badge-warning {\n  border-color: transparent;\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--wa) / var(--tw-bg-opacity));\n  --tw-text-opacity: 1;\n  color: hsl(var(--wac, var(--nc)) / var(--tw-text-opacity));\n}\r\n.badge-outline.badge-secondary {\n  --tw-text-opacity: 1;\n  color: hsl(var(--s) / var(--tw-text-opacity));\n}\r\n.badge-outline.badge-warning {\n  --tw-text-opacity: 1;\n  color: hsl(var(--wa) / var(--tw-text-opacity));\n}\r\n.card-compact .card-body {\n  padding: 1rem;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n}\r\n.card-normal .card-body {\n  padding: var(--padding-card, 2rem);\n  font-size: 1rem;\n  line-height: 1.5rem;\n}\r\n.modal-bottom :where(.modal-box) {\n  width: 100%;\n  max-width: none;\n  --tw-translate-y: 2.5rem;\n  --tw-scale-x: 1;\n  --tw-scale-y: 1;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n  border-bottom-right-radius: 0px;\n  border-bottom-left-radius: 0px;\n}\r\n.modal-middle :where(.modal-box) {\n  width: 91.666667%;\n  max-width: 32rem;\n  --tw-translate-y: 0px;\n  --tw-scale-x: .9;\n  --tw-scale-y: .9;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n  border-bottom-left-radius: var(--rounded-box, 1rem);\n  border-bottom-right-radius: var(--rounded-box, 1rem);\n}\r\n.steps-horizontal .step {\n  grid-template-rows: 40px 1fr;\n  grid-template-columns: auto;\n  min-width: 4rem;\n}\r\n.steps-horizontal .step:before {\n  height: 0.5rem;\n  width: 100%;\n  --tw-translate-y: 0px;\n  --tw-translate-x: 0px;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n  content: \"\";\n  margin-left: -100%;\n}\r\n.steps-vertical .step {\n  gap: 0.5rem;\n  grid-template-columns: 40px 1fr;\n  grid-template-rows: auto;\n  min-height: 4rem;\n  justify-items: start;\n}\r\n.steps-vertical .step:before {\n  height: 100%;\n  width: 0.5rem;\n  --tw-translate-y: -50%;\n  --tw-translate-x: -50%;\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n  margin-left: 50%;\n}\r\n.fixed {\n  position: fixed;\n}\r\n.absolute {\n  position: absolute;\n}\r\n.bottom-0 {\n  bottom: 0px;\n}\r\n.left-2 {\n  left: 0.5rem;\n}\r\n.bottom-2 {\n  bottom: 0.5rem;\n}\r\n.right-4 {\n  right: 1rem;\n}\r\n.bottom-4 {\n  bottom: 1rem;\n}\r\n.left-4 {\n  left: 1rem;\n}\r\n.z-20 {\n  z-index: 20;\n}\r\n.z-10 {\n  z-index: 10;\n}\r\n.z-50 {\n  z-index: 50;\n}\r\n.z-40 {\n  z-index: 40;\n}\r\n.m-10 {\n  margin: 2.5rem;\n}\r\n.mx-auto {\n  margin-left: auto;\n  margin-right: auto;\n}\r\n.ml-2 {\n  margin-left: 0.5rem;\n}\r\n.-mt-4 {\n  margin-top: -1rem;\n}\r\n.-mt-2 {\n  margin-top: -0.5rem;\n}\r\n.mt-7 {\n  margin-top: 1.75rem;\n}\r\n.ml-8 {\n  margin-left: 2rem;\n}\r\n.ml-16 {\n  margin-left: 4rem;\n}\r\n.mt-8 {\n  margin-top: 2rem;\n}\r\n.-mt-5 {\n  margin-top: -1.25rem;\n}\r\n.mt-6 {\n  margin-top: 1.5rem;\n}\r\n.ml-3 {\n  margin-left: 0.75rem;\n}\r\n.mt-2 {\n  margin-top: 0.5rem;\n}\r\n.mb-2 {\n  margin-bottom: 0.5rem;\n}\r\n.mr-2 {\n  margin-right: 0.5rem;\n}\r\n.-ml-3 {\n  margin-left: -0.75rem;\n}\r\n.mr-\\[320px\\] {\n  margin-right: 320px;\n}\r\n.-mt-1 {\n  margin-top: -0.25rem;\n}\r\n.ml-11 {\n  margin-left: 2.75rem;\n}\r\n.mt-1 {\n  margin-top: 0.25rem;\n}\r\n.ml-5 {\n  margin-left: 1.25rem;\n}\r\n.ml-7 {\n  margin-left: 1.75rem;\n}\r\n.ml-1 {\n  margin-left: 0.25rem;\n}\r\n.-ml-2 {\n  margin-left: -0.5rem;\n}\r\n.flex {\n  display: flex;\n}\r\n.h-28 {\n  height: 7rem;\n}\r\n.h-20 {\n  height: 5rem;\n}\r\n.h-16 {\n  height: 4rem;\n}\r\n.h-48 {\n  height: 12rem;\n}\r\n.h-6 {\n  height: 1.5rem;\n}\r\n.h-screen {\n  height: 100vh;\n}\r\n.h-24 {\n  height: 6rem;\n}\r\n.min-h-screen {\n  min-height: 100vh;\n}\r\n.w-full {\n  width: 100%;\n}\r\n.w-12 {\n  width: 3rem;\n}\r\n.w-28 {\n  width: 7rem;\n}\r\n.w-20 {\n  width: 5rem;\n}\r\n.w-16 {\n  width: 4rem;\n}\r\n.w-72 {\n  width: 18rem;\n}\r\n.w-48 {\n  width: 12rem;\n}\r\n.w-6 {\n  width: 1.5rem;\n}\r\n.w-screen {\n  width: 100vw;\n}\r\n.w-24 {\n  width: 6rem;\n}\r\n.w-64 {\n  width: 16rem;\n}\r\n.w-\\[270px\\] {\n  width: 270px;\n}\r\n.max-w-sm {\n  max-width: 24rem;\n}\r\n.max-w-xs {\n  max-width: 20rem;\n}\r\n.flex-shrink-0 {\n  flex-shrink: 0;\n}\r\n.transform {\n  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\r\n@-webkit-keyframes ping {\n\n  75%, 100% {\n    transform: scale(2);\n    opacity: 0;\n  }\n}\r\n@keyframes ping {\n\n  75%, 100% {\n    transform: scale(2);\n    opacity: 0;\n  }\n}\r\n.animate-ping {\n  -webkit-animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;\n          animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;\n}\r\n@-webkit-keyframes pulse {\n\n  50% {\n    opacity: .5;\n  }\n}\r\n@keyframes pulse {\n\n  50% {\n    opacity: .5;\n  }\n}\r\n.animate-pulse {\n  -webkit-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;\n          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;\n}\r\n.cursor-pointer {\n  cursor: pointer;\n}\r\n.flex-col {\n  flex-direction: column;\n}\r\n.content-center {\n  align-content: center;\n}\r\n.items-center {\n  align-items: center;\n}\r\n.justify-center {\n  justify-content: center;\n}\r\n.justify-between {\n  justify-content: space-between;\n}\r\n.rounded-md {\n  border-radius: 0.375rem;\n}\r\n.bg-base-100 {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b1) / var(--tw-bg-opacity));\n}\r\n.bg-base-200 {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));\n}\r\n.bg-primary {\n  --tw-bg-opacity: 1;\n  background-color: hsl(var(--p) / var(--tw-bg-opacity));\n}\r\n.fill-warning {\n  fill: hsl(var(--wa));\n}\r\n.fill-secondary {\n  fill: hsl(var(--s));\n}\r\n.fill-base-100 {\n  fill: hsl(var(--b1));\n}\r\n.stroke-warning {\n  stroke: hsl(var(--wa));\n}\r\n.stroke-secondary {\n  stroke: hsl(var(--s));\n}\r\n.stroke-current {\n  stroke: currentColor;\n}\r\n.stroke-white {\n  stroke: #fff;\n}\r\n.stroke-1 {\n  stroke-width: 1;\n}\r\n.stroke-\\[1px\\] {\n  stroke-width: 1px;\n}\r\n.stroke-\\[0\\.5px\\] {\n  stroke-width: 0.5px;\n}\r\n.stroke-\\[0\\.3px\\] {\n  stroke-width: 0.3px;\n}\r\n.p-2 {\n  padding: 0.5rem;\n}\r\n.p-5 {\n  padding: 1.25rem;\n}\r\n.py-6 {\n  padding-top: 1.5rem;\n  padding-bottom: 1.5rem;\n}\r\n.px-2 {\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n}\r\n.py-4 {\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n}\r\n.pt-4 {\n  padding-top: 1rem;\n}\r\n.pl-4 {\n  padding-left: 1rem;\n}\r\n.pl-3 {\n  padding-left: 0.75rem;\n}\r\n.text-center {\n  text-align: center;\n}\r\n.text-3xl {\n  font-size: 1.875rem;\n  line-height: 2.25rem;\n}\r\n.text-base {\n  font-size: 1rem;\n  line-height: 1.5rem;\n}\r\n.text-5xl {\n  font-size: 3rem;\n  line-height: 1;\n}\r\n.text-sm {\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n}\r\n.text-xl {\n  font-size: 1.25rem;\n  line-height: 1.75rem;\n}\r\n.text-lg {\n  font-size: 1.125rem;\n  line-height: 1.75rem;\n}\r\n.font-bold {\n  font-weight: 700;\n}\r\n.text-error {\n  --tw-text-opacity: 1;\n  color: hsl(var(--er) / var(--tw-text-opacity));\n}\r\n.text-accent {\n  --tw-text-opacity: 1;\n  color: hsl(var(--a) / var(--tw-text-opacity));\n}\r\n.shadow-2xl {\n  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);\n  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\r\n.shadow-lg {\n  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);\n  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);\n  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);\n}\r\n/*My hatred for CSS is present in the emptiness of this file*/\r\n@media (min-width: 640px) {\n\n  .sm\\:modal-middle {\n    align-items: center;\n  }\n\n  .sm\\:modal-middle :where(.modal-box) {\n    width: 91.666667%;\n    max-width: 32rem;\n    --tw-translate-y: 0px;\n    --tw-scale-x: .9;\n    --tw-scale-y: .9;\n    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n    border-bottom-left-radius: var(--rounded-box, 1rem);\n    border-bottom-right-radius: var(--rounded-box, 1rem);\n  }\n}\r\n@media (min-width: 1024px) {\n\n  .lg\\:flex-row-reverse {\n    flex-direction: row-reverse;\n  }\n\n  .lg\\:text-left {\n    text-align: left;\n  }\n}\r\n@media (min-width: 1280px) {\n\n  .xl\\:mb-4 {\n    margin-bottom: 1rem;\n  }\n\n  .xl\\:ml-4 {\n    margin-left: 1rem;\n  }\n\n  .xl\\:mt-1 {\n    margin-top: 0.25rem;\n  }\n\n  .xl\\:-ml-7 {\n    margin-left: -1.75rem;\n  }\n\n  .xl\\:h-64 {\n    height: 16rem;\n  }\n\n  .xl\\:h-48 {\n    height: 12rem;\n  }\n\n  .xl\\:h-8 {\n    height: 2rem;\n  }\n\n  .xl\\:h-36 {\n    height: 9rem;\n  }\n\n  .xl\\:h-24 {\n    height: 6rem;\n  }\n\n  .xl\\:h-56 {\n    height: 14rem;\n  }\n\n  .xl\\:w-64 {\n    width: 16rem;\n  }\n\n  .xl\\:w-48 {\n    width: 12rem;\n  }\n\n  .xl\\:w-24 {\n    width: 6rem;\n  }\n\n  .xl\\:w-28 {\n    width: 7rem;\n  }\n\n  .xl\\:w-12 {\n    width: 3rem;\n  }\n\n  .xl\\:w-36 {\n    width: 9rem;\n  }\n\n  .xl\\:w-80 {\n    width: 20rem;\n  }\n\n  .xl\\:w-56 {\n    width: 14rem;\n  }\n\n  .xl\\:p-10 {\n    padding: 2.5rem;\n  }\n\n  .xl\\:pl-0 {\n    padding-left: 0px;\n  }\n\n  .xl\\:pl-8 {\n    padding-left: 2rem;\n  }\n\n  .xl\\:text-lg {\n    font-size: 1.125rem;\n    line-height: 1.75rem;\n  }\n\n  .xl\\:text-2xl {\n    font-size: 1.5rem;\n    line-height: 2rem;\n  }\n\n  .xl\\:text-3xl {\n    font-size: 1.875rem;\n    line-height: 2.25rem;\n  }\n\n  .xl\\:text-5xl {\n    font-size: 3rem;\n    line-height: 1;\n  }\n}\r\n\r\n";
     styleInject(css_248z);
 
     const app = new App({

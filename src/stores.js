@@ -4,17 +4,22 @@ export const liveGamepiece = writable("");
 export const autoStack = writable([])
 export const teleStack = writable([])
 
+export const badName = writable(false)
+export const badTeamNum = writable(false)
+
+export const undoing = writable(false)
+
 
 
 export const generalGameData=writable({
-    scoutName: "Name",
-    teamNum: 0,
+    scoutName: "",
+    teamNum: "",
     allianceColor: "blue"
 })
 
 export const defaultGeneralGameData=writable({
-    scoutName: "Name",
-    teamNum: 0,
+    scoutName: "",
+    teamNum: "",
     allianceColor: "blue"
 })
 

@@ -1,5 +1,5 @@
 <script>
-    import {gameStage} from "./stores";
+    import {gameStage, generalGameData, badName, badTeamNum} from "./stores";
 
     let allianceColor = "blue"
     let timer;
@@ -12,7 +12,7 @@
         } else {
             allianceColor = "red"
         }
-        console.log(allianceColor)
+        $generalGameData["allianceColor"] = allianceColor
     }
 
     const changeColorDebounce = e => {
@@ -24,12 +24,33 @@
                 allianceColor = "red"
             }
             console.log(allianceColor);
+            $generalGameData["allianceColor"] = allianceColor
         }, 20);
     }
 
     function goToAuto() {
-        $gameStage = 1
-        console.log($gameStage)
+        if(checkValid()) {
+            $gameStage = 1
+        }
+    }
+
+    function checkValid() {
+        let valid = true;
+        if($generalGameData["scoutName"] === ""){
+            valid = false;
+            $badName = true;
+        }
+        else{
+            $badName = false;
+        }
+        if($generalGameData["teamNum"] === "" || isNaN($generalGameData["teamNum"]) || $generalGameData["teamNum"].length > 5 || $generalGameData["teamNum"]<0){
+            valid = false;
+            $badTeamNum = true;
+        }
+        else{
+            $badTeamNum = false;
+        }
+        return valid;
     }
 </script>
 
@@ -45,13 +66,13 @@
                     <label class="label">
                         <span class="label-text">Your Name</span>
                     </label>
-                    <input type="text" placeholder="name" class="input input-bordered" bind:value={name}/>
+                    <input type="text" placeholder="{$badTeamNum ? 'Missing Scout Name' : 'name'}" class="input input-bordered {$badName ? 'input-error' : ''}" bind:value={$generalGameData["scoutName"]}/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Team #</span>
                     </label>
-                    <input type="text" placeholder="team #" class="input input-bordered" bind:value={number} />
+                    <input type="text" placeholder="{$badTeamNum ? 'Missing Team #' : 'team #'}" class="input input-bordered {$badTeamNum ? 'input-error' : ''}" bind:value={$generalGameData["teamNum"]} />
 
                 </div>
                 <label class="label">
