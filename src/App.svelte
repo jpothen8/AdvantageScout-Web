@@ -5,6 +5,7 @@
     import Tele from "./Tele.svelte";
     import Post from "./Post.svelte";
     import QRPage from "./QRPage.svelte";
+
 </script>
 
 {#if $gameStage === 0}

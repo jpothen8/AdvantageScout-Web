@@ -13,14 +13,14 @@
 </script>
 
 <button
-        class="btn btn-square back bg-base-100 btn-outline w-28 h-28 xl:w-64 xl:h-64 {gamePiece === 'Cube'
+        class="btn btn-square back bg-base-100 btn-outline w-28 h-28 xl:w-48 xl:h-48 {gamePiece === 'Cube'
         ? 'btn-warning'
         : 'btn-secondary'}  "
         on:click={updateGameObject}
 >
     {#if gamePiece === "Cube"}
         <svg
-                class="w-20 h-20 xl:w-48 xl:h-48 fill-warning  stroke-[0.5px] stroke-current {$liveGamepiece === 'Cube' ? 'animate-pulse' : ''}"
+                class="w-20 h-20 xl:w-32 xl:h-32 fill-warning  stroke-[0.5px] stroke-current {$liveGamepiece === 'Cube' ? 'animate-pulse' : ''}"
                 viewBox="0 0 56 56"
                 xmlns="http://www.w3.org/2000/svg"
         ><g id="SVGRepo_bgCarrier" /><g
@@ -35,7 +35,7 @@
         >
     {:else}
         <svg
-                class=" bi bi-cone w-20 h-20 xl:w-48 xl:h-48 fill-secondary stroke-[0.3px] stroke-current {$liveGamepiece === 'Cone' ? 'animate-pulse' : ''}"
+                class=" bi bi-cone w-20 h-20 xl:w-32 xl:h-32 fill-secondary stroke-[0.3px] stroke-current {$liveGamepiece === 'Cone' ? 'animate-pulse' : ''}"
                 viewBox="0 0 16.00 16.00"
                 xmlns="http://www.w3.org/2000/svg"
         ><g id="SVGRepo_bgCarrier" /><g

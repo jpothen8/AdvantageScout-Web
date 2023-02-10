@@ -23,17 +23,18 @@
     <GamePieceCombo class="mx-auto"/>
 </div>
 
-<div class="z-20 pt-4 xl:pl-0xl:pl-8  z-10">
-    <div class="flex justify-center mr-[320px]">
+<div class="z-20 pt-4   z-10">
+    <div class="flex justify-center">
         <UndoButton/>
+        <div class="w-80 xl:w-96 h-1 bg-transparent border border-transparent"></div>
     </div>
 </div>
 
 <div class="flex justify-center -mt-1 xl:mt-1">
-    <div class="text-3xl mt-7 -ml-2 xl:text-5xl">
-        Tele-Op
+    <div class="text-3xl mt-7 -ml-3 ">
+        Tele-Op&nbsp;&nbsp;&nbsp;
     </div>
-    <div class="ml-1">
+    <div class="-ml-1">
         <DockedBox/>
     </div>
     <div class="ml-16">
@@ -51,5 +52,4 @@
     </div>
 </div>
 
-<br><br><br><br><hr style="height:7px; visibility:hidden;" />
 
