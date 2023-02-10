@@ -1,6 +1,9 @@
 <script>
 
-import {autoGameData} from "./stores";
+    import {autoGameData, autoStack} from "./stores";
+
+    // $: $autoGameData["mobility"], $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
+
 </script>
 
 <div class="form-control">

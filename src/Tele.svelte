@@ -4,6 +4,19 @@
     import UndoButton from "./UndoButton.svelte";
     import DockedBox from "./DockedBox.svelte";
     import BalancedBox from "./BalancedBox.svelte";
+    import {autoGameData, autoStack, generalGameData, teleGameData, teleStack, undoing} from "./stores";
+
+    if($teleStack.length === 0){
+        $teleStack.push((JSON.parse(JSON.stringify($teleGameData))))
+    }
+
+    $: $teleGameData, updateStack()
+    function updateStack() {
+        if (!$undoing) {
+            $teleStack.push((JSON.parse(JSON.stringify($teleGameData))))
+        }
+        $undoing=false;
+    }
 </script>
 
 <div class="fixed bottom-0 w-full flex justify-center z-10">
@@ -16,18 +29,18 @@
     </div>
 </div>
 
-<div class="flex justify-center -mt-1">
-    <div class="text-3xl mt-7 ">
-        Tele
+<div class="flex justify-center -mt-1 xl:mt-1">
+    <div class="text-3xl mt-7 -ml-2 xl:text-5xl">
+        Tele-Op
     </div>
-    <div class="ml-11">
+    <div class="ml-1">
         <DockedBox/>
     </div>
     <div class="ml-16">
         <BalancedBox/>
     </div>
-    <div class="text-3xl mt-8 ml-8">
-        6328
+    <div class="text-3xl mt-8 ml-8 {$generalGameData['allianceColor']==='red' ? 'text-error' : 'text-accent'}">
+        {$generalGameData['teamNum']}
     </div>
 </div>
 

@@ -13,16 +13,11 @@
         dicString = heightConvert[height] + $liveGamepiece + type;
         if($gameStage === 1){
             $autoGameData[dicString] += 1;
+            // $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
         }
         else if($gameStage === 2){
             $teleGameData[dicString] += 1;
-        }
-        if($gameStage === 1){
-                $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
-        }
-        if($gameStage === 2) {
-
-            $teleStack.push((JSON.parse(JSON.stringify($teleGameData))))
+            // $teleStack.push((JSON.parse(JSON.stringify($teleGameData))))
         }
         console.log($autoStack)
     }

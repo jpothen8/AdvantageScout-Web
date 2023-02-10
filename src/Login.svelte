@@ -1,33 +1,56 @@
 <script>
-    import {gameStage, generalGameData} from "./stores";
+    import {gameStage, generalGameData, badName, badTeamNum} from "./stores";
 
     let allianceColor = "blue"
     let timer;
-
+    let name = "";
+    let number = "";
 
     function changeColor() {
-        if($generalGameData["allianceColor"] === "red") {
-            $generalGameData["allianceColor"] = "blue"
+        if(allianceColor === "red") {
+            allianceColor = "blue"
         } else {
-            $generalGameData["allianceColor"] = "red"
+            allianceColor = "red"
         }
-
+        $generalGameData["allianceColor"] = allianceColor
     }
 
     const changeColorDebounce = e => {
         clearTimeout(timer);
         timer = setTimeout(() => {
-            if($generalGameData["allianceColor"] === "red") {
-                $generalGameData["allianceColor"] = "blue"
+            if(allianceColor === "red") {
+                allianceColor = "blue"
             } else {
-                $generalGameData["allianceColor"] = "red"
+                allianceColor = "red"
             }
+            console.log(allianceColor);
+            $generalGameData["allianceColor"] = allianceColor
         }, 20);
     }
 
     function goToAuto() {
-        $gameStage = 1
-        console.log($gameStage)
+        if(checkValid()) {
+            $gameStage = 1
+        }
+    }
+
+    function checkValid() {
+        let valid = true;
+        if($generalGameData["scoutName"] === ""){
+            valid = false;
+            $badName = true;
+        }
+        else{
+            $badName = false;
+        }
+        if($generalGameData["teamNum"] === "" || isNaN($generalGameData["teamNum"]) || $generalGameData["teamNum"].length > 5 || $generalGameData["teamNum"]<0){
+            valid = false;
+            $badTeamNum = true;
+        }
+        else{
+            $badTeamNum = false;
+        }
+        return valid;
     }
 </script>
 
@@ -43,20 +66,20 @@
                     <label class="label">
                         <span class="label-text">Your Name</span>
                     </label>
-                    <input type="text" placeholder="name" class="input input-bordered" bind:value={$generalGameData['scoutName']}/>
+                    <input type="text" placeholder="{$badTeamNum ? 'Missing Scout Name' : 'name'}" class="input input-bordered {$badName ? 'input-error' : ''}" bind:value={$generalGameData["scoutName"]}/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Team #</span>
                     </label>
-                    <input type="text" placeholder="team #" class="input input-bordered" bind:value={$generalGameData['teamNum']}/>
+                    <input type="text" placeholder="{$badTeamNum ? 'Missing Team #' : 'team #'}" class="input input-bordered {$badTeamNum ? 'input-error' : ''}" bind:value={$generalGameData["teamNum"]} />
 
                 </div>
                 <label class="label">
                     <span class="label-text">Alliance Color</span>
                 </label>
 
-                {#if $generalGameData["allianceColor"] === "red"}
+                {#if allianceColor === "red"}
                 <button class="btn btn-error" on:click={changeColorDebounce}>Red</button>
                 {:else}
                 <button class="btn btn-accent" on:click={changeColorDebounce}>Blue</button>

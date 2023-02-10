@@ -5,11 +5,12 @@
     function changeInput() {
         $autoGameData["startingLocation"] = input
         console.log($autoGameData["startingLocation"])
-        $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
+        // $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
         console.log($autoStack)
     }
 
     $: $autoGameData["startingLocation"], input = $autoGameData["startingLocation"]
+    // $: $autoGameData["startingLocation"], $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
 </script>
 
 

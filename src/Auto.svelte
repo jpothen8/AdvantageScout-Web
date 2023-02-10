@@ -9,19 +9,27 @@
     import DockedBox from "./DockedBox.svelte";
     import BalancedBox from "./BalancedBox.svelte";
     import UndoButton from "./UndoButton.svelte";
-    import {autoGameData, autoStack} from "./stores";
+    import {autoGameData, autoStack, generalGameData, undoing} from "./stores";
 
-    if($autoStack.length === 0){
+    if ($autoStack.length === 0) {
         $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
     }
 
+    $: $autoGameData, updateStack()
+
+    function updateStack() {
+        if (!$undoing) {
+            $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
+        }
+        $undoing=false;
+    }
 </script>
 
 <div class="z-20 pt-4 xl:pl-0xl:pl-8  z-10">
     <div class="flex justify-center">
         <UndoButton/>
         <div class="ml-2">
-        <StartLocationDropdown/>
+            <StartLocationDropdown/>
         </div>
         <div class="-mt-4 ml-2">
             <MobilityBox/>
@@ -37,8 +45,8 @@
         <div class="ml-16">
             <BalancedBox/>
         </div>
-        <div class="text-3xl mt-8 ml-8">
-            6328
+        <div class="text-3xl mt-8 ml-8 {$generalGameData['allianceColor']==='red' ? 'text-error' : 'text-accent'}">
+            {$generalGameData['teamNum']}
         </div>
     </div>
 
@@ -55,7 +63,8 @@
     </div>
 </div>
 
-<br><br><br><br><hr style="height:7px; visibility:hidden;" />
+<br><br><br><br>
+<hr style="height:7px; visibility:hidden;"/>
 
 
 
