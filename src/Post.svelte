@@ -16,3 +16,4 @@
      <StarRating name = "Intake Rating"/>
      <NotesBox/>
  </div>
+<br><br><br><br>

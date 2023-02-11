@@ -13,7 +13,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
     </svg>
 
-<button class="btn btn-outline w-12 h-28 z-50 xl:h-64 xl:w-24" on:click={nextStage}>
+<button class="btn btn-outline w-12 h-28 z-50 xl:h-48 xl:w-24" on:click={nextStage}>
 </button>
 
 

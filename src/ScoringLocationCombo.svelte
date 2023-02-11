@@ -7,7 +7,7 @@
 
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col pb-24 xl:pb-44">
     <div class="flex items-center mb-2 xl:mb-4">
         <div class="p-2 mr-2">
             <ScoringLocation height=2/>
