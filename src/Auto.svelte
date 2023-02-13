@@ -10,7 +10,7 @@
     import BalancedBox from "./BalancedBox.svelte";
     import UndoButton from "./UndoButton.svelte";
     import {autoGameData, autoStack, generalGameData, undoing} from "./stores";
-
+    let lastData = JSON.parse(JSON.stringify($autoGameData))
     if ($autoStack.length === 0) {
         $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
     }
@@ -18,10 +18,15 @@
     $: $autoGameData, updateStack()
 
     function updateStack() {
-        if (!$undoing) {
+        console.log("hi")
+        if (!$undoing && lastData !== $autoGameData) {
             $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
+            lastData = JSON.parse(JSON.stringify($autoGameData))
+            JSON.parse(JSON.stringify($autoGameData))
+            console.log("hi2")
         }
         $undoing=false;
+        console.log(lastData === $autoGameData)
     }
 </script>
 

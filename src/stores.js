@@ -6,6 +6,7 @@ export const teleStack = writable([])
 
 export const badName = writable(false)
 export const badTeamNum = writable(false)
+export const badMatchNum = writable(false)
 
 export const undoing = writable(false)
 
@@ -14,7 +15,8 @@ export const undoing = writable(false)
 export const generalGameData=writable({
     scoutName: "",
     teamNum: "",
-    allianceColor: "blue"
+    allianceColor: "blue",
+    matchNum: ""
 })
 
 export const defaultGeneralGameData=writable({

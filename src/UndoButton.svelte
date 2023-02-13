@@ -26,6 +26,7 @@
                 console.log($teleStack)
             }
         }
+        console.log("undo")
     }
 </script>
 
