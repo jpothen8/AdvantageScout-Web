@@ -6,6 +6,11 @@
     import Post from "./Post.svelte";
     import QRPage from "./QRPage.svelte";
 
+    window.onbeforeunload = function ()
+    {
+        return "";
+    };
+
 </script>
 
 {#if $gameStage === 0}

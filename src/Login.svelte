@@ -50,7 +50,13 @@
         else{
             $badTeamNum = false;
         }
-        if($badMatchNum)
+        if($generalGameData["matchNum"] === "" || isNaN($generalGameData["matchNum"]) || $generalGameData["matchNum"].length > 5 || $generalGameData["matchNum"]<0){
+            valid = false;
+            $badMatchNum = true;
+        }
+        else{
+            $badMatchNum = false;
+        }
         return valid;
     }
 </script>
@@ -80,7 +86,7 @@
                     <label class="label">
                         <span class="label-text">Match #</span>
                     </label>
-                    <input type="text" placeholder="{$badName ? 'Missing Match #' : 'match #'}" class="input input-bordered {$badName ? 'input-error' : ''}" bind:value={$generalGameData["scoutName"]}/>
+                    <input type="text" placeholder="{$badMatchNum ? 'Missing Match #' : 'match #'}" class="input input-bordered {$badMatchNum ? 'input-error' : ''}" bind:value={$generalGameData["matchNum"]}/>
                 </div>
                 <label class="label">
                     <span class="label-text">Alliance Color</span>

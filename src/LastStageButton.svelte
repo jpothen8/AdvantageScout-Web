@@ -53,7 +53,7 @@
 <div class="modal modal-bottom sm:modal-middle cursor-pointer">
     <div class="modal-box">
         <h3 class="font-bold text-lg">Reset Submission</h3>
-        <p class="py-4">Do you want to reset the submission?</p>
+        <p class="py-4">Do you want to reset the submission? (This clears all current data)</p>
         <div class="modal-action">
             <label for="Restart" class="btn btn-error absolute left-4 bottom-4" on:click={reset}>Yes, Reset</label>
         </div>

@@ -13,7 +13,7 @@
 </script>
 
 <button
-        class="btn btn-square back bg-base-100 btn-outline w-28 h-28 xl:w-48 xl:h-48 {gamePiece === 'Cube'
+        class="btn btn-square back bg-base-100 btn-outline w-28 h-28 xl:w-48 xl:h-48  {gamePiece === 'Cube'
         ? 'btn-warning'
         : 'btn-secondary'}  "
         on:click={updateGameObject}
