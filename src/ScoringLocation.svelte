@@ -19,7 +19,6 @@
             $teleGameData[dicString] += 1;
             // $teleStack.push((JSON.parse(JSON.stringify($teleGameData))))
         }
-        console.log($autoStack)
     }
 </script>
 

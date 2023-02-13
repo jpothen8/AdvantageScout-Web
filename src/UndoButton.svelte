@@ -6,24 +6,20 @@
         $undoing=true;
         if($gameStage === 1){
             if($autoStack.length > 1) {
-                $autoGameData =JSON.parse(JSON.stringify($autoStack[$autoStack.length - 2]))
-                $autoStack.pop()
+                $autoGameData = JSON.parse(JSON.stringify($autoStack.pop()))
                 console.log($autoStack)
             }
             else{
                 $autoGameData = JSON.parse(JSON.stringify($autoStack[0]))
-                console.log($autoStack)
             }
         }
         if($gameStage === 2){
             if($teleStack.length > 1) {
                 $teleGameData =JSON.parse(JSON.stringify($teleStack[$teleStack.length - 2]))
                 $teleStack.pop()
-                console.log($teleStack)
             }
             else{
                 $teleGameData = JSON.parse(JSON.stringify($teleStack[0]))
-                console.log($teleStack)
             }
         }
         console.log("undo")

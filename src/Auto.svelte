@@ -18,15 +18,12 @@
     $: $autoGameData, updateStack()
 
     function updateStack() {
-        console.log("hi")
-        if (!$undoing && lastData !== $autoGameData) {
+        if (!$undoing && JSON.parse(JSON.stringify(lastData)) !== JSON.parse(JSON.stringify($autoGameData))) {
             $autoStack.push((JSON.parse(JSON.stringify($autoGameData))))
             lastData = JSON.parse(JSON.stringify($autoGameData))
-            JSON.parse(JSON.stringify($autoGameData))
-            console.log("hi2")
+            console.log("herehere")
         }
         $undoing=false;
-        console.log(lastData === $autoGameData)
     }
 </script>
 
