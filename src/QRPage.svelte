@@ -15,7 +15,7 @@
         $generalGameData["scoutName"] = "none"
     }
 
-    let qrString = `${Object.values($generalGameData).join(',') + "," + Object.values($autoGameData).join(',') + "," + Object.values($teleGameData).join(',') + "," + Object.values($postGameData).join(',')}`
+    let qrString = `${Object.values($generalGameData).join(',') + "," + Object.values($autoGameData).join(',') + "," + Object.values($teleGameData).join(',')`
     console.log(qrString)
 
 
