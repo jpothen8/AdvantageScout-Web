@@ -64,8 +64,8 @@
 <div class="hero min-h-screen bg-base-200">
     <div class="hero-content flex-col lg:flex-row-reverse">
         <div class="text-center lg:text-left">
-            <h1 class="text-5xl font-bold">Advantage Scout</h1>
-            <p class="py-6">A mobile-first, easy to use, QR based, scouting application made by FRC 6328</p>
+            <h1 class="text-5xl font-bold">Quantitative Scouting Form</h1>
+            <p class="py-6">A mobile-first, easy to use, QR based, scouting application based from team 6328, Mechanical Advantage. This is our QUANTITATIVE scouting form!</p>
         </div>
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div class="card-body">
