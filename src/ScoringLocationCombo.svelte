@@ -24,7 +24,7 @@
         <div class=" p-5 mr-2 xl:p-10">
             <ScoringLocation type="Fail" height="1"/>
         </div>
-        <div class="text-center -ml-3 text-xl font-bold xl:text-3xl">Mid</div>
+        <div class="text-center -ml-3 text-xl font-bold xl:text-3xl">Medium</div>
     </div>
     <div class="flex items-center">
         <div class=" p-2 mr-2">
@@ -33,13 +33,13 @@
         <div class=" p-5 mr-2 xl:p-10">
             <ScoringLocation type="Fail" height="0"/>
         </div>
-        <div class="text-center -ml-3 text-xl font-bold xl:text-3xl">Hybrid</div>
+        <div class="text-center -ml-3 text-xl font-bold xl:text-3xl">Hybrid (Ground)</div>
     </div>
     <div class="flex items-center">
         <div class=" p-2 mr-2">
             <TrashCan/>
         </div>
 
-        <div class="text-center text-xl font-bold xl:text-3xl xl:ml-4">Dropped</div>
+        <div class="text-center text-xl font-bold xl:text-3xl xl:ml-4">Dropped before scoring</div>
     </div>
 </div>
