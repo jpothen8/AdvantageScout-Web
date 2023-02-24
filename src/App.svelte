@@ -3,7 +3,6 @@
     import {gameStage} from "./stores";
     import Auto from "./Auto.svelte";
     import Tele from "./Tele.svelte";
-    import Post from "./Post.svelte";
     import QRPage from "./QRPage.svelte";
 
     window.onbeforeunload = function ()
@@ -19,8 +18,6 @@
     <Auto/>
 {:else if $gameStage === 2}
     <Tele/>
-{:else if $gameStage === 3}
-    <Post/>
 {:else}
     <QRPage/>
 {/if}
