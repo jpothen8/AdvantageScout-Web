@@ -4,7 +4,6 @@
     import TrashCan from "./TrashCan.svelte";
     import GamePiece from "./GamePiece.svelte";
     import GamePieceCombo from "./GamePieceCombo.svelte";
-    import StartLocationDropdown from "./StartLocationDropdown.svelte";
     import MobilityBox from "./MobilityBox.svelte";
     import DockedBox from "./DockedBox.svelte";
     import BalancedBox from "./BalancedBox.svelte";
@@ -30,9 +29,6 @@
 <div class="z-20 pt-4 xl:pl-0xl:pl-8  z-10">
     <div class="flex justify-center">
         <UndoButton/>
-        <div class="ml-2">
-            <StartLocationDropdown/>
-        </div>
         <div class="-mt-4 ml-2">
             <MobilityBox/>
         </div>
